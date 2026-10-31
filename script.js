@@ -738,6 +738,11 @@ footerQuickPlayer.addEventListener('mouseleave', () => {
   if (!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
   footerQuickCloseTimer = window.setTimeout(() => setFooterQuickOpen(false), 160);
 });
+document.addEventListener('pointerdown', (event) => {
+  if (!window.matchMedia('(hover:none), (pointer:coarse)').matches) return;
+  if (!footerQuickPlayer.classList.contains('is-open') || footerQuickPlayer.contains(event.target)) return;
+  setFooterQuickOpen(false);
+});
 footerJump.addEventListener('click', () => {
   const isOpen = footerQuickPlayer.classList.contains('is-open');
   if (!isOpen) {
