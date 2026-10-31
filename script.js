@@ -80,6 +80,20 @@ let countdownFadeInStarted = false;
 let countdownMuted = false;
 let countdownTrackQueue = [];
 let countdownTrackNoticeTimer = null;
+function ensureAudioGain(audio) {
+  return null;
+}
+
+function resumeNaviesAudio() {}
+
+function getAudioLevel(audio) {
+  return audio.volume;
+}
+
+function setAudioLevel(audio, level) {
+  const safeLevel = Math.max(0, Math.min(1, level));
+  try { audio.volume = safeLevel; } catch (error) {}
+}
 
 function shuffledTrackIndexes(avoidFirstIndex = -1) {
   const indexes = countdownTracks.map((_, index) => index);
@@ -130,14 +144,14 @@ function stopCountdownFade() {
 function fadeCountdownAudio(targetVolume, duration, onComplete) {
   if (!countdownAudio) return;
   stopCountdownFade();
-  const initialVolume = countdownAudio.volume;
+  const initialVolume = getAudioLevel(countdownAudio);
   const startedAt = performance.now();
   const animate = (now) => {
     const progress = Math.min(1, (now - startedAt) / duration);
     const eased = targetVolume > initialVolume
       ? progress * progress * (3 - (2 * progress))
       : 1 - Math.pow(1 - progress, 3);
-    countdownAudio.volume = Math.max(0, Math.min(1, initialVolume + ((targetVolume - initialVolume) * eased)));
+    setAudioLevel(countdownAudio, initialVolume + ((targetVolume - initialVolume) * eased));
     if (progress < 1) countdownFadeFrame = window.requestAnimationFrame(animate);
     else {
       countdownFadeFrame = null;
@@ -187,7 +201,8 @@ function prepareCountdownTrack() {
 async function playPreparedCountdownTrack() {
   if (!countdownAudio || countdownLeaving) return false;
   stopCountdownFade();
-  countdownAudio.volume = 0;
+  resumeNaviesAudio();
+  setAudioLevel(countdownAudio, 0);
   const intendedStart = countdownTracks[countdownTrackIndex].start;
   const isFirstPlay = !countdownHasPlayed;
   const trackIndexAtPlay = countdownTrackIndex;
@@ -241,6 +256,8 @@ async function advanceCountdownTrack() {
 
 function revealCountdown() {
   sessionStorage.setItem('the-navies-countdown-revealed', '1');
+  ensureAudioGain(countdownAudio);
+  resumeNaviesAudio();
   playPreparedCountdownTrack();
   countdownStart.disabled = true;
   document.documentElement.classList.remove('countdown-welcome');
@@ -297,6 +314,8 @@ function openCountdownWelcome() {
 
 function leaveCountdown() {
   countdownLeaving = true;
+  const handoffIndex = countdownTrackIndex;
+  prepareSiteMusicFromCountdown(handoffIndex);
   document.documentElement.classList.add('countdown-exiting');
   document.documentElement.classList.remove('countdown-entry', 'countdown-welcome');
   if (countdownTimer !== null) {
@@ -845,11 +864,11 @@ function nextSiteMusicIndex() {
 
 function fadeSiteMusicOut(onComplete) {
   if (siteMusicFadeFrame !== null) cancelAnimationFrame(siteMusicFadeFrame);
-  const initialVolume = siteMusicAudio.volume;
+  const initialVolume = getAudioLevel(siteMusicAudio);
   const startedAt = performance.now();
   const animate = (now) => {
     const progress = Math.min(1, (now - startedAt) / 2000);
-    siteMusicAudio.volume = initialVolume * (1 - (progress * progress * (3 - (2 * progress))));
+    setAudioLevel(siteMusicAudio, initialVolume * (1 - (progress * progress * (3 - (2 * progress)))));
     if (progress < 1) siteMusicFadeFrame = requestAnimationFrame(animate);
     else {
       siteMusicFadeFrame = null;
@@ -859,13 +878,13 @@ function fadeSiteMusicOut(onComplete) {
   siteMusicFadeFrame = requestAnimationFrame(animate);
 }
 
-function fadeSiteMusicIn() {
+function fadeSiteMusicIn(duration = 2000) {
   if (siteMusicFadeFrame !== null) cancelAnimationFrame(siteMusicFadeFrame);
   const startedAt = performance.now();
   const animate = (now) => {
-    const progress = Math.min(1, (now - startedAt) / 2000);
+    const progress = Math.min(1, (now - startedAt) / duration);
     const eased = progress * progress * (3 - (2 * progress));
-    siteMusicAudio.volume = .34 * eased;
+    setAudioLevel(siteMusicAudio, .34 * eased);
     if (progress < 1) siteMusicFadeFrame = requestAnimationFrame(animate);
     else siteMusicFadeFrame = null;
   };
@@ -874,11 +893,13 @@ function fadeSiteMusicIn() {
 
 async function playSiteMusic(index, rememberCurrent = true) {
   if (siteMusicFadeFrame !== null) cancelAnimationFrame(siteMusicFadeFrame);
+  ensureAudioGain(siteMusicAudio);
+  resumeNaviesAudio();
   if (rememberCurrent && siteMusicIndex >= 0 && siteMusicIndex !== index) siteMusicHistory.push(siteMusicIndex);
   siteMusicIndex = index;
   siteMusicEndFadeStarted = false;
   const fadeFromStart = countdownTracks[index].file === 'have-you-ever-seen-the-rain';
-  siteMusicAudio.volume = fadeFromStart ? 0 : .34;
+  setAudioLevel(siteMusicAudio, fadeFromStart ? 0 : .34);
   siteMusicProgress.value = '0';
   siteMusicProgress.style.setProperty('--music-progress', '0%');
   siteMusicAudio.src = siteMusicSource(index);
@@ -889,6 +910,23 @@ async function playSiteMusic(index, rememberCurrent = true) {
     if (fadeFromStart) fadeSiteMusicIn();
     showFooterQuickTrack();
   } catch (error) {}
+  updateSiteMusicUI();
+}
+
+function prepareSiteMusicFromCountdown(index) {
+  if (index < 0 || index >= countdownTracks.length) return;
+  if (siteMusicFadeFrame !== null) cancelAnimationFrame(siteMusicFadeFrame);
+  siteMusicAudio.pause();
+  siteMusicIndex = index;
+  siteMusicEndFadeStarted = false;
+  siteMusicQueue = siteMusicQueue.filter((trackIndex) => trackIndex !== index);
+  const fadeFromStart = countdownTracks[index].file === 'have-you-ever-seen-the-rain';
+  setAudioLevel(siteMusicAudio, fadeFromStart ? 0 : .34);
+  siteMusicAudio.muted = false;
+  siteMusicProgress.value = '0';
+  siteMusicProgress.style.setProperty('--music-progress', '0%');
+  siteMusicAudio.src = siteMusicSource(index);
+  siteMusicAudio.load();
   updateSiteMusicUI();
 }
 
@@ -922,16 +960,21 @@ siteMusicProgress.addEventListener('input', () => {
   if (siteMusicFadeFrame !== null) cancelAnimationFrame(siteMusicFadeFrame);
   siteMusicFadeFrame = null;
   siteMusicEndFadeStarted = false;
-  siteMusicAudio.volume = .34;
+  setAudioLevel(siteMusicAudio, .34);
   siteMusicAudio.currentTime = (Number(siteMusicProgress.value) / 1000) * siteMusicAudio.duration;
 });
 function toggleSiteMusicPlayback() {
   if (siteMusicIndex < 0) {
+    ensureAudioGain(siteMusicAudio);
+    resumeNaviesAudio();
     playNextSiteMusic();
     return;
   }
+  ensureAudioGain(siteMusicAudio);
+  resumeNaviesAudio();
   if (siteMusicAudio.paused) siteMusicAudio.play().then(() => {
-    if (siteMusicIndex >= 0 && countdownTracks[siteMusicIndex].file === 'have-you-ever-seen-the-rain' && siteMusicAudio.currentTime < .35 && siteMusicAudio.volume === 0) fadeSiteMusicIn();
+    if (siteMusicIndex >= 0 && countdownTracks[siteMusicIndex].file === 'have-you-ever-seen-the-rain' && siteMusicAudio.currentTime < .35 && getAudioLevel(siteMusicAudio) === 0) fadeSiteMusicIn();
+    showFooterQuickTrack();
     updateSiteMusicUI();
   }).catch(() => {});
   else siteMusicAudio.pause();
