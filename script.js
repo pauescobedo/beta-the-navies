@@ -979,12 +979,12 @@ function nextSiteMusicIndex() {
   return siteMusicQueue.shift();
 }
 
-function fadeSiteMusicOut(onComplete) {
+function fadeSiteMusicOut(onComplete, duration = 2000) {
   if (siteMusicFadeFrame !== null) cancelAnimationFrame(siteMusicFadeFrame);
   const initialVolume = getAudioLevel(siteMusicAudio);
   const startedAt = performance.now();
   const animate = (now) => {
-    const progress = Math.min(1, (now - startedAt) / 2000);
+    const progress = Math.min(1, (now - startedAt) / duration);
     setAudioLevel(siteMusicAudio, initialVolume * (1 - (progress * progress * (3 - (2 * progress)))));
     if (progress < 1) siteMusicFadeFrame = requestAnimationFrame(animate);
     else {
@@ -1007,6 +1007,32 @@ function fadeSiteMusicIn(duration = 2000) {
   };
   siteMusicFadeFrame = requestAnimationFrame(animate);
 }
+
+let siteMusicInterruptedByNavyAudio = false;
+window.naviesPauseSiteMusicForNavyAudio = function naviesPauseSiteMusicForNavyAudio() {
+  if (siteMusicIndex < 0 || siteMusicAudio.paused || siteMusicInterruptedByNavyAudio) return;
+  siteMusicInterruptedByNavyAudio = true;
+  fadeSiteMusicOut(() => {
+    siteMusicAudio.pause();
+    updateSiteMusicUI();
+  }, 650);
+};
+
+window.naviesResumeSiteMusicAfterNavyAudio = function naviesResumeSiteMusicAfterNavyAudio() {
+  if (!siteMusicInterruptedByNavyAudio || siteMusicIndex < 0) return;
+  siteMusicInterruptedByNavyAudio = false;
+  ensureAudioGain(siteMusicAudio);
+  resumeNaviesAudio();
+  setAudioLevel(siteMusicAudio, 0);
+  siteMusicAudio.play().then(() => {
+    fadeSiteMusicIn(750);
+    showFooterQuickTrack();
+    updateSiteMusicUI();
+  }).catch(() => {
+    setAudioLevel(siteMusicAudio, .34);
+    updateSiteMusicUI();
+  });
+};
 
 async function playSiteMusic(index, rememberCurrent = true) {
   if (siteMusicFadeFrame !== null) cancelAnimationFrame(siteMusicFadeFrame);
@@ -1081,6 +1107,28 @@ siteMusicProgress.addEventListener('input', () => {
   siteMusicAudio.currentTime = (Number(siteMusicProgress.value) / 1000) * siteMusicAudio.duration;
 });
 function toggleSiteMusicPlayback() {
+  const reclaimedFromNavyAudio = window.naviesStopNavyAudioForSiteMusic?.() === true;
+  if (reclaimedFromNavyAudio) {
+    siteMusicInterruptedByNavyAudio = false;
+    if (siteMusicFadeFrame !== null) cancelAnimationFrame(siteMusicFadeFrame);
+    siteMusicFadeFrame = null;
+    if (siteMusicIndex < 0) {
+      playNextSiteMusic();
+      return;
+    }
+    ensureAudioGain(siteMusicAudio);
+    resumeNaviesAudio();
+    setAudioLevel(siteMusicAudio, 0);
+    siteMusicAudio.play().then(() => {
+      fadeSiteMusicIn(750);
+      showFooterQuickTrack();
+      updateSiteMusicUI();
+    }).catch(() => {
+      setAudioLevel(siteMusicAudio, .34);
+      updateSiteMusicUI();
+    });
+    return;
+  }
   if (siteMusicIndex < 0) {
     ensureAudioGain(siteMusicAudio);
     resumeNaviesAudio();

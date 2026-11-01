@@ -45,16 +45,22 @@ button { font: inherit; }
 .countdown-opening .countdown-landing { position:fixed; inset:0; z-index:70; min-height:100svh; padding:clamp(92px,11vh,132px) clamp(22px,6vw,88px) clamp(22px,4vh,46px); display:grid; place-items:center; overflow:hidden; color:white; opacity:0; background:radial-gradient(circle at 12% 20%,color-mix(in srgb,var(--accent) 28%,transparent),transparent 32%),radial-gradient(circle at 88% 78%,color-mix(in srgb,var(--accent) 18%,transparent),transparent 34%),linear-gradient(145deg,#17304a,#243b56 54%,#142b42); transition:opacity .9s cubic-bezier(.16,1,.3,1); pointer-events:none; }
 .countdown-opening.countdown-opening-active .countdown-landing { opacity:1; }
 .countdown-opening .countdown-landing > * { visibility:hidden; }
-.countdown-opening .site-header,
 .countdown-opening .page-view:not([hidden]),
 .countdown-opening body > footer,
 .countdown-opening .footer-quick-player { animation:siteSceneOut .72s ease both; }
+.countdown-opening .footer-quick-player { opacity:0!important; visibility:hidden!important; animation:none!important; pointer-events:none!important; }
 .site-returning .site-header,
 .site-returning .page-view:not([hidden]),
 .site-returning body > footer,
 .site-returning .footer-quick-player { animation:siteSceneIn 1.05s cubic-bezier(.16,1,.3,1) both; }
 .countdown-welcome-arriving .countdown-welcome-panel { animation:welcomePanelIn .85s cubic-bezier(.16,1,.3,1) both; }
-.countdown-welcome-arriving .site-header .header-left { animation:welcomeLanguageIn .85s cubic-bezier(.16,1,.3,1) both; }
+.countdown-opening .site-header { z-index:80; height:auto; padding:25px; color:white; background:transparent!important; border:0!important; box-shadow:none!important; backdrop-filter:none!important; transform:none!important; }
+.countdown-opening .site-header .brand-center,
+.countdown-opening .site-header nav,
+.countdown-opening .site-header .menu-toggle,
+.countdown-opening .site-header .account-trigger { display:none!important; }
+.countdown-opening .site-header .header-left { grid-column:1/-1; justify-self:end; animation:languageWithBackdrop .9s cubic-bezier(.16,1,.3,1) both; }
+.countdown-opening .language-trigger { color:white; border-color:rgba(255,255,255,.22); background:rgba(20,43,66,.58); }
 html.countdown-entry, html.countdown-entry body { height:100%; overflow:hidden; overscroll-behavior:none; background:#17304a; }
 html.countdown-entry .countdown-landing, html.countdown-exiting .countdown-landing { position:fixed; inset:0; z-index:15; min-height:100svh; padding:clamp(92px,11vh,132px) clamp(22px,6vw,88px) clamp(22px,4vh,46px); display:grid; place-items:center; overflow:hidden; color:white; background:radial-gradient(circle at 12% 20%,color-mix(in srgb,var(--accent) 28%,transparent),transparent 32%),radial-gradient(circle at 88% 78%,color-mix(in srgb,var(--accent) 18%,transparent),transparent 34%),linear-gradient(145deg,#17304a,#243b56 54%,#142b42); transition:opacity 1.05s cubic-bezier(.16,1,.3,1),transform 1.05s cubic-bezier(.16,1,.3,1),filter 1.05s ease; }
 html.countdown-exiting .countdown-landing { z-index:70; opacity:0; transform:scale(1.018); filter:blur(6px); pointer-events:none; }
@@ -76,7 +82,7 @@ html.countdown-preloading .countdown-welcome-panel { opacity:0; visibility:hidde
 @keyframes siteSceneOut { from { opacity:1; } to { opacity:0; } }
 @keyframes siteSceneIn { from { opacity:0; } to { opacity:1; } }
 @keyframes welcomePanelIn { from { opacity:0; transform:translate(-50%,-46%) scale(.985); } to { opacity:1; transform:translate(-50%,-50%) scale(1); } }
-@keyframes welcomeLanguageIn { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:none; } }
+@keyframes languageWithBackdrop { from { opacity:.28; transform:translateY(-5px); } to { opacity:1; transform:none; } }
 .countdown-welcome-eyebrow { margin:0 0 13px; color:color-mix(in srgb,var(--accent) 78%,white); font:700 10px/1 "Manrope",sans-serif; letter-spacing:.2em; }
 .countdown-welcome-panel h2 { margin:0; color:white; font-size:clamp(38px,6vw,68px); line-height:1; }
 .countdown-welcome-panel p:not(.countdown-welcome-eyebrow) { max-width:430px; margin:18px auto 28px; color:#b9cbd6; font-size:clamp(14px,1.5vw,17px); line-height:1.65; }
@@ -123,7 +129,8 @@ html.countdown-entry .language-menu button[aria-selected="true"] { color:#17304a
 .countdown-volume .mute-slash { display:none; color:var(--accent); stroke-width:2.2; }
 .countdown-volume.is-muted .sound-wave { display:none; }
 .countdown-volume.is-muted .mute-slash { display:block; }
-html.countdown-welcome .countdown-sound-control { opacity:0; pointer-events:none; transform:translateY(8px); }
+html.countdown-opening .countdown-sound-control,
+html.countdown-welcome .countdown-sound-control { opacity:0!important; visibility:hidden!important; pointer-events:none!important; transform:translateY(8px); }
 .countdown-track-notice { max-width:0; min-width:0; padding:0; display:block; color:white; font-size:11px; font-weight:650; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; opacity:0; transform:translateX(-7px); transition:max-width .48s cubic-bezier(.22,1,.36,1),padding .42s cubic-bezier(.22,1,.36,1),opacity .25s ease,transform .42s cubic-bezier(.22,1,.36,1); pointer-events:none; }
 .countdown-track-notice.is-visible { max-width:min(350px,calc(100vw - 104px)); padding:0 17px 0 3px; opacity:1; transform:translateX(0); }
 .countdown-orb { position:absolute; border-radius:50%; border:1px solid rgba(255,255,255,.09); pointer-events:none; }
@@ -508,7 +515,7 @@ body.route-media .account-member-icon { color:var(--ink-deep); background:var(--
   .site-header.header-hidden { transform:translate3d(0,-110%,0); }
   .noise { backface-visibility:hidden; }
   .site-header { height: 76px; grid-template-columns: 1fr auto auto; column-gap: 10px; }
-  html.countdown-entry .site-header { height:auto; padding:18px; }
+  html.countdown-entry .site-header, html.countdown-opening .site-header { height:auto; padding:18px; }
   .site-header:not(.header-scrolled) { background:transparent; border-bottom-color:transparent; box-shadow:none; backdrop-filter:none; }
   .menu-toggle { grid-column: 3; grid-row: 1; justify-self: end; display: grid; gap: 4px; width: 42px; height: 42px; place-content: center; border: 1px solid var(--line); border-radius: 50%; background: rgba(255,255,255,.5); z-index: 2; }
   .brand-center { grid-column: 1; justify-self: start; }
