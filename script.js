@@ -88,6 +88,7 @@ const naviesIsIOS = /iP(?:hone|ad|od)/.test(navigator.userAgent)
 let naviesMobileAudioContext = null;
 const naviesMobileAudioGains = new WeakMap();
 const naviesMobileAudioLevels = new WeakMap();
+const naviesMobileAudioMuted = new WeakMap();
 const naviesMobileAudioPending = new WeakSet();
 
 function ensureAudioGain(audio) {
@@ -98,7 +99,8 @@ function ensureAudioGain(audio) {
   if (!AudioContextClass) return null;
   naviesMobileAudioPending.add(audio);
   naviesMobileAudioLevels.set(audio, Number.isFinite(audio.volume) ? audio.volume : 1);
-  const intendedMutedState = audio.muted;
+  const intendedMutedState = naviesMobileAudioMuted.get(audio) ?? audio.muted;
+  naviesMobileAudioMuted.set(audio, intendedMutedState);
   audio.muted = true;
   try {
     if (!naviesMobileAudioContext) naviesMobileAudioContext = new AudioContextClass();
@@ -109,7 +111,7 @@ function ensureAudioGain(audio) {
       if (naviesMobileAudioContext.state !== 'running') throw new Error('Audio context unavailable');
       const source = naviesMobileAudioContext.createMediaElementSource(audio);
       const gain = naviesMobileAudioContext.createGain();
-      gain.gain.value = naviesMobileAudioLevels.get(audio) ?? 1;
+      gain.gain.value = intendedMutedState ? 0 : (naviesMobileAudioLevels.get(audio) ?? 1);
       source.connect(gain).connect(naviesMobileAudioContext.destination);
       audio.volume = 1;
       naviesMobileAudioGains.set(audio, gain);
@@ -142,10 +144,22 @@ function setAudioLevel(audio, level) {
   const safeLevel = Math.max(0, Math.min(1, level));
   naviesMobileAudioLevels.set(audio, safeLevel);
   const gain = naviesMobileAudioGains.get(audio);
-  if (gain) gain.gain.value = safeLevel;
+  if (gain) gain.gain.value = naviesMobileAudioMuted.get(audio) ? 0 : safeLevel;
   else {
     try { audio.volume = safeLevel; } catch (error) {}
   }
+}
+
+function setAudioMuted(audio, muted) {
+  const nextMuted = Boolean(muted);
+  naviesMobileAudioMuted.set(audio, nextMuted);
+  audio.muted = nextMuted;
+  const gain = naviesMobileAudioGains.get(audio);
+  if (gain) gain.gain.value = nextMuted ? 0 : (naviesMobileAudioLevels.get(audio) ?? 1);
+}
+
+function isAudioMuted(audio) {
+  return naviesMobileAudioMuted.get(audio) ?? audio.muted;
 }
 
 function shuffledTrackIndexes(avoidFirstIndex = -1) {
@@ -333,7 +347,7 @@ function setCountdownVolumeLabel() {
 
 function toggleCountdownVolume() {
   countdownMuted = !countdownMuted;
-  countdownAudio.muted = countdownMuted;
+  setAudioMuted(countdownAudio, countdownMuted);
   setCountdownVolumeLabel();
 }
 
@@ -389,14 +403,12 @@ function openCountdownWelcome({ showPreloader = true } = {}) {
       root.classList.add('countdown-opening-active');
     }));
     window.setTimeout(() => {
-      root.classList.add('countdown-entry', 'countdown-welcome', 'countdown-welcome-revealing');
+      root.classList.add('countdown-entry', 'countdown-welcome', 'countdown-welcome-arriving');
       root.classList.remove('countdown-opening', 'countdown-opening-active');
       history.replaceState({ route:'countdown' }, '', location.pathname);
       window.scrollTo({ top:0, behavior:'auto' });
       activateCountdownExperience();
-      window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
-        root.classList.remove('countdown-welcome-revealing');
-      }));
+      window.setTimeout(() => root.classList.remove('countdown-welcome-arriving'), 900);
     }, 900);
     return;
   }
@@ -779,11 +791,11 @@ Object.assign(translations.en, { groupVocals:'Three singers', groupVocalsCopy:'T
 Object.assign(translations.it, { groupVocals:'Tre cantanti', groupVocalsCopy:'Tre voci per melodie, armonie e cori.', groupBass:'Una bassista', groupBassCopy:'La base grave che unisce ritmo e armonia.', groupGuitar:'Un chitarrista', groupGuitarCopy:'Riff, accordi e il carattere rock della band.', groupKeys:'Pau Fermosel', groupKeysCopy:'Pianoforti, sintetizzatori e strati che ampliano il suono.', groupDrums:'Pau Escobedo', groupDrumsCopy:'Il ritmo che muove l’energia e tiene unita la band.', provisionalBio:'Così si completa il suono dei The Navies.' });
 Object.assign(translations.fr, { groupVocals:'Trois chanteuses', groupVocalsCopy:'Trois voix pour les mélodies, harmonies et chœurs.', groupBass:'Une bassiste', groupBassCopy:'La base grave qui relie rythme et harmonie.', groupGuitar:'Un guitariste', groupGuitarCopy:'Des riffs, des accords et le caractère rock du groupe.', groupKeys:'Pau Fermosel', groupKeysCopy:'Pianos, synthétiseurs et textures qui élargissent le son.', groupDrums:'Pau Escobedo', groupDrumsCopy:'Le rythme qui porte l’énergie et maintient le groupe uni.', provisionalBio:'Ainsi se construit le son de The Navies.' });
 
-Object.assign(translations.es, { countdownWelcomeTitle:'Algo está a punto de sonar', countdownWelcomeCopy:'El 21 de noviembre, siete músicos y un escenario te esperan en Plaza Masadas. El resto, lo tendrás que descubrir en directo.', countdownWelcomeStart:'Descubrir', countdownEventDate:'21 DE NOVIEMBRE', countdownEventTime:'13:00', countdownPlaceLabel:'Lugar', countdownDays:'Días', countdownHours:'Horas', countdownMinutes:'Minutos', countdownSeconds:'Segundos', countdownEnter:'Ir al inicio', memberContinuation:'…a cargo de', memberDialogVocals:'En las <em>voces</em>…', memberDialogBass:'En el <em>bajo</em>…', memberDialogGuitar:'En la <em>guitarra</em>…', memberDialogKeys:'En los <em>teclados</em>…', memberDialogDrums:'En la <em>batería</em>…', countdownEventTime:'13:00', countdownEventVenue:'PLAZA MASADAS', countdownKicker:'Próximo concierto', countdownDateLabel:'Fecha', countdownTimeLabel:'Hora' });
+Object.assign(translations.es, { countdownWelcomeTitle:'Algo está a punto de sonar', countdownWelcomeCopy:'El 21 de noviembre, siete músicos y un escenario te esperan en Plaza Masadas. El resto, lo tendrás que descubrir en directo.', countdownWelcomeStart:'Descubrir', countdownEventDate:'21 DE NOVIEMBRE', countdownEventTime:'13:00', countdownPlaceLabel:'Lugar', countdownDays:'Días', countdownHours:'Horas', countdownMinutes:'Minutos', countdownSeconds:'Segundos', countdownEnter:'Ir a inicio', memberContinuation:'…a cargo de', memberDialogVocals:'En las <em>voces</em>…', memberDialogBass:'En el <em>bajo</em>…', memberDialogGuitar:'En la <em>guitarra</em>…', memberDialogKeys:'En los <em>teclados</em>…', memberDialogDrums:'En la <em>batería</em>…', countdownEventTime:'13:00', countdownEventVenue:'PLAZA MASADAS', countdownKicker:'Próximo concierto', countdownDateLabel:'Fecha', countdownTimeLabel:'Hora' });
 Object.assign(translations.ca, { countdownWelcomeTitle:'Alguna cosa està a punt de sonar', countdownWelcomeCopy:'El 21 de novembre, set músics i un escenari t’esperen a Plaza Masadas. La resta, l’hauràs de descobrir en directe.', countdownWelcomeStart:'Descobrir', countdownEventDate:'21 DE NOVEMBRE', countdownEventTime:'13:00', countdownEventVenue:'PLAZA MASADAS', countdownKicker:'Pròxim concert', countdownDateLabel:'Data', countdownTimeLabel:'Hora', countdownPlaceLabel:'Lloc', countdownDays:'Dies', countdownHours:'Hores', countdownMinutes:'Minuts', countdownSeconds:'Segons', countdownEnter:'Anar a l’inici', memberInCharge:'A càrrec de', memberDialogKeys:'Als <em>teclats</em>', memberDialogDrums:'A la <em>bateria</em>' });
-Object.assign(translations.en, { countdownWelcomeTitle:'Something is about to begin', countdownWelcomeCopy:'On 21 November, seven musicians and one stage await you at Plaza Masadas. The rest, you’ll have to discover live.', countdownWelcomeStart:'Discover', countdownEventDate:'21 NOVEMBER', countdownEventTime:'13:00', countdownEventVenue:'PLAZA MASADAS', countdownKicker:'Next show', countdownDateLabel:'Date', countdownTimeLabel:'Time', countdownPlaceLabel:'Venue', countdownDays:'Days', countdownHours:'Hours', countdownMinutes:'Minutes', countdownSeconds:'Seconds', countdownEnter:'Enter the site', memberInCharge:'Featuring', memberDialogKeys:'On <em>keys</em>', memberDialogDrums:'On <em>drums</em>' });
+Object.assign(translations.en, { countdownWelcomeTitle:'Something is about to begin', countdownWelcomeCopy:'On 21 November, seven musicians and one stage await you at Plaza Masadas. The rest, you’ll have to discover live.', countdownWelcomeStart:'Discover', countdownEventDate:'21 NOVEMBER', countdownEventTime:'13:00', countdownEventVenue:'PLAZA MASADAS', countdownKicker:'Next show', countdownDateLabel:'Date', countdownTimeLabel:'Time', countdownPlaceLabel:'Venue', countdownDays:'Days', countdownHours:'Hours', countdownMinutes:'Minutes', countdownSeconds:'Seconds', countdownEnter:'Go to homepage', memberInCharge:'Featuring', memberDialogKeys:'On <em>keys</em>', memberDialogDrums:'On <em>drums</em>' });
 Object.assign(translations.it, { countdownWelcomeTitle:'Qualcosa sta per iniziare', countdownWelcomeCopy:'Il 21 novembre, sette musicisti e un palco ti aspettano a Plaza Masadas. Il resto dovrai scoprirlo dal vivo.', countdownWelcomeStart:'Scopri', countdownEventDate:'21 NOVEMBRE', countdownEventTime:'13:00', countdownEventVenue:'PLAZA MASADAS', countdownKicker:'Prossimo concerto', countdownDateLabel:'Data', countdownTimeLabel:'Ora', countdownPlaceLabel:'Luogo', countdownDays:'Giorni', countdownHours:'Ore', countdownMinutes:'Minuti', countdownSeconds:'Secondi', countdownEnter:'Vai alla home', memberInCharge:'Con', memberDialogKeys:'Alle <em>tastiere</em>', memberDialogDrums:'Alla <em>batteria</em>' });
-Object.assign(translations.fr, { countdownWelcomeTitle:'Quelque chose va commencer', countdownWelcomeCopy:'Le 21 novembre, sept musiciens et une scène vous attendent à Plaza Masadas. Le reste sera à découvrir en concert.', countdownWelcomeStart:'Découvrir', countdownEventDate:'21 NOVEMBRE', countdownEventTime:'13:00', countdownEventVenue:'PLAZA MASADAS', countdownKicker:'Prochain concert', countdownDateLabel:'Date', countdownTimeLabel:'Heure', countdownPlaceLabel:'Lieu', countdownDays:'Jours', countdownHours:'Heures', countdownMinutes:'Minutes', countdownSeconds:'Secondes', countdownEnter:'Accéder au site', memberInCharge:'Avec', memberDialogKeys:'Aux <em>claviers</em>', memberDialogDrums:'À la <em>batterie</em>' });
+Object.assign(translations.fr, { countdownWelcomeTitle:'Quelque chose va commencer', countdownWelcomeCopy:'Le 21 novembre, sept musiciens et une scène vous attendent à Plaza Masadas. Le reste sera à découvrir en concert.', countdownWelcomeStart:'Découvrir', countdownEventDate:'21 NOVEMBRE', countdownEventTime:'13:00', countdownEventVenue:'PLAZA MASADAS', countdownKicker:'Prochain concert', countdownDateLabel:'Date', countdownTimeLabel:'Heure', countdownPlaceLabel:'Lieu', countdownDays:'Jours', countdownHours:'Heures', countdownMinutes:'Minutes', countdownSeconds:'Secondes', countdownEnter:'Aller à l’accueil', memberInCharge:'Avec', memberDialogKeys:'Aux <em>claviers</em>', memberDialogDrums:'À la <em>batterie</em>' });
 Object.assign(translations.ca, { memberContinuation:'…a càrrec de', memberDialogVocals:'En les <em>veus</em>…', memberDialogBass:'En el <em>baix</em>…', memberDialogGuitar:'En la <em>guitarra</em>…', memberDialogKeys:'En els <em>teclats</em>…', memberDialogDrums:'En la <em>bateria</em>…' });
 Object.assign(translations.en, { memberContinuation:'…featuring', memberDialogVocals:'On <em>vocals</em>…', memberDialogBass:'On <em>bass</em>…', memberDialogGuitar:'On <em>guitar</em>…', memberDialogKeys:'On <em>keyboards</em>…', memberDialogDrums:'On <em>drums</em>…' });
 Object.assign(translations.it, { memberContinuation:'…con', memberDialogVocals:'Alle <em>voci</em>…', memberDialogBass:'Al <em>basso</em>…', memberDialogGuitar:'Alla <em>chitarra</em>…', memberDialogKeys:'Alle <em>tastiere</em>…', memberDialogDrums:'Alla <em>batteria</em>…' });
@@ -952,8 +964,9 @@ function updateSiteMusicUI() {
   siteMusicToggle.setAttribute('aria-label', playing ? copy.musicPause : copy.musicPlay);
   footerQuickToggle.setAttribute('aria-label', playing ? copy.musicPause : copy.musicPlay);
   footerQuickNext.setAttribute('aria-label', copy.musicNext);
-  siteMusicMute.classList.toggle('is-muted', siteMusicAudio.muted);
-  siteMusicMute.setAttribute('aria-label', siteMusicAudio.muted ? copy.musicUnmute : copy.musicMute);
+  const musicMuted = isAudioMuted(siteMusicAudio);
+  siteMusicMute.classList.toggle('is-muted', musicMuted);
+  siteMusicMute.setAttribute('aria-label', musicMuted ? copy.musicUnmute : copy.musicMute);
   if (siteMusicIndex >= 0) {
     const track = countdownTracks[siteMusicIndex];
     siteMusicTrack.textContent = `${track.artist} — ${track.title}`;
@@ -1026,7 +1039,7 @@ function prepareSiteMusicFromCountdown(index) {
   siteMusicQueue = siteMusicQueue.filter((trackIndex) => trackIndex !== index);
   const fadeFromStart = countdownTracks[index].file === 'have-you-ever-seen-the-rain';
   setAudioLevel(siteMusicAudio, fadeFromStart ? 0 : .34);
-  siteMusicAudio.muted = false;
+  setAudioMuted(siteMusicAudio, false);
   siteMusicProgress.value = '0';
   siteMusicProgress.style.setProperty('--music-progress', '0%');
   siteMusicAudio.src = siteMusicSource(index);
@@ -1056,7 +1069,7 @@ seasonControl.querySelector('[data-music-action="previous"]').addEventListener('
 seasonControl.querySelector('[data-music-action="next"]').addEventListener('click', playNextSiteMusic);
 footerQuickNext.addEventListener('click', playNextSiteMusic);
 siteMusicMute.addEventListener('click', () => {
-  siteMusicAudio.muted = !siteMusicAudio.muted;
+  setAudioMuted(siteMusicAudio, !isAudioMuted(siteMusicAudio));
   updateSiteMusicUI();
 });
 siteMusicProgress.addEventListener('input', () => {
@@ -1076,11 +1089,17 @@ function toggleSiteMusicPlayback() {
   }
   ensureAudioGain(siteMusicAudio);
   resumeNaviesAudio();
-  if (siteMusicAudio.paused) siteMusicAudio.play().then(() => {
-    if (siteMusicIndex >= 0 && countdownTracks[siteMusicIndex].file === 'have-you-ever-seen-the-rain' && siteMusicAudio.currentTime < .35 && getAudioLevel(siteMusicAudio) === 0) fadeSiteMusicIn();
-    showFooterQuickTrack();
-    updateSiteMusicUI();
-  }).catch(() => {});
+  if (siteMusicAudio.paused) {
+    const shouldFadeFromStart = siteMusicIndex >= 0
+      && countdownTracks[siteMusicIndex].file === 'have-you-ever-seen-the-rain'
+      && siteMusicAudio.currentTime < .35;
+    if (shouldFadeFromStart) setAudioLevel(siteMusicAudio, 0);
+    siteMusicAudio.play().then(() => {
+      if (shouldFadeFromStart) fadeSiteMusicIn();
+      showFooterQuickTrack();
+      updateSiteMusicUI();
+    }).catch(() => {});
+  }
   else siteMusicAudio.pause();
   updateSiteMusicUI();
 }
@@ -1099,7 +1118,10 @@ siteMusicAudio.addEventListener('timeupdate', () => {
   const remaining = siteMusicAudio.duration - siteMusicAudio.currentTime;
   if (shouldFade && Number.isFinite(remaining) && remaining <= 2.1 && remaining > 0 && !siteMusicEndFadeStarted) {
     siteMusicEndFadeStarted = true;
-    fadeSiteMusicOut(playNextSiteMusic);
+    fadeSiteMusicOut(() => {
+      siteMusicAudio.pause();
+      playNextSiteMusic();
+    });
   }
 });
 siteMusicAudio.addEventListener('ended', () => {

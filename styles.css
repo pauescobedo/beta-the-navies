@@ -53,8 +53,8 @@ button { font: inherit; }
 .site-returning .page-view:not([hidden]),
 .site-returning body > footer,
 .site-returning .footer-quick-player { animation:siteSceneIn 1.05s cubic-bezier(.16,1,.3,1) both; }
-.countdown-welcome-revealing .countdown-welcome-panel { opacity:0; transform:translate(-50%,-46%); }
-.countdown-welcome-revealing .site-header .header-left { opacity:0; transform:translateY(-8px); }
+.countdown-welcome-arriving .countdown-welcome-panel { animation:welcomePanelIn .85s cubic-bezier(.16,1,.3,1) both; }
+.countdown-welcome-arriving .site-header .header-left { animation:welcomeLanguageIn .85s cubic-bezier(.16,1,.3,1) both; }
 html.countdown-entry, html.countdown-entry body { height:100%; overflow:hidden; overscroll-behavior:none; background:#17304a; }
 html.countdown-entry .countdown-landing, html.countdown-exiting .countdown-landing { position:fixed; inset:0; z-index:15; min-height:100svh; padding:clamp(92px,11vh,132px) clamp(22px,6vw,88px) clamp(22px,4vh,46px); display:grid; place-items:center; overflow:hidden; color:white; background:radial-gradient(circle at 12% 20%,color-mix(in srgb,var(--accent) 28%,transparent),transparent 32%),radial-gradient(circle at 88% 78%,color-mix(in srgb,var(--accent) 18%,transparent),transparent 34%),linear-gradient(145deg,#17304a,#243b56 54%,#142b42); transition:opacity 1.05s cubic-bezier(.16,1,.3,1),transform 1.05s cubic-bezier(.16,1,.3,1),filter 1.05s ease; }
 html.countdown-exiting .countdown-landing { z-index:70; opacity:0; transform:scale(1.018); filter:blur(6px); pointer-events:none; }
@@ -75,6 +75,8 @@ html.countdown-preloading .countdown-welcome-panel { opacity:0; visibility:hidde
 @keyframes countdownPreload { from { transform:scaleX(0); } to { transform:scaleX(1); } }
 @keyframes siteSceneOut { from { opacity:1; } to { opacity:0; } }
 @keyframes siteSceneIn { from { opacity:0; } to { opacity:1; } }
+@keyframes welcomePanelIn { from { opacity:0; transform:translate(-50%,-46%) scale(.985); } to { opacity:1; transform:translate(-50%,-50%) scale(1); } }
+@keyframes welcomeLanguageIn { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:none; } }
 .countdown-welcome-eyebrow { margin:0 0 13px; color:color-mix(in srgb,var(--accent) 78%,white); font:700 10px/1 "Manrope",sans-serif; letter-spacing:.2em; }
 .countdown-welcome-panel h2 { margin:0; color:white; font-size:clamp(38px,6vw,68px); line-height:1; }
 .countdown-welcome-panel p:not(.countdown-welcome-eyebrow) { max-width:430px; margin:18px auto 28px; color:#b9cbd6; font-size:clamp(14px,1.5vw,17px); line-height:1.65; }
