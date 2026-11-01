@@ -80,19 +80,69 @@ let countdownFadeInStarted = false;
 let countdownMuted = false;
 let countdownTrackQueue = [];
 let countdownTrackNoticeTimer = null;
+const naviesIsIOS = /iP(?:hone|ad|od)/.test(navigator.userAgent)
+  || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+let naviesMobileAudioContext = null;
+const naviesMobileAudioGains = new WeakMap();
+const naviesMobileAudioLevels = new WeakMap();
+const naviesMobileAudioPending = new WeakSet();
+
 function ensureAudioGain(audio) {
+  if (!audio || !naviesIsIOS) return null;
+  if (naviesMobileAudioGains.has(audio)) return naviesMobileAudioGains.get(audio);
+  if (naviesMobileAudioPending.has(audio)) return null;
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextClass) return null;
+  naviesMobileAudioPending.add(audio);
+  naviesMobileAudioLevels.set(audio, Number.isFinite(audio.volume) ? audio.volume : 1);
+  const intendedMutedState = audio.muted;
+  audio.muted = true;
+  try {
+    if (!naviesMobileAudioContext) naviesMobileAudioContext = new AudioContextClass();
+    const activate = naviesMobileAudioContext.state === 'running'
+      ? Promise.resolve()
+      : naviesMobileAudioContext.resume();
+    Promise.resolve(activate).then(() => {
+      if (naviesMobileAudioContext.state !== 'running') throw new Error('Audio context unavailable');
+      const source = naviesMobileAudioContext.createMediaElementSource(audio);
+      const gain = naviesMobileAudioContext.createGain();
+      gain.gain.value = naviesMobileAudioLevels.get(audio) ?? 1;
+      source.connect(gain).connect(naviesMobileAudioContext.destination);
+      audio.volume = 1;
+      naviesMobileAudioGains.set(audio, gain);
+      naviesMobileAudioPending.delete(audio);
+      audio.muted = intendedMutedState;
+    }).catch(() => {
+      naviesMobileAudioPending.delete(audio);
+      audio.muted = intendedMutedState;
+    });
+  } catch (error) {
+    naviesMobileAudioPending.delete(audio);
+    audio.muted = intendedMutedState;
+  }
   return null;
 }
 
-function resumeNaviesAudio() {}
+function resumeNaviesAudio() {
+  if (naviesIsIOS && naviesMobileAudioContext?.state === 'suspended') {
+    naviesMobileAudioContext.resume().catch(() => {});
+  }
+}
 
 function getAudioLevel(audio) {
-  return audio.volume;
+  const gain = naviesMobileAudioGains.get(audio);
+  if (gain) return gain.gain.value;
+  return naviesMobileAudioLevels.get(audio) ?? audio.volume;
 }
 
 function setAudioLevel(audio, level) {
   const safeLevel = Math.max(0, Math.min(1, level));
-  try { audio.volume = safeLevel; } catch (error) {}
+  naviesMobileAudioLevels.set(audio, safeLevel);
+  const gain = naviesMobileAudioGains.get(audio);
+  if (gain) gain.gain.value = safeLevel;
+  else {
+    try { audio.volume = safeLevel; } catch (error) {}
+  }
 }
 
 function shuffledTrackIndexes(avoidFirstIndex = -1) {
