@@ -80,6 +80,9 @@ let countdownFadeInStarted = false;
 let countdownMuted = false;
 let countdownTrackQueue = [];
 let countdownTrackNoticeTimer = null;
+let countdownPreloadTimer = null;
+let countdownPreparation = null;
+let countdownPreparedIndex = -1;
 const naviesIsIOS = /iP(?:hone|ad|od)/.test(navigator.userAgent)
   || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 let naviesMobileAudioContext = null;
@@ -219,13 +222,15 @@ function chooseNextCountdownTrack() {
 
 function prepareCountdownTrack() {
   if (!countdownAudio) return Promise.reject(new Error('Audio unavailable'));
+  if (countdownPreparation && countdownPreparedIndex === countdownTrackIndex) return countdownPreparation;
   countdownEndFadeStarted = false;
   countdownHasPlayed = false;
   countdownStartConfirmed = false;
   countdownFadeInStarted = false;
   countdownAudio.src = countdownAudioSource();
   countdownAudio.load();
-  return new Promise((resolve, reject) => {
+  countdownPreparedIndex = countdownTrackIndex;
+  countdownPreparation = new Promise((resolve, reject) => {
     const setStartPoint = () => {
       cleanup();
       const track = countdownTracks[countdownTrackIndex];
@@ -234,6 +239,8 @@ function prepareCountdownTrack() {
     };
     const reportError = () => {
       cleanup();
+      countdownPreparation = null;
+      countdownPreparedIndex = -1;
       reject(countdownAudio.error || new Error('Audio unavailable'));
     };
     const cleanup = () => {
@@ -246,6 +253,7 @@ function prepareCountdownTrack() {
       countdownAudio.addEventListener('error', reportError, { once:true });
     }
   });
+  return countdownPreparation;
 }
 
 async function playPreparedCountdownTrack() {
@@ -300,6 +308,8 @@ async function advanceCountdownTrack() {
   countdownChangingTrack = true;
   countdownAudio.pause();
   countdownTrackIndex = chooseNextCountdownTrack();
+  countdownPreparation = null;
+  countdownPreparedIndex = -1;
   await startCountdownTrack();
   countdownChangingTrack = false;
 }
@@ -308,7 +318,7 @@ function revealCountdown() {
   sessionStorage.setItem('the-navies-countdown-revealed', '1');
   ensureAudioGain(countdownAudio);
   resumeNaviesAudio();
-  playPreparedCountdownTrack();
+  startCountdownTrack();
   countdownStart.disabled = true;
   document.documentElement.classList.remove('countdown-welcome');
 }
@@ -339,7 +349,17 @@ function finishCountdownEntrance() {
   }));
 }
 
-function openCountdownWelcome() {
+function startCountdownPreload() {
+  window.clearTimeout(countdownPreloadTimer);
+  document.documentElement.classList.remove('countdown-preloading');
+  void document.documentElement.offsetHeight;
+  document.documentElement.classList.add('countdown-preloading');
+  countdownPreloadTimer = window.setTimeout(() => {
+    document.documentElement.classList.remove('countdown-preloading');
+  }, 2500);
+}
+
+function resetCountdownWelcomeState() {
   if (typeof siteMusicAudio !== 'undefined' && siteMusicAudio && !siteMusicAudio.paused) siteMusicAudio.pause();
   stopCountdownFade();
   countdownAudio.pause();
@@ -351,23 +371,49 @@ function openCountdownWelcome() {
   countdownStartConfirmed = false;
   countdownFadeInStarted = false;
   countdownTrackIndex = Math.floor(Math.random() * countdownTracks.length);
+  countdownPreparation = null;
+  countdownPreparedIndex = -1;
   countdownTrackQueue = shuffledTrackIndexes().filter((index) => index !== countdownTrackIndex);
   countdownStart.disabled = false;
   sessionStorage.removeItem('the-navies-countdown-revealed');
   document.documentElement.classList.remove('countdown-exiting');
+}
+
+function openCountdownWelcome({ showPreloader = true } = {}) {
+  if (document.documentElement.classList.contains('countdown-opening')) return;
+  resetCountdownWelcomeState();
+  if (!showPreloader) {
+    const root = document.documentElement;
+    root.classList.add('countdown-opening');
+    window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+      root.classList.add('countdown-opening-active');
+    }));
+    window.setTimeout(() => {
+      root.classList.add('countdown-entry', 'countdown-welcome', 'countdown-welcome-revealing');
+      root.classList.remove('countdown-opening', 'countdown-opening-active');
+      history.replaceState({ route:'countdown' }, '', location.pathname);
+      window.scrollTo({ top:0, behavior:'auto' });
+      activateCountdownExperience();
+      window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+        root.classList.remove('countdown-welcome-revealing');
+      }));
+    }, 900);
+    return;
+  }
   document.documentElement.classList.add('countdown-entry', 'countdown-welcome', 'countdown-entering');
   history.replaceState({ route:'countdown' }, '', location.pathname);
   window.scrollTo({ top:0, behavior:'auto' });
   activateCountdownExperience();
+  startCountdownPreload();
   finishCountdownEntrance();
 }
 
 function leaveCountdown() {
   countdownLeaving = true;
+  window.clearTimeout(countdownPreloadTimer);
+  document.documentElement.classList.remove('countdown-preloading');
   const handoffIndex = countdownTrackIndex;
   prepareSiteMusicFromCountdown(handoffIndex);
-  document.documentElement.classList.add('countdown-exiting');
-  document.documentElement.classList.remove('countdown-entry', 'countdown-welcome');
   if (countdownTimer !== null) {
     window.clearInterval(countdownTimer);
     countdownTimer = null;
@@ -385,7 +431,14 @@ function leaveCountdown() {
   sessionStorage.removeItem('the-navies-countdown-revealed');
   history.replaceState({ route:'home' }, '', '#inicio');
   showPage('home', false);
-  window.setTimeout(() => document.documentElement.classList.remove('countdown-exiting'), 900);
+  const homeView = pageViews.find((view) => view.dataset.pageView === 'home');
+  homeView?.classList.remove('route-entering');
+  homeView?.querySelectorAll('.reveal').forEach((element) => element.classList.add('visible'));
+  document.querySelector('.footer-quick-player')?.classList.remove('quick-route-entering');
+  void document.documentElement.offsetHeight;
+  document.documentElement.classList.add('countdown-exiting', 'site-returning');
+  document.documentElement.classList.remove('countdown-entry', 'countdown-welcome');
+  window.setTimeout(() => document.documentElement.classList.remove('countdown-exiting', 'site-returning'), 1100);
 }
 
 if (countdownLanding) {
@@ -420,6 +473,7 @@ if (countdownLanding) {
   countdownAudio.addEventListener('ended', advanceCountdownTrack);
   if (document.documentElement.classList.contains('countdown-entry')) {
     activateCountdownExperience();
+    if (document.documentElement.classList.contains('countdown-welcome')) startCountdownPreload();
     if (document.documentElement.classList.contains('countdown-entering')) finishCountdownEntrance();
   }
 }
@@ -489,7 +543,7 @@ navigation.querySelectorAll('[data-route]').forEach((link) => link.addEventListe
 }));
 document.querySelectorAll('a.brand[data-route]').forEach((brand) => brand.addEventListener('click', (event) => {
   event.preventDefault();
-  openCountdownWelcome();
+  openCountdownWelcome({ showPreloader:false });
 }));
 document.querySelectorAll('[data-scroll-target]').forEach((link) => link.addEventListener('click', (event) => {
   const target = document.getElementById(link.dataset.scrollTarget);

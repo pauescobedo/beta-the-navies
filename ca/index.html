@@ -18,7 +18,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="navies-build" content="20261101-133">
+  <meta name="navies-build" content="20261101-141">
   <title>The Navies</title>
   <link rel="canonical" href="https://thenavies.com/ca/">
   <link rel="alternate" hreflang="x-default" href="https://thenavies.com/">
@@ -65,7 +65,7 @@
     "publisher": { "@id": "https://thenavies.com/#music-group" }
   }
   </script>
-+  <script type="application/ld+json">
+  <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -78,19 +78,19 @@
     "primaryImageOfPage": { "@id": "https://thenavies.com/icons/pwa-512.png" }
   }
   </script>
-  <style>html:not(.nav-ready) #main-nav>a::after{opacity:0!important}@media(max-width:900px){html:not(.nav-ready) #main-nav{display:none!important}}</style>
+  <style>html:not(.nav-ready) #main-nav>a::after{opacity:0!important}html.countdown-entry,html.countdown-entry body{background:#17304a!important}html.countdown-entry .countdown-landing{position:fixed;inset:0;background:#17304a}html.countdown-entry.countdown-entering .countdown-landing>*{visibility:hidden}@media(max-width:900px){html:not(.nav-ready) #main-nav{display:none!important}}</style>
   <script>if('scrollRestoration'in history)history.scrollRestoration='manual'</script>
-  <script>try{const n=performance.getEntriesByType('navigation')[0],r=n&&n.type==='reload',c=!location.hash||location.hash==='#countdown',i=sessionStorage.getItem('the-navies-internal-navigation')==='1',v=sessionStorage.getItem('the-navies-countdown-revealed')==='1';if(c){document.documentElement.classList.add('countdown-entry');if(r||!(i&&v))document.documentElement.classList.add('countdown-welcome','countdown-entering')}}catch(e){}</script>
+  <script>try{const n=performance.getEntriesByType('navigation')[0],r=n&&n.type==='reload',c=!location.hash||location.hash==='#countdown',i=sessionStorage.getItem('the-navies-internal-navigation')==='1',v=sessionStorage.getItem('the-navies-countdown-revealed')==='1';if(c){document.documentElement.classList.add('countdown-entry');if(r||!(i&&v))document.documentElement.classList.add('countdown-welcome','countdown-entering','countdown-preloading')}}catch(e){}</script>
   <script>try{const b=document.querySelector('meta[name="navies-build"]').content;fetch(`${location.pathname}?comprobar=${Date.now()}`,{cache:'no-store'}).then(r=>r.text()).then(h=>{const n=h.match(/<meta name="navies-build" content="([^"]+)"/)?.[1];if(n&&n!==b){const u=new URL(location.href);u.searchParams.set('version',n);location.replace(u)}}).catch(()=>{})}catch(e){}</script>
   <script>try{const c={spring:'#F4A7C1',summer:'#FFD76A',autumn:'#C77B52',winter:'#A8DADC'},n=performance.getEntriesByType('navigation')[0],i=sessionStorage.getItem('the-navies-internal-navigation')==='1',k=i||(n&&n.type==='back_forward');sessionStorage.removeItem('the-navies-internal-navigation');if(!k)localStorage.removeItem('the-navies-season');const s=k&&localStorage.getItem('the-navies-season')||'autumn';window.__naviesInitialSeason=c[s]?s:'autumn';document.documentElement.dataset.season=window.__naviesInitialSeason;document.documentElement.style.setProperty('--accent',c[window.__naviesInitialSeason])}catch(e){document.documentElement.dataset.season='autumn'}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="preload" href="../script.js?v=20261101-133" as="script">
-  <link rel="stylesheet" href="../styles.css?v=20261101-133">
-  <link rel="stylesheet" href="../subpages.css?v=20261101-133">
-  <script defer src="../script.js?v=20261101-133"></script>
-  <script defer src="../portal.js?v=20261101-133"></script>
+  <link rel="preload" href="../script.js?v=20261101-141" as="script">
+  <link rel="stylesheet" href="../styles.css?v=20261101-141">
+  <link rel="stylesheet" href="../subpages.css?v=20261101-141">
+  <script defer src="../script.js?v=20261101-141"></script>
+  <script defer src="../portal.js?v=20261101-141"></script>
 </head>
 <body>
   <div class="noise" aria-hidden="true"></div>
@@ -102,6 +102,7 @@
   <section class="countdown-landing" id="countdown-landing" aria-labelledby="countdown-title">
     <div class="countdown-orb countdown-orb-one" aria-hidden="true"></div>
     <div class="countdown-orb countdown-orb-two" aria-hidden="true"></div>
+    <div class="countdown-preloader" aria-hidden="true"><strong>THE NAVIES</strong><span><i></i></span></div>
     <div class="countdown-welcome-panel" id="countdown-welcome">
       <p class="countdown-welcome-eyebrow">THE NAVIES</p>
       <h2 data-i18n="countdownWelcomeTitle">Alguna cosa està a punt de sonar</h2>
