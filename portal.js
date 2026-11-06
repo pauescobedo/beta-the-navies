@@ -106,7 +106,7 @@ function applyPortalState(isLoggedIn) {
 
 function syncPortal() {
   const member = localStorage.getItem('navies-member-session');
-  const isLoggedIn = ['pauescobedo', 'marionaescobedo', 'paufermosel', 'candelagonzalez', 'carlesgonzalez', 'ainasalmeron'].includes(member);
+  const isLoggedIn = ['pauescobedo', 'marionaescobedo', 'paufermosel', 'candelagonzalez', 'carlesgonzalez', 'ainasalmeron', 'emmatuabu'].includes(member);
   if (isLoggedIn) memberName.textContent = window.naviesMemberName(member);
 
   if (!portalReady) {
