@@ -12,15 +12,16 @@
   const time = panel.querySelector('.account-admin-time');
   const extendButton = panel.querySelector('.account-admin-extend');
   const endButton = panel.querySelector('.account-admin-end');
+  const remainingLabel = sessionView.querySelector('small');
   const apiUrl = String(window.NAVIES_ADMIN_API_URL || '').replace(/\/$/, '');
   const sessionKey = 'navies-admin-session';
   let lastActiveState = null;
   const copy = {
-    es:{ access:'Acceder a administración', active:'Administración activa', verify:'Verificar código', invalid:'El código no es válido o ha caducado.', unavailable:'Falta configurar el servicio privado de administración.', network:'No se ha podido contactar con el servicio de administración.', extend:'Extender 10 minutos' },
-    ca:{ access:'Accedir a administració', active:'Administració activa', verify:'Verificar el codi', invalid:'El codi no és vàlid o ha caducat.', unavailable:'Falta configurar el servei privat d’administració.', network:'No s’ha pogut contactar amb el servei d’administració.', extend:'Ampliar 10 minuts' },
-    en:{ access:'Access administration', active:'Administration active', verify:'Verify code', invalid:'The code is invalid or has expired.', unavailable:'The private administration service has not been configured.', network:'The administration service could not be reached.', extend:'Extend 10 minutes' },
-    it:{ access:'Accedi all’amministrazione', active:'Amministrazione attiva', verify:'Verifica codice', invalid:'Il codice non è valido o è scaduto.', unavailable:'Il servizio privato di amministrazione non è configurato.', network:'Impossibile contattare il servizio di amministrazione.', extend:'Estendi di 10 minuti' },
-    fr:{ access:'Accéder à l’administration', active:'Administration active', verify:'Vérifier le code', invalid:'Le code est invalide ou a expiré.', unavailable:'Le service privé d’administration n’est pas configuré.', network:'Impossible de contacter le service d’administration.', extend:'Prolonger de 10 minutes' }
+    es:{ access:'Acceder a administración', active:'Administración activa', verify:'Verificar código', invalid:'El código no es válido o ha caducado.', unavailable:'Falta configurar el servicio privado de administración.', network:'No se ha podido contactar con el servicio de administración.', extend:'Extender 10 minutos', end:'Salir del modo administración', remaining:'Tiempo restante' },
+    ca:{ access:'Accedir a administració', active:'Administració activa', verify:'Verificar el codi', invalid:'El codi no és vàlid o ha caducat.', unavailable:'Falta configurar el servei privat d’administració.', network:'No s’ha pogut contactar amb el servei d’administració.', extend:'Ampliar 10 minuts', end:'Sortir del mode administració', remaining:'Temps restant' },
+    en:{ access:'Access administration', active:'Administration active', verify:'Verify code', invalid:'The code is invalid or has expired.', unavailable:'The private administration service has not been configured.', network:'The administration service could not be reached.', extend:'Extend 10 minutes', end:'Exit administration mode', remaining:'Time remaining' },
+    it:{ access:'Accedi all’amministrazione', active:'Amministrazione attiva', verify:'Verifica codice', invalid:'Il codice non è valido o è scaduto.', unavailable:'Il servizio privato di amministrazione non è configurato.', network:'Impossibile contattare il servizio di amministrazione.', extend:'Estendi di 10 minuti', end:'Esci dalla modalità amministrazione', remaining:'Tempo rimanente' },
+    fr:{ access:'Accéder à l’administration', active:'Administration active', verify:'Vérifier le code', invalid:'Le code est invalide ou a expiré.', unavailable:'Le service privé d’administration n’est pas configuré.', network:'Impossible de contacter le service d’administration.', extend:'Prolonger de 10 minutes', end:'Quitter le mode administration', remaining:'Temps restant' }
   };
 
   function language() {
@@ -75,6 +76,8 @@
     }
     submitButton.textContent = words().verify;
     extendButton.textContent = words().extend;
+    endButton.textContent = words().end;
+    remainingLabel.textContent = words().remaining;
     window.dispatchEvent(new CustomEvent('navies-admin-change', { detail:{ active } }));
   }
 

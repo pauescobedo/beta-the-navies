@@ -7,6 +7,15 @@ const memberName = document.querySelector('#member-name');
 const dashboardBar = document.querySelector('.dashboard-bar');
 const portalApiUrl = String(window.NAVIES_ADMIN_API_URL || '').replace(/\/$/, '');
 const portalAdminSessionKey = 'navies-admin-session';
+const portalLanguage = (document.documentElement.lang || 'es').slice(0, 2);
+const editorCopies = {
+  es:{ edit:'Editar página', tools:'Herramientas de administración', title:'Editar página', intro:'Gestiona el contenido publicado en Inicio y Espacio Navy.', back:'Volver a Espacio Navy', home:'Inicio', space:'Espacio Navy', mainTexts:'Textos principales', mainTextsCopy:'Contenido en castellano, el idioma principal de la web.', concerts:'Conciertos', concertsCopy:'El primero será el concierto destacado de Inicio.', addConcert:'Añadir concierto', members:'Tarjetas de músicos', membersCopy:'Título, instrumento, descripción breve y texto ampliado.', dates:'Fechas internas', datesCopy:'Ensayos, ensayos generales, extras, conciertos y grabaciones.', addDate:'Añadir fecha', setlist:'Repertorio', setlistCopy:'El orden guardado será el que verá toda la banda.', addSong:'Añadir canción', links:'Enlaces útiles', linksCopy:'Accesos compartidos de la banda.', addLink:'Añadir enlace', save:'Guardar cambios', remove:'Eliminar', up:'Subir', down:'Bajar', type:'Tipo', altName:'Nombre alternativo', altPlaceholder:'Opcional, salvo en Otro', date:'Fecha', time:'Hora', place:'Lugar', song:'Canción', name:'Nombre', web:'Dirección web', instrument:'Instrumento', cardTitle:'Título', short:'Descripción breve', long:'Descripción ampliada', presentation:'Presentación principal', sound:'Descripción del sonido', band:'Presentación de la banda', day:'Día (opcional)', month:'Mes', year:'Año', rehearsal:'Ensayo', extra:'Ensayo extra', general:'Ensayo general', concert:'Concierto', recording:'Grabación', other:'Otro', saving:'Guardando…', saved:'Cambios guardados.', loadError:'No se ha podido cargar el contenido.', expired:'La sesión de administración ha caducado.', expiredAgain:'La sesión ha caducado. Vuelve a introducir el código.', saveError:'No se han podido guardar los cambios.', confirmDelete:'¿Seguro que quieres eliminar este elemento?', newConcert:'Nuevo concierto' },
+  ca:{ edit:'Editar pàgina', tools:'Eines d’administració', title:'Editar pàgina', intro:'Gestiona el contingut publicat a Inici i Espai Navy.', back:'Tornar a Espai Navy', home:'Inici', space:'Espai Navy', mainTexts:'Textos principals', mainTextsCopy:'Contingut en castellà, l’idioma principal del web.', concerts:'Concerts', concertsCopy:'El primer serà el concert destacat d’Inici.', addConcert:'Afegir concert', members:'Targetes de músics', membersCopy:'Títol, instrument, descripció breu i text ampliat.', dates:'Dates internes', datesCopy:'Assajos, assajos generals, extres, concerts i gravacions.', addDate:'Afegir data', setlist:'Repertori', setlistCopy:'L’ordre desat serà el que veurà tota la banda.', addSong:'Afegir cançó', links:'Enllaços útils', linksCopy:'Accessos compartits de la banda.', addLink:'Afegir enllaç', save:'Desar canvis', remove:'Eliminar', up:'Pujar', down:'Baixar', type:'Tipus', altName:'Nom alternatiu', altPlaceholder:'Opcional, excepte a Altres', date:'Data', time:'Hora', place:'Lloc', song:'Cançó', name:'Nom', web:'Adreça web', instrument:'Instrument', cardTitle:'Títol', short:'Descripció breu', long:'Descripció ampliada', presentation:'Presentació principal', sound:'Descripció del so', band:'Presentació de la banda', day:'Dia (opcional)', month:'Mes', year:'Any', rehearsal:'Assaig', extra:'Assaig extra', general:'Assaig general', concert:'Concert', recording:'Gravació', other:'Altres', saving:'Desant…', saved:'Canvis desats.', loadError:'No s’ha pogut carregar el contingut.', expired:'La sessió d’administració ha caducat.', expiredAgain:'La sessió ha caducat. Torna a introduir el codi.', saveError:'No s’han pogut desar els canvis.', confirmDelete:'Segur que vols eliminar aquest element?', newConcert:'Concert nou' },
+  en:{ edit:'Edit page', tools:'Administration tools', title:'Edit page', intro:'Manage the content published on Home and Navy Space.', back:'Back to Navy Space', home:'Home', space:'Navy Space', mainTexts:'Main text', mainTextsCopy:'Content in Spanish, the website’s primary language.', concerts:'Shows', concertsCopy:'The first one will be the featured show on Home.', addConcert:'Add show', members:'Musician cards', membersCopy:'Title, instrument, short description and expanded text.', dates:'Internal dates', datesCopy:'Rehearsals, dress rehearsals, extras, shows and recordings.', addDate:'Add date', setlist:'Setlist', setlistCopy:'The saved order is what the whole band will see.', addSong:'Add song', links:'Useful links', linksCopy:'Shared band resources.', addLink:'Add link', save:'Save changes', remove:'Delete', up:'Move up', down:'Move down', type:'Type', altName:'Alternative name', altPlaceholder:'Optional, except for Other', date:'Date', time:'Time', place:'Location', song:'Song', name:'Name', web:'Web address', instrument:'Instrument', cardTitle:'Title', short:'Short description', long:'Expanded description', presentation:'Main introduction', sound:'Sound description', band:'Band introduction', day:'Day (optional)', month:'Month', year:'Year', rehearsal:'Rehearsal', extra:'Extra rehearsal', general:'Dress rehearsal', concert:'Show', recording:'Recording', other:'Other', saving:'Saving…', saved:'Changes saved.', loadError:'The content could not be loaded.', expired:'The administration session has expired.', expiredAgain:'The session has expired. Enter the code again.', saveError:'The changes could not be saved.', confirmDelete:'Are you sure you want to delete this item?', newConcert:'New show' },
+  fr:{ edit:'Modifier la page', tools:'Outils d’administration', title:'Modifier la page', intro:'Gérez le contenu publié sur l’Accueil et l’Espace Navy.', back:'Retour à l’Espace Navy', home:'Accueil', space:'Espace Navy', mainTexts:'Textes principaux', mainTextsCopy:'Contenu en espagnol, la langue principale du site.', concerts:'Concerts', concertsCopy:'Le premier sera le concert mis en avant sur l’Accueil.', addConcert:'Ajouter un concert', members:'Cartes des musiciens', membersCopy:'Titre, instrument, description courte et texte détaillé.', dates:'Dates internes', datesCopy:'Répétitions, générales, extras, concerts et enregistrements.', addDate:'Ajouter une date', setlist:'Répertoire', setlistCopy:'L’ordre enregistré sera visible par tout le groupe.', addSong:'Ajouter une chanson', links:'Liens utiles', linksCopy:'Ressources partagées du groupe.', addLink:'Ajouter un lien', save:'Enregistrer', remove:'Supprimer', up:'Monter', down:'Descendre', type:'Type', altName:'Nom alternatif', altPlaceholder:'Facultatif, sauf pour Autre', date:'Date', time:'Heure', place:'Lieu', song:'Chanson', name:'Nom', web:'Adresse web', instrument:'Instrument', cardTitle:'Titre', short:'Description courte', long:'Description détaillée', presentation:'Présentation principale', sound:'Description du son', band:'Présentation du groupe', day:'Jour (facultatif)', month:'Mois', year:'Année', rehearsal:'Répétition', extra:'Répétition supplémentaire', general:'Répétition générale', concert:'Concert', recording:'Enregistrement', other:'Autre', saving:'Enregistrement…', saved:'Modifications enregistrées.', loadError:'Impossible de charger le contenu.', expired:'La session d’administration a expiré.', expiredAgain:'La session a expiré. Saisissez de nouveau le code.', saveError:'Impossible d’enregistrer les modifications.', confirmDelete:'Voulez-vous vraiment supprimer cet élément ?', newConcert:'Nouveau concert' },
+  it:{ edit:'Modifica pagina', tools:'Strumenti di amministrazione', title:'Modifica pagina', intro:'Gestisci i contenuti pubblicati su Home e Spazio Navy.', back:'Torna a Spazio Navy', home:'Home', space:'Spazio Navy', mainTexts:'Testi principali', mainTextsCopy:'Contenuto in spagnolo, la lingua principale del sito.', concerts:'Concerti', concertsCopy:'Il primo sarà il concerto in evidenza nella Home.', addConcert:'Aggiungi concerto', members:'Schede dei musicisti', membersCopy:'Titolo, strumento, descrizione breve e testo esteso.', dates:'Date interne', datesCopy:'Prove, prove generali, extra, concerti e registrazioni.', addDate:'Aggiungi data', setlist:'Repertorio', setlistCopy:'L’ordine salvato sarà visibile a tutta la band.', addSong:'Aggiungi brano', links:'Link utili', linksCopy:'Risorse condivise della band.', addLink:'Aggiungi link', save:'Salva modifiche', remove:'Elimina', up:'Sposta su', down:'Sposta giù', type:'Tipo', altName:'Nome alternativo', altPlaceholder:'Facoltativo, tranne per Altro', date:'Data', time:'Ora', place:'Luogo', song:'Brano', name:'Nome', web:'Indirizzo web', instrument:'Strumento', cardTitle:'Titolo', short:'Descrizione breve', long:'Descrizione estesa', presentation:'Presentazione principale', sound:'Descrizione del suono', band:'Presentazione della band', day:'Giorno (facoltativo)', month:'Mese', year:'Anno', rehearsal:'Prova', extra:'Prova extra', general:'Prova generale', concert:'Concerto', recording:'Registrazione', other:'Altro', saving:'Salvataggio…', saved:'Modifiche salvate.', loadError:'Impossibile caricare il contenuto.', expired:'La sessione di amministrazione è scaduta.', expiredAgain:'La sessione è scaduta. Inserisci di nuovo il codice.', saveError:'Impossibile salvare le modifiche.', confirmDelete:'Vuoi davvero eliminare questo elemento?', newConcert:'Nuovo concerto' }
+};
+const editorText = editorCopies[portalLanguage] || editorCopies.es;
 
 localStorage.removeItem('navies-demo-chat');
 localStorage.removeItem('navies-demo-member');
@@ -55,6 +64,15 @@ function localToday() {
   const parts = new Intl.DateTimeFormat('en-CA', { timeZone:'Europe/Madrid', year:'numeric', month:'2-digit', day:'2-digit' }).formatToParts(new Date());
   const value = Object.fromEntries(parts.map((part) => [part.type, part.value]));
   return `${value.year}-${value.month}-${value.day}`;
+}
+
+const eventTypeKeys = ['rehearsal','extra','general','concert','recording','other'];
+function eventTypeLabel(type, language = portalLanguage) {
+  const source = editorCopies[language] || editorCopies.es;
+  return source[type] || source.other;
+}
+function isCanonicalEventName(name) {
+  return eventTypeKeys.some((type) => Object.values(editorCopies).some((copy) => copy[type] === name));
 }
 
 function renderSetlist(songs) {
@@ -107,7 +125,7 @@ function renderEvents(events) {
     }
     const details = document.createElement('div');
     const name = document.createElement('b');
-    name.textContent = event.name;
+    name.textContent = event.name && !isCanonicalEventName(event.name) ? event.name : eventTypeLabel(event.type, locale.slice(0, 2));
     details.append(name);
     const meta = [event.time ? `${event.time}h` : '', event.location].filter(Boolean).join(' · ');
     if (meta) {
@@ -314,10 +332,11 @@ audioDialog.addEventListener('click', (event) => { if (event.target === audioDia
 const editContentButton = document.createElement('button');
 editContentButton.className = 'content-editor-trigger';
 editContentButton.type = 'button';
-editContentButton.innerHTML = '<span aria-hidden="true">✦</span> Editar página';
+editContentButton.innerHTML = `<span aria-hidden="true">✦</span> ${editorText.edit}`;
 editContentButton.hidden = true;
 const adminToolbar = document.createElement('div');
 adminToolbar.className = 'content-admin-toolbar';
+adminToolbar.dataset.label = editorText.tools;
 adminToolbar.append(editContentButton);
 dashboardBar?.after(adminToolbar);
 
@@ -327,40 +346,40 @@ contentEditor.hidden = true;
 contentEditor.innerHTML = `
   <div class="content-editor-shell">
     <header class="content-editor-header">
-      <div><p class="eyebrow"><span></span> THE NAVIES</p><h2>Editar página</h2><p>Gestiona el contenido publicado en Inicio y Espacio Navy.</p></div>
-      <button class="content-editor-back" type="button" aria-label="Volver a Espacio Navy">←</button>
+      <div><p class="eyebrow"><span></span> THE NAVIES</p><h2>${editorText.title}</h2><p>${editorText.intro}</p></div>
+      <button class="content-editor-back" type="button" aria-label="${editorText.back}">←</button>
     </header>
     <form class="content-editor-form">
-      <nav class="content-editor-tabs" aria-label="Secciones editables"><button type="button" data-editor-tab="home" aria-pressed="true">Inicio</button><button type="button" data-editor-tab="space" aria-pressed="false">Espacio Navy</button></nav>
+      <nav class="content-editor-tabs"><button type="button" data-editor-tab="home" aria-pressed="true">${editorText.home}</button><button type="button" data-editor-tab="space" aria-pressed="false">${editorText.space}</button></nav>
       <div class="editor-page" data-editor-page="home">
       <section class="editor-section">
-        <div class="editor-section-head"><div><span>01</span><h3>Textos principales</h3><p>Contenido en castellano, el idioma principal de la web.</p></div></div>
+        <div class="editor-section-head"><div><span>01</span><h3>${editorText.mainTexts}</h3><p>${editorText.mainTextsCopy}</p></div></div>
         <div class="editor-text-grid" data-editor-home-texts></div>
       </section>
       <section class="editor-section">
-        <div class="editor-section-head"><div><span>02</span><h3>Conciertos</h3><p>El primero será el concierto destacado de Inicio.</p></div><button type="button" data-editor-add="concert">Añadir concierto</button></div>
+        <div class="editor-section-head"><div><span>02</span><h3>${editorText.concerts}</h3><p>${editorText.concertsCopy}</p></div><button type="button" data-editor-add="concert">${editorText.addConcert}</button></div>
         <div class="editor-list" data-editor-list="concerts"></div>
       </section>
       <section class="editor-section">
-        <div class="editor-section-head"><div><span>03</span><h3>Tarjetas de músicos</h3><p>Título, instrumento, descripción breve y texto ampliado.</p></div></div>
+        <div class="editor-section-head"><div><span>03</span><h3>${editorText.members}</h3><p>${editorText.membersCopy}</p></div></div>
         <div class="editor-list" data-editor-list="members"></div>
       </section>
       </div>
       <div class="editor-page" data-editor-page="space" hidden>
       <section class="editor-section">
-        <div class="editor-section-head"><div><span>01</span><h3>Fechas internas</h3><p>Ensayos, ensayos generales, extras y conciertos.</p></div><button type="button" data-editor-add="event">Añadir fecha</button></div>
+        <div class="editor-section-head"><div><span>01</span><h3>${editorText.dates}</h3><p>${editorText.datesCopy}</p></div><button type="button" data-editor-add="event">${editorText.addDate}</button></div>
         <div class="editor-list" data-editor-list="events"></div>
       </section>
       <section class="editor-section">
-        <div class="editor-section-head"><div><span>02</span><h3>Repertorio</h3><p>El orden guardado será el que verá toda la banda.</p></div><button type="button" data-editor-add="song">Añadir canción</button></div>
+        <div class="editor-section-head"><div><span>02</span><h3>${editorText.setlist}</h3><p>${editorText.setlistCopy}</p></div><button type="button" data-editor-add="song">${editorText.addSong}</button></div>
         <div class="editor-list" data-editor-list="songs"></div>
       </section>
       <section class="editor-section">
-        <div class="editor-section-head"><div><span>03</span><h3>Enlaces útiles</h3><p>Accesos compartidos de la banda.</p></div><button type="button" data-editor-add="link">Añadir enlace</button></div>
+        <div class="editor-section-head"><div><span>03</span><h3>${editorText.links}</h3><p>${editorText.linksCopy}</p></div><button type="button" data-editor-add="link">${editorText.addLink}</button></div>
         <div class="editor-list" data-editor-list="links"></div>
       </section>
       </div>
-      <footer class="content-editor-actions"><p class="content-editor-status" aria-live="polite"></p><button class="editor-save" type="submit">Guardar cambios</button></footer>
+      <footer class="content-editor-actions"><p class="content-editor-status" aria-live="polite"></p><button class="editor-save" type="submit">${editorText.save}</button></footer>
     </form>
   </div>`;
 document.querySelector('.space-shell').append(contentEditor);
@@ -399,7 +418,7 @@ function rowActions(kind) {
   const actions = document.createElement('div');
   actions.className = 'editor-row-actions';
   if (kind !== 'event') {
-    [['up', '↑', 'Subir'], ['down', '↓', 'Bajar']].forEach(([action, symbol, label]) => {
+    [['up', '↑', editorText.up], ['down', '↓', editorText.down]].forEach(([action, symbol, label]) => {
       const button = document.createElement('button');
       button.type = 'button';
       button.dataset.editorAction = action;
@@ -412,7 +431,7 @@ function rowActions(kind) {
   remove.type = 'button';
   remove.dataset.editorAction = 'remove';
   remove.className = 'editor-remove';
-  remove.textContent = 'Eliminar';
+  remove.textContent = editorText.remove;
   actions.append(remove);
   return actions;
 }
@@ -422,18 +441,23 @@ function eventEditorRow(event = {}) {
   row.className = 'editor-row editor-event-row';
   row.dataset.id = event.id || `event-${Date.now()}`;
   const typeLabel = document.createElement('label');
-  typeLabel.innerHTML = '<span>Tipo</span>';
+  typeLabel.innerHTML = `<span>${editorText.type}</span>`;
   const select = document.createElement('select');
   select.name = 'type';
-  [['rehearsal','Ensayo'], ['extra','Ensayo extra'], ['general','Ensayo general'], ['concert','Concierto']].forEach(([value, label]) => {
+  eventTypeKeys.forEach((value) => {
     const option = document.createElement('option');
     option.value = value;
-    option.textContent = label;
+    option.textContent = eventTypeLabel(value);
     option.selected = event.type === value;
     select.append(option);
   });
   typeLabel.append(select);
-  row.append(typeLabel, field('Nombre', 'name', event.name, 'text', { maxlength:'160', required:'' }), field('Fecha', 'date', event.date, 'date', { required:'' }), field('Hora', 'time', event.time, 'time'), field('Lugar', 'location', event.location, 'text', { maxlength:'160' }), rowActions('event'));
+  const alternate = field(editorText.altName, 'name', isCanonicalEventName(event.name) ? '' : event.name, 'text', { maxlength:'160', placeholder:editorText.altPlaceholder });
+  const alternateInput = alternate.querySelector('input');
+  const syncAlternative = () => { alternateInput.required = select.value === 'other'; };
+  select.addEventListener('change', syncAlternative);
+  syncAlternative();
+  row.append(typeLabel, alternate, field(editorText.date, 'date', event.date, 'date', { required:'' }), field(editorText.time, 'time', event.time, 'time'), field(editorText.place, 'location', event.location, 'text', { maxlength:'160' }), rowActions('event'));
   return row;
 }
 
@@ -441,7 +465,7 @@ function songEditorRow(song = {}) {
   const row = document.createElement('div');
   row.className = 'editor-row editor-song-row';
   row.dataset.id = song.id || '';
-  row.append(field('Canción', 'title', song.title, 'text', { maxlength:'160', required:'' }), rowActions('song'));
+  row.append(field(editorText.song, 'title', song.title, 'text', { maxlength:'160', required:'' }), rowActions('song'));
   return row;
 }
 
@@ -449,7 +473,7 @@ function linkEditorRow(link = {}) {
   const row = document.createElement('div');
   row.className = 'editor-row editor-link-row';
   row.dataset.id = link.id || '';
-  row.append(field('Nombre', 'label', link.label, 'text', { maxlength:'160', required:'' }), field('Dirección web', 'url', link.url, 'url', { maxlength:'500', required:'', placeholder:'https://…' }), rowActions('link'));
+  row.append(field(editorText.name, 'label', link.label, 'text', { maxlength:'160', required:'' }), field(editorText.web, 'url', link.url, 'url', { maxlength:'500', required:'', placeholder:'https://…' }), rowActions('link'));
   return row;
 }
 
@@ -458,19 +482,19 @@ function concertEditorRow(concert = {}) {
   row.className = 'editor-row editor-concert-row';
   row.dataset.id = concert.id || '';
   const monthLabelElement = document.createElement('label');
-  monthLabelElement.innerHTML = '<span>Mes</span>';
+  monthLabelElement.innerHTML = `<span>${editorText.month}</span>`;
   const month = document.createElement('select');
   month.name = 'month';
   for (let index = 1; index <= 12; index += 1) {
     const value = String(index).padStart(2, '0');
     const option = document.createElement('option');
     option.value = value;
-    option.textContent = monthLabel(value, 'es');
+    option.textContent = monthLabel(value, portalLanguage);
     option.selected = concert.month === value;
     month.append(option);
   }
   monthLabelElement.append(month);
-  row.append(field('Nombre', 'name', concert.name, 'text', { maxlength:'160', required:'' }), field('Día (opcional)', 'day', concert.day, 'number', { min:'1', max:'31', inputmode:'numeric' }), monthLabelElement, field('Año', 'year', concert.year || String(new Date().getFullYear()), 'number', { min:'2026', max:'2100', required:'' }), field('Hora', 'time', concert.time, 'time'), field('Lugar', 'location', concert.location, 'text', { maxlength:'160' }), rowActions('concert'));
+  row.append(field(editorText.name, 'name', concert.name, 'text', { maxlength:'160', required:'' }), field(editorText.day, 'day', concert.day, 'number', { min:'1', max:'31', inputmode:'numeric' }), monthLabelElement, field(editorText.year, 'year', concert.year || String(new Date().getFullYear()), 'number', { min:'2026', max:'2100', required:'' }), field(editorText.time, 'time', concert.time, 'time'), field(editorText.place, 'location', concert.location, 'text', { maxlength:'160' }), rowActions('concert'));
   return row;
 }
 
@@ -478,7 +502,7 @@ function memberEditorRow(member = {}) {
   const row = document.createElement('div');
   row.className = 'editor-row editor-member-row';
   row.dataset.id = member.id || '';
-  row.append(field('Instrumento', 'instrument', member.instrument, 'text', { maxlength:'160', required:'' }), field('Título', 'title', member.title, 'text', { maxlength:'160', required:'' }), textAreaField('Descripción breve', 'summary', member.summary, 300), textAreaField('Descripción ampliada', 'bio', member.bio, 800));
+  row.append(field(editorText.instrument, 'instrument', member.instrument, 'text', { maxlength:'160', required:'' }), field(editorText.cardTitle, 'title', member.title, 'text', { maxlength:'160', required:'' }), textAreaField(editorText.short, 'summary', member.summary, 300), textAreaField(editorText.long, 'bio', member.bio, 800));
   return row;
 }
 
@@ -490,7 +514,7 @@ function populateEditor() {
   const eventList = contentEditor.querySelector('[data-editor-list="events"]');
   const songList = contentEditor.querySelector('[data-editor-list="songs"]');
   const linkList = contentEditor.querySelector('[data-editor-list="links"]');
-  homeTexts.replaceChildren(textAreaField('Presentación principal', 'heroIntro', navyContent.home.texts.heroIntro), textAreaField('Descripción del sonido', 'soundBody', navyContent.home.texts.soundBody), textAreaField('Presentación de la banda', 'bandBody', navyContent.home.texts.bandBody));
+  homeTexts.replaceChildren(textAreaField(editorText.presentation, 'heroIntro', navyContent.home.texts.heroIntro), textAreaField(editorText.sound, 'soundBody', navyContent.home.texts.soundBody), textAreaField(editorText.band, 'bandBody', navyContent.home.texts.bandBody));
   concertList.replaceChildren(...navyContent.home.concerts.map(concertEditorRow));
   memberList.replaceChildren(...navyContent.home.members.map(memberEditorRow));
   eventList.replaceChildren(...navyContent.events.map(eventEditorRow));
@@ -557,7 +581,7 @@ editContentButton.addEventListener('click', async () => {
   if (!contentSession()) return syncEditorAccess();
   if (!navyContent) await loadNavyContent();
   if (!navyContent) {
-    editorStatus.textContent = 'No se ha podido cargar el contenido.';
+    editorStatus.textContent = editorText.loadError;
     return;
   }
   populateEditor();
@@ -595,7 +619,7 @@ contentEditor.addEventListener('click', (event) => {
   if (add) {
     const kind = add.dataset.editorAdd;
     const list = contentEditor.querySelector(`[data-editor-list="${kind}s"]`);
-    const row = kind === 'event' ? eventEditorRow({ type:'rehearsal', name:'Ensayo', date:localToday(), time:'17:30', location:'' }) : kind === 'song' ? songEditorRow() : kind === 'concert' ? concertEditorRow({ name:'Nuevo concierto', day:'', month:'12', year:String(new Date().getFullYear()), time:'', location:'' }) : linkEditorRow();
+    const row = kind === 'event' ? eventEditorRow({ type:'rehearsal', name:'', date:localToday(), time:'17:30', location:'' }) : kind === 'song' ? songEditorRow() : kind === 'concert' ? concertEditorRow({ name:editorText.newConcert, day:'', month:'12', year:String(new Date().getFullYear()), time:'', location:'' }) : linkEditorRow();
     list.append(row);
     list.lastElementChild.scrollIntoView({ behavior:'smooth', block:'center' });
     return;
@@ -604,7 +628,7 @@ contentEditor.addEventListener('click', (event) => {
   if (!action) return;
   const row = action.closest('.editor-row');
   if (action.dataset.editorAction === 'remove') {
-    if (window.confirm('¿Seguro que quieres eliminar este elemento?')) row.remove();
+    if (window.confirm(editorText.confirmDelete)) row.remove();
   } else if (action.dataset.editorAction === 'up' && row.previousElementSibling) {
     row.parentNode.insertBefore(row, row.previousElementSibling);
   } else if (action.dataset.editorAction === 'down' && row.nextElementSibling) {
@@ -616,13 +640,13 @@ editorForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   const session = contentSession();
   if (!session) {
-    editorStatus.textContent = 'La sesión de administración ha caducado.';
+    editorStatus.textContent = editorText.expired;
     syncEditorAccess();
     return;
   }
   const save = contentEditor.querySelector('.editor-save');
   save.disabled = true;
-  editorStatus.textContent = 'Guardando…';
+  editorStatus.textContent = editorText.saving;
   try {
     const response = await fetch(`${portalApiUrl}/content`, {
       method:'PUT',
@@ -632,9 +656,9 @@ editorForm.addEventListener('submit', async (event) => {
     const result = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(result.error || 'save_failed');
     renderNavyContent(result.content);
-    editorStatus.textContent = 'Cambios guardados.';
+    editorStatus.textContent = editorText.saved;
   } catch (error) {
-    editorStatus.textContent = error.message === 'invalid_session' ? 'La sesión ha caducado. Vuelve a introducir el código.' : 'No se han podido guardar los cambios.';
+    editorStatus.textContent = error.message === 'invalid_session' ? editorText.expiredAgain : editorText.saveError;
   } finally {
     save.disabled = false;
   }
