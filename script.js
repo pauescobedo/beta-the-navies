@@ -1384,7 +1384,8 @@ const memberDialogBios = {
 function openMember(member) {
   const displayNames = memberDisplayNames[currentLanguage] || memberDisplayNames.es;
   dialogName.textContent = displayNames[member] || (translations[currentLanguage] || translations.es)[memberTitleKeys[member]];
-  dialogBio.innerHTML = (memberDialogBios[currentLanguage] || memberDialogBios.es)[member];
+  const editableBio = currentLanguage === 'es' ? window.naviesEditableMemberBios?.[member] : '';
+  dialogBio.innerHTML = editableBio || (memberDialogBios[currentLanguage] || memberDialogBios.es)[member];
   dialogSocial.hidden = member !== 'drums';
   memberDialog.showModal();
 }

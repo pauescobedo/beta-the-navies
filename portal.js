@@ -139,8 +139,88 @@ function renderLinks(links) {
   });
 }
 
+const builtInConcertNames = {
+  'sagrera-2026':{ es:'Fiestas de La Sagrera', ca:'Festes de La Sagrera', en:'La Sagrera Neighbourhood Festival', fr:'Fête de quartier de La Sagrera', it:'Festa di quartiere de La Sagrera' },
+  'christmas-2026':{ es:'Concierto de Navidad', ca:'Concert de Nadal', en:'Christmas Concert', fr:'Concert de Noël', it:'Concerto di Natale' },
+  'spring-2027':{ es:'Fiestas de la Primavera', ca:'Festes de la Primavera', en:'Spring Festival', fr:'Fête du Printemps', it:'Festa di Primavera' },
+  'end-course-2027':{ es:'Concierto de Final de Curso', ca:'Concert de Final de Curs', en:'End-of-year Concert', fr:'Concert de fin d’année', it:'Concerto di fine anno' }
+};
+
+function concertName(concert) {
+  const language = (document.documentElement.lang || 'es').slice(0, 2);
+  const defaults = builtInConcertNames[concert.id];
+  return defaults && concert.name === defaults.es ? (defaults[language] || defaults.es) : concert.name;
+}
+
+function renderHomeContent(home) {
+  if (!home) return;
+  const language = (document.documentElement.lang || 'es').slice(0, 2);
+  if (language === 'es') {
+    const textTargets = { heroIntro:'.hero-intro', soundBody:'#sonido .sound-copy [data-i18n="soundBody"]', bandBody:'#banda .about-copy [data-i18n="bandBody"]' };
+    Object.entries(textTargets).forEach(([key, selector]) => {
+      const target = document.querySelector(selector);
+      if (target && home.texts[key]) target.textContent = home.texts[key];
+    });
+    home.members.forEach((member) => {
+      const card = document.querySelector(`[data-member="${member.id}"]`);
+      if (!card) return;
+      const instrument = card.querySelector('.instrument-word');
+      const title = card.querySelector('h3');
+      const summary = card.querySelector('p');
+      if (instrument) instrument.textContent = member.instrument;
+      if (title) title.textContent = member.title;
+      if (summary) summary.textContent = member.summary;
+    });
+    window.naviesEditableMemberBios = Object.fromEntries(home.members.map((member) => [member.id, member.bio]));
+  }
+  const concerts = home.concerts || [];
+  const featured = concerts[0];
+  const featuredShow = document.querySelector('.featured-show');
+  if (featured && featuredShow) {
+    featuredShow.querySelector('.date-block strong').textContent = featured.day || '—';
+    featuredShow.querySelector('.date-block span').innerHTML = `${monthLabel(featured.month, language)}<br>${featured.year}`;
+    featuredShow.querySelector('.show-info h3').textContent = concertName(featured);
+    const meta = [featured.time ? `${featured.time}h` : '', featured.location].filter(Boolean).join(' · ');
+    featuredShow.querySelector('.show-info p').textContent = meta;
+  }
+  const list = document.querySelector('.show-list');
+  if (list) {
+    list.replaceChildren();
+    concerts.slice(1).forEach((concert) => {
+      const article = document.createElement('article');
+      const time = document.createElement('time');
+      const day = document.createElement('strong');
+      day.textContent = concert.day || '—';
+      const dateMeta = document.createElement('span');
+      dateMeta.className = 'date-meta';
+      const month = document.createElement('b');
+      month.textContent = monthLabel(concert.month, language);
+      const year = document.createElement('small');
+      year.textContent = concert.year;
+      dateMeta.append(month, year);
+      time.append(day, dateMeta);
+      const details = document.createElement('div');
+      const title = document.createElement('h3');
+      title.textContent = concertName(concert);
+      details.append(title);
+      const meta = [concert.time ? `${concert.time}h` : '', concert.location].filter(Boolean).join(' · ');
+      if (meta) { const paragraph = document.createElement('p'); paragraph.textContent = meta; details.append(paragraph); }
+      const status = document.createElement('span');
+      status.textContent = ({ ca:'Pròximament', en:'Coming soon', fr:'Prochainement', it:'Prossimamente' })[language] || 'Próximamente';
+      article.append(time, details, status);
+      list.append(article);
+    });
+  }
+}
+
+function monthLabel(month, language = 'es') {
+  const date = new Date(`2026-${month}-01T12:00:00`);
+  return new Intl.DateTimeFormat(language, { month:'short' }).format(date).replace('.', '').toUpperCase();
+}
+
 function renderNavyContent(content) {
   navyContent = structuredClone(content);
+  renderHomeContent(content.home);
   renderSetlist(content.songs);
   renderEvents(content.events);
   renderLinks(content.links);
@@ -234,21 +314,41 @@ audioDialog.addEventListener('click', (event) => { if (event.target === audioDia
 const editContentButton = document.createElement('button');
 editContentButton.className = 'content-editor-trigger';
 editContentButton.type = 'button';
-editContentButton.textContent = 'Editar contenido';
+editContentButton.innerHTML = '<span aria-hidden="true">✦</span> Editar página';
 editContentButton.hidden = true;
-dashboardBar?.append(editContentButton);
+const adminToolbar = document.createElement('div');
+adminToolbar.className = 'content-admin-toolbar';
+adminToolbar.append(editContentButton);
+dashboardBar?.after(adminToolbar);
 
-const contentEditor = document.createElement('dialog');
+const contentEditor = document.createElement('section');
 contentEditor.className = 'content-editor';
+contentEditor.hidden = true;
 contentEditor.innerHTML = `
   <div class="content-editor-shell">
     <header class="content-editor-header">
-      <div><p class="eyebrow"><span></span> THE NAVIES</p><h2>Editar contenido</h2><p>Gestiona fechas, repertorio y enlaces de Espacio Navy.</p></div>
-      <button class="content-editor-close" type="button" aria-label="Cerrar">×</button>
+      <div><p class="eyebrow"><span></span> THE NAVIES</p><h2>Editar página</h2><p>Gestiona el contenido publicado en Inicio y Espacio Navy.</p></div>
+      <button class="content-editor-back" type="button" aria-label="Volver a Espacio Navy">←</button>
     </header>
     <form class="content-editor-form">
+      <nav class="content-editor-tabs" aria-label="Secciones editables"><button type="button" data-editor-tab="home" aria-pressed="true">Inicio</button><button type="button" data-editor-tab="space" aria-pressed="false">Espacio Navy</button></nav>
+      <div class="editor-page" data-editor-page="home">
       <section class="editor-section">
-        <div class="editor-section-head"><div><span>01</span><h3>Fechas</h3><p>Ensayos, ensayos generales, extras y conciertos.</p></div><button type="button" data-editor-add="event">Añadir fecha</button></div>
+        <div class="editor-section-head"><div><span>01</span><h3>Textos principales</h3><p>Contenido en castellano, el idioma principal de la web.</p></div></div>
+        <div class="editor-text-grid" data-editor-home-texts></div>
+      </section>
+      <section class="editor-section">
+        <div class="editor-section-head"><div><span>02</span><h3>Conciertos</h3><p>El primero será el concierto destacado de Inicio.</p></div><button type="button" data-editor-add="concert">Añadir concierto</button></div>
+        <div class="editor-list" data-editor-list="concerts"></div>
+      </section>
+      <section class="editor-section">
+        <div class="editor-section-head"><div><span>03</span><h3>Tarjetas de músicos</h3><p>Título, instrumento, descripción breve y texto ampliado.</p></div></div>
+        <div class="editor-list" data-editor-list="members"></div>
+      </section>
+      </div>
+      <div class="editor-page" data-editor-page="space" hidden>
+      <section class="editor-section">
+        <div class="editor-section-head"><div><span>01</span><h3>Fechas internas</h3><p>Ensayos, ensayos generales, extras y conciertos.</p></div><button type="button" data-editor-add="event">Añadir fecha</button></div>
         <div class="editor-list" data-editor-list="events"></div>
       </section>
       <section class="editor-section">
@@ -259,10 +359,11 @@ contentEditor.innerHTML = `
         <div class="editor-section-head"><div><span>03</span><h3>Enlaces útiles</h3><p>Accesos compartidos de la banda.</p></div><button type="button" data-editor-add="link">Añadir enlace</button></div>
         <div class="editor-list" data-editor-list="links"></div>
       </section>
-      <footer class="content-editor-actions"><p class="content-editor-status" aria-live="polite"></p><button class="editor-cancel" type="button">Cancelar</button><button class="editor-save" type="submit">Guardar cambios</button></footer>
+      </div>
+      <footer class="content-editor-actions"><p class="content-editor-status" aria-live="polite"></p><button class="editor-save" type="submit">Guardar cambios</button></footer>
     </form>
   </div>`;
-document.body.append(contentEditor);
+document.querySelector('.space-shell').append(contentEditor);
 
 const editorForm = contentEditor.querySelector('.content-editor-form');
 const editorStatus = contentEditor.querySelector('.content-editor-status');
@@ -276,6 +377,20 @@ function field(label, name, value = '', type = 'text', attributes = {}) {
   input.type = type;
   input.value = value;
   Object.entries(attributes).forEach(([key, setting]) => input.setAttribute(key, setting));
+  wrapper.append(caption, input);
+  return wrapper;
+}
+
+function textAreaField(label, name, value = '', maxlength = 800) {
+  const wrapper = document.createElement('label');
+  const caption = document.createElement('span');
+  caption.textContent = label;
+  const input = document.createElement('textarea');
+  input.name = name;
+  input.value = value;
+  input.maxLength = maxlength;
+  input.rows = 3;
+  input.required = true;
   wrapper.append(caption, input);
   return wrapper;
 }
@@ -338,11 +453,46 @@ function linkEditorRow(link = {}) {
   return row;
 }
 
+function concertEditorRow(concert = {}) {
+  const row = document.createElement('div');
+  row.className = 'editor-row editor-concert-row';
+  row.dataset.id = concert.id || '';
+  const monthLabelElement = document.createElement('label');
+  monthLabelElement.innerHTML = '<span>Mes</span>';
+  const month = document.createElement('select');
+  month.name = 'month';
+  for (let index = 1; index <= 12; index += 1) {
+    const value = String(index).padStart(2, '0');
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = monthLabel(value, 'es');
+    option.selected = concert.month === value;
+    month.append(option);
+  }
+  monthLabelElement.append(month);
+  row.append(field('Nombre', 'name', concert.name, 'text', { maxlength:'160', required:'' }), field('Día (opcional)', 'day', concert.day, 'number', { min:'1', max:'31', inputmode:'numeric' }), monthLabelElement, field('Año', 'year', concert.year || String(new Date().getFullYear()), 'number', { min:'2026', max:'2100', required:'' }), field('Hora', 'time', concert.time, 'time'), field('Lugar', 'location', concert.location, 'text', { maxlength:'160' }), rowActions('concert'));
+  return row;
+}
+
+function memberEditorRow(member = {}) {
+  const row = document.createElement('div');
+  row.className = 'editor-row editor-member-row';
+  row.dataset.id = member.id || '';
+  row.append(field('Instrumento', 'instrument', member.instrument, 'text', { maxlength:'160', required:'' }), field('Título', 'title', member.title, 'text', { maxlength:'160', required:'' }), textAreaField('Descripción breve', 'summary', member.summary, 300), textAreaField('Descripción ampliada', 'bio', member.bio, 800));
+  return row;
+}
+
 function populateEditor() {
   if (!navyContent) return;
+  const homeTexts = contentEditor.querySelector('[data-editor-home-texts]');
+  const concertList = contentEditor.querySelector('[data-editor-list="concerts"]');
+  const memberList = contentEditor.querySelector('[data-editor-list="members"]');
   const eventList = contentEditor.querySelector('[data-editor-list="events"]');
   const songList = contentEditor.querySelector('[data-editor-list="songs"]');
   const linkList = contentEditor.querySelector('[data-editor-list="links"]');
+  homeTexts.replaceChildren(textAreaField('Presentación principal', 'heroIntro', navyContent.home.texts.heroIntro), textAreaField('Descripción del sonido', 'soundBody', navyContent.home.texts.soundBody), textAreaField('Presentación de la banda', 'bandBody', navyContent.home.texts.bandBody));
+  concertList.replaceChildren(...navyContent.home.concerts.map(concertEditorRow));
+  memberList.replaceChildren(...navyContent.home.members.map(memberEditorRow));
   eventList.replaceChildren(...navyContent.events.map(eventEditorRow));
   songList.replaceChildren(...navyContent.songs.map(songEditorRow));
   linkList.replaceChildren(...navyContent.links.map(linkEditorRow));
@@ -350,6 +500,24 @@ function populateEditor() {
 }
 
 function editorContent() {
+  const homeTexts = contentEditor.querySelector('[data-editor-home-texts]');
+  const concerts = [...contentEditor.querySelectorAll('.editor-concert-row')].map((row, index) => ({
+    id:row.dataset.id || `${slugify(row.querySelector('[name="name"]').value)}-${Date.now()}-${index}`,
+    name:row.querySelector('[name="name"]').value.trim(),
+    day:row.querySelector('[name="day"]').value ? String(Number(row.querySelector('[name="day"]').value)) : '',
+    month:row.querySelector('[name="month"]').value,
+    year:row.querySelector('[name="year"]').value,
+    time:row.querySelector('[name="time"]').value,
+    location:row.querySelector('[name="location"]').value.trim(),
+    status:index === 0 ? 'next' : 'soon'
+  }));
+  const members = [...contentEditor.querySelectorAll('.editor-member-row')].map((row) => ({
+    id:row.dataset.id,
+    instrument:row.querySelector('[name="instrument"]').value.trim(),
+    title:row.querySelector('[name="title"]').value.trim(),
+    summary:row.querySelector('[name="summary"]').value.trim(),
+    bio:row.querySelector('[name="bio"]').value.trim()
+  }));
   const events = [...contentEditor.querySelectorAll('.editor-event-row')].map((row) => ({
     id:row.dataset.id || `event-${Date.now()}`,
     type:row.querySelector('[name="type"]').value,
@@ -374,15 +542,15 @@ function editorContent() {
     usedLinkIds.add(id);
     return { id, label, url:row.querySelector('[name="url"]').value.trim() };
   });
-  return { events, songs, links };
+  return { home:{ texts:{ heroIntro:homeTexts.querySelector('[name="heroIntro"]').value.trim(), soundBody:homeTexts.querySelector('[name="soundBody"]').value.trim(), bandBody:homeTexts.querySelector('[name="bandBody"]').value.trim() }, concerts, members }, events, songs, links };
 }
 
 function syncEditorAccess() {
   const isPau = localStorage.getItem('navies-member-session') === 'pauescobedo';
-  editContentButton.hidden = !(isPau && contentSession());
-  if (!isPau || !contentSession()) {
-    if (contentEditor.open) contentEditor.close();
-  }
+  const canEdit = Boolean(isPau && contentSession());
+  editContentButton.hidden = !canEdit;
+  adminToolbar.hidden = !canEdit;
+  if (!isPau || !contentSession()) closeContentEditor(true);
 }
 
 editContentButton.addEventListener('click', async () => {
@@ -393,25 +561,42 @@ editContentButton.addEventListener('click', async () => {
     return;
   }
   populateEditor();
-  contentEditor.showModal();
+  contentEditorOpen = true;
+  dashboard.hidden = true;
+  contentEditor.hidden = false;
+  window.scrollTo({ top:0, behavior:'smooth' });
   requestAnimationFrame(() => contentEditor.classList.add('is-visible'));
 });
 
-function closeContentEditor() {
+function closeContentEditor(immediate = false) {
+  if (!contentEditorOpen && contentEditor.hidden) return;
+  contentEditorOpen = false;
   contentEditor.classList.remove('is-visible');
-  window.setTimeout(() => { if (contentEditor.open) contentEditor.close(); }, 260);
+  const finish = () => {
+    contentEditor.hidden = true;
+    if (localStorage.getItem('navies-member-session')) dashboard.hidden = false;
+    window.scrollTo({ top:0, behavior:immediate ? 'instant' : 'smooth' });
+  };
+  if (immediate) finish();
+  else window.setTimeout(finish, 260);
 }
 
-contentEditor.querySelector('.content-editor-close').addEventListener('click', closeContentEditor);
-contentEditor.querySelector('.editor-cancel').addEventListener('click', closeContentEditor);
-contentEditor.addEventListener('click', (event) => { if (event.target === contentEditor) closeContentEditor(); });
+contentEditor.querySelector('.content-editor-back').addEventListener('click', () => closeContentEditor());
+
+contentEditor.querySelectorAll('[data-editor-tab]').forEach((button) => {
+  button.addEventListener('click', () => {
+    contentEditor.querySelectorAll('[data-editor-tab]').forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+    contentEditor.querySelectorAll('[data-editor-page]').forEach((page) => { page.hidden = page.dataset.editorPage !== button.dataset.editorTab; });
+  });
+});
 
 contentEditor.addEventListener('click', (event) => {
   const add = event.target.closest('[data-editor-add]');
   if (add) {
     const kind = add.dataset.editorAdd;
     const list = contentEditor.querySelector(`[data-editor-list="${kind}s"]`);
-    list.append(kind === 'event' ? eventEditorRow({ type:'rehearsal', name:'Ensayo', date:localToday(), time:'17:30', location:'' }) : kind === 'song' ? songEditorRow() : linkEditorRow());
+    const row = kind === 'event' ? eventEditorRow({ type:'rehearsal', name:'Ensayo', date:localToday(), time:'17:30', location:'' }) : kind === 'song' ? songEditorRow() : kind === 'concert' ? concertEditorRow({ name:'Nuevo concierto', day:'', month:'12', year:String(new Date().getFullYear()), time:'', location:'' }) : linkEditorRow();
+    list.append(row);
     list.lastElementChild.scrollIntoView({ behavior:'smooth', block:'center' });
     return;
   }
@@ -448,7 +633,6 @@ editorForm.addEventListener('submit', async (event) => {
     if (!response.ok) throw new Error(result.error || 'save_failed');
     renderNavyContent(result.content);
     editorStatus.textContent = 'Cambios guardados.';
-    window.setTimeout(closeContentEditor, 650);
   } catch (error) {
     editorStatus.textContent = error.message === 'invalid_session' ? 'La sesión ha caducado. Vuelve a introducir el código.' : 'No se han podido guardar los cambios.';
   } finally {
@@ -463,10 +647,12 @@ loadNavyContent();
 
 let portalReady = false;
 let portalTransitionTimer;
+let contentEditorOpen = false;
 
 function applyPortalState(isLoggedIn) {
   loginPanel.hidden = isLoggedIn;
-  dashboard.hidden = !isLoggedIn;
+  dashboard.hidden = !isLoggedIn || contentEditorOpen;
+  if (!isLoggedIn) contentEditor.hidden = true;
   document.querySelector('.space-shell').classList.toggle('is-authenticated', isLoggedIn);
 }
 
