@@ -372,8 +372,10 @@ contentEditor.innerHTML = `
   <div class="content-editor-shell">
     <header class="content-editor-header">
       <div><p class="eyebrow"><span></span> THE NAVIES</p><h2>${editorText.title}</h2><p>${editorText.intro}</p></div>
-      <nav class="content-editor-tabs"><button type="button" data-editor-tab="home" aria-pressed="true">${editorText.home}</button><button type="button" data-editor-tab="space" aria-pressed="false">${editorText.space}</button><button type="button" data-editor-tab="general" aria-pressed="false">${editorText.general}</button></nav>
-      <div class="content-editor-actions"><p class="content-editor-status" aria-live="polite"></p><button class="editor-save" type="submit" form="content-editor-form">${editorText.save}</button></div>
+      <div class="content-editor-controls">
+        <nav class="content-editor-tabs"><button type="button" data-editor-tab="home" aria-pressed="true">${editorText.home}</button><button type="button" data-editor-tab="space" aria-pressed="false">${editorText.space}</button><button type="button" data-editor-tab="general" aria-pressed="false">${editorText.general}</button></nav>
+        <div class="content-editor-actions"><button class="editor-save" type="submit" form="content-editor-form">${editorText.save}</button><p class="content-editor-status" aria-live="polite"></p></div>
+      </div>
     </header>
     <form class="content-editor-form" id="content-editor-form">
       <div class="editor-page" data-editor-page="home">
@@ -417,6 +419,16 @@ document.querySelector('.space-shell').append(contentEditor);
 
 const editorForm = contentEditor.querySelector('.content-editor-form');
 const editorStatus = contentEditor.querySelector('.content-editor-status');
+let editorStatusTimer;
+function setEditorStatus(message, temporary = false) {
+  window.clearTimeout(editorStatusTimer);
+  editorStatus.textContent = message;
+  editorStatus.classList.toggle('is-visible', Boolean(message));
+  if (temporary) editorStatusTimer = window.setTimeout(() => {
+    editorStatus.classList.remove('is-visible');
+    window.setTimeout(() => { editorStatus.textContent = ''; }, 220);
+  }, 3200);
+}
 
 function field(label, name, value = '', type = 'text', attributes = {}) {
   const wrapper = document.createElement('label');
@@ -571,7 +583,7 @@ function populateEditor() {
   eventList.replaceChildren(...navyContent.events.map(eventEditorRow));
   songList.replaceChildren(...navyContent.songs.map(songEditorRow));
   linkList.replaceChildren(...navyContent.links.map(linkEditorRow));
-  editorStatus.textContent = '';
+  setEditorStatus('');
 }
 
 function editorContent() {
@@ -657,7 +669,7 @@ editContentButton.addEventListener('click', async (event) => {
   editorOriginRoute = document.documentElement.dataset.route || 'home';
   if (!navyContent) await loadNavyContent();
   if (!navyContent) {
-    editorStatus.textContent = editorText.loadError;
+    setEditorStatus(editorText.loadError);
     return;
   }
   populateEditor();
@@ -730,13 +742,13 @@ editorForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   const session = contentSession();
   if (!session) {
-    editorStatus.textContent = editorText.expired;
+    setEditorStatus(editorText.expired);
     syncEditorAccess();
     return;
   }
   const save = contentEditor.querySelector('.editor-save');
   save.disabled = true;
-  editorStatus.textContent = editorText.saving;
+  setEditorStatus(editorText.saving);
   try {
     const response = await fetch(`${portalApiUrl}/content`, {
       method:'PUT',
@@ -746,9 +758,9 @@ editorForm.addEventListener('submit', async (event) => {
     const result = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(result.error || 'save_failed');
     renderNavyContent(result.content);
-    editorStatus.textContent = editorText.saved;
+    setEditorStatus(editorText.saved, true);
   } catch (error) {
-    editorStatus.textContent = error.message === 'invalid_session' ? editorText.expiredAgain : editorText.saveError;
+    setEditorStatus(error.message === 'invalid_session' ? editorText.expiredAgain : editorText.saveError);
   } finally {
     save.disabled = false;
   }
