@@ -1383,10 +1383,18 @@ const memberDialogBios = {
 };
 function openMember(member) {
   const displayNames = memberDisplayNames[currentLanguage] || memberDisplayNames.es;
-  dialogName.textContent = displayNames[member] || (translations[currentLanguage] || translations.es)[memberTitleKeys[member]];
+  const editableTitle = currentLanguage === 'es' ? window.naviesEditableMemberTitles?.[member] : '';
+  dialogName.textContent = editableTitle || displayNames[member] || (translations[currentLanguage] || translations.es)[memberTitleKeys[member]];
   const editableBio = currentLanguage === 'es' ? window.naviesEditableMemberBios?.[member] : '';
   dialogBio.innerHTML = editableBio || (memberDialogBios[currentLanguage] || memberDialogBios.es)[member];
-  dialogSocial.hidden = member !== 'drums';
+  const editableSocial = currentLanguage === 'es' ? window.naviesEditableMemberSocials?.[member] : null;
+  if (editableSocial?.url) {
+    dialogSocial.href = editableSocial.url;
+    dialogSocial.textContent = `${editableSocial.label || 'Enlace'} ↗`;
+    dialogSocial.hidden = false;
+  } else {
+    dialogSocial.hidden = member !== 'drums';
+  }
   memberDialog.showModal();
 }
 document.querySelectorAll('[data-member]').forEach((card) => {
