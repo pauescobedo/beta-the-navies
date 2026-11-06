@@ -14,6 +14,7 @@
   const endButton = panel.querySelector('.account-admin-end');
   const apiUrl = String(window.NAVIES_ADMIN_API_URL || '').replace(/\/$/, '');
   const sessionKey = 'navies-admin-session';
+  let lastActiveState = null;
   const copy = {
     es:{ access:'Acceder a administración', active:'Administración activa', verify:'Verificar código', invalid:'El código no es válido o ha caducado.', unavailable:'Falta configurar el servicio privado de administración.', network:'No se ha podido contactar con el servicio de administración.', extend:'Extender 10 minutos' },
     ca:{ access:'Accedir a administració', active:'Administració activa', verify:'Verificar el codi', invalid:'El codi no és vàlid o ha caducat.', unavailable:'Falta configurar el servei privat d’administració.', network:'No s’ha pogut contactar amb el servei d’administració.', extend:'Ampliar 10 minuts' },
@@ -40,6 +41,7 @@
   function clearSession() {
     sessionStorage.removeItem(sessionKey);
     document.body.classList.remove('admin-mode');
+    window.dispatchEvent(new CustomEvent('navies-admin-change', { detail:{ active:false } }));
   }
 
   function remainingSeconds(session = readSession()) {
@@ -61,6 +63,10 @@
     }
     const active = Boolean(session);
     document.body.classList.toggle('admin-mode', active);
+    if (active !== lastActiveState) {
+      lastActiveState = active;
+      window.dispatchEvent(new CustomEvent('navies-admin-change', { detail:{ active } }));
+    }
     loginView.hidden = active;
     sessionView.hidden = !active;
     if (active) {
@@ -69,6 +75,7 @@
     }
     submitButton.textContent = words().verify;
     extendButton.textContent = words().extend;
+    window.dispatchEvent(new CustomEvent('navies-admin-change', { detail:{ active } }));
   }
 
   async function request(path, options) {
@@ -139,5 +146,14 @@
   });
 
   window.setInterval(update, 1000);
+  window.naviesAdmin = {
+    isActive:() => remainingSeconds() > 0,
+    request:async (path, options = {}) => {
+      const session = readSession();
+      const headers = { ...(options.headers || {}) };
+      if (session?.token) headers.Authorization = `Bearer ${session.token}`;
+      return request(path, { ...options, headers });
+    }
+  };
   update();
 })();
