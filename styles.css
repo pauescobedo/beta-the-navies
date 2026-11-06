@@ -424,6 +424,7 @@ footer > .brand { color:var(--ink-deep); }
 .dialog-social { width:max-content; margin:-8px 0 22px; display:block; color:color-mix(in srgb,var(--accent) 55%,var(--ink)); font-size:13px; font-weight:700; text-decoration:none; }
 .dialog-social:hover { color:var(--ink); }
 .dialog-social[hidden] { display:none; }
+.dialog-social + .dialog-social { margin-top:-14px; }
 .member-dialog > small { color: #8496a1; font-size: 11px; letter-spacing: .03em; }
 .dialog-close { position: absolute; top: 18px; right: 18px; width: 40px; height: 40px; border: 1px solid var(--line); border-radius: 50%; background: transparent; color: var(--ink); font-size: 24px; cursor: pointer; }
 

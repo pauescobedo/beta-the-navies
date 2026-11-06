@@ -17,11 +17,11 @@ const editorCopies = {
 };
 const editorText = editorCopies[portalLanguage] || editorCopies.es;
 Object.assign(editorText, ({
-  es:{ live:'Navies Live', liveTitle:'Título de Navies Live', liveDescription:'Descripción de Navies Live', socialNetworks:'Redes sociales', socialNetworksCopy:'Enlaces públicos mostrados en la página de Inicio.', addSocial:'Añadir red', dialogTitle:'Título interior', socialLabel:'Texto del enlace', socialUrl:'Enlace personal' },
-  ca:{ live:'Navies Live', liveTitle:'Títol de Navies Live', liveDescription:'Descripció de Navies Live', socialNetworks:'Xarxes socials', socialNetworksCopy:'Enllaços públics mostrats a la pàgina d’Inici.', addSocial:'Afegir xarxa', dialogTitle:'Títol interior', socialLabel:'Text de l’enllaç', socialUrl:'Enllaç personal' },
-  en:{ live:'Navies Live', liveTitle:'Navies Live title', liveDescription:'Navies Live description', socialNetworks:'Social media', socialNetworksCopy:'Public links shown on the Home page.', addSocial:'Add social link', dialogTitle:'Inner title', socialLabel:'Link text', socialUrl:'Personal link' },
-  fr:{ live:'Navies Live', liveTitle:'Titre de Navies Live', liveDescription:'Description de Navies Live', socialNetworks:'Réseaux sociaux', socialNetworksCopy:'Liens publics affichés sur la page d’accueil.', addSocial:'Ajouter un réseau', dialogTitle:'Titre intérieur', socialLabel:'Texte du lien', socialUrl:'Lien personnel' },
-  it:{ live:'Navies Live', liveTitle:'Titolo di Navies Live', liveDescription:'Descrizione di Navies Live', socialNetworks:'Social media', socialNetworksCopy:'Link pubblici mostrati nella pagina Home.', addSocial:'Aggiungi social', dialogTitle:'Titolo interno', socialLabel:'Testo del link', socialUrl:'Link personale' }
+  es:{ live:'Navies Live', liveTitle:'Título de Navies Live', liveDescription:'Descripción de Navies Live', socialNetworks:'Redes sociales', socialNetworksCopy:'Enlaces públicos mostrados en la página de Inicio.', addSocial:'Añadir red', dialogTitle:'Título interior', socialLabel:'Texto del enlace', socialUrl:'Enlace personal', siteEditing:'Edición del sitio', general:'Ajustes generales', generalCopy:'Preferencias comunes para toda la web.', defaultSeason:'Tema predeterminado', singer:'Cantante' },
+  ca:{ live:'Navies Live', liveTitle:'Títol de Navies Live', liveDescription:'Descripció de Navies Live', socialNetworks:'Xarxes socials', socialNetworksCopy:'Enllaços públics mostrats a la pàgina d’Inici.', addSocial:'Afegir xarxa', dialogTitle:'Títol interior', socialLabel:'Text de l’enllaç', socialUrl:'Enllaç personal', siteEditing:'Edició del lloc', general:'Configuració general', generalCopy:'Preferències comunes per a tot el web.', defaultSeason:'Tema predeterminat', singer:'Cantant' },
+  en:{ live:'Navies Live', liveTitle:'Navies Live title', liveDescription:'Navies Live description', socialNetworks:'Social media', socialNetworksCopy:'Public links shown on the Home page.', addSocial:'Add social link', dialogTitle:'Inner title', socialLabel:'Link text', socialUrl:'Personal link', siteEditing:'Site editing', general:'General settings', generalCopy:'Shared preferences for the whole website.', defaultSeason:'Default theme', singer:'Singer' },
+  fr:{ live:'Navies Live', liveTitle:'Titre de Navies Live', liveDescription:'Description de Navies Live', socialNetworks:'Réseaux sociaux', socialNetworksCopy:'Liens publics affichés sur la page d’accueil.', addSocial:'Ajouter un réseau', dialogTitle:'Titre intérieur', socialLabel:'Texte du lien', socialUrl:'Lien personnel', siteEditing:'Édition du site', general:'Réglages généraux', generalCopy:'Préférences communes à tout le site.', defaultSeason:'Thème par défaut', singer:'Chanteuse' },
+  it:{ live:'Navies Live', liveTitle:'Titolo di Navies Live', liveDescription:'Descrizione di Navies Live', socialNetworks:'Social media', socialNetworksCopy:'Link pubblici mostrati nella pagina Home.', addSocial:'Aggiungi social', dialogTitle:'Titolo interno', socialLabel:'Testo del link', socialUrl:'Link personale', siteEditing:'Modifica sito', general:'Impostazioni generali', generalCopy:'Preferenze comuni per tutto il sito.', defaultSeason:'Tema predefinito', singer:'Cantante' }
 }[portalLanguage] || {}));
 
 localStorage.removeItem('navies-demo-chat');
@@ -179,6 +179,7 @@ function concertName(concert) {
 
 function renderHomeContent(home) {
   if (!home) return;
+  if (home.settings?.defaultSeason) window.naviesSetSeason?.(home.settings.defaultSeason, false);
   const language = (document.documentElement.lang || 'es').slice(0, 2);
   if (language === 'es') {
     const textTargets = { heroIntro:'.hero-intro', soundBody:'#sonido .sound-copy [data-i18n="soundBody"]', bandBody:'#banda .about-copy [data-i18n="bandBody"]' };
@@ -198,7 +199,11 @@ function renderHomeContent(home) {
     });
     window.naviesEditableMemberBios = Object.fromEntries(home.members.map((member) => [member.id, member.bio]));
     window.naviesEditableMemberTitles = Object.fromEntries(home.members.map((member) => [member.id, member.dialogTitle]));
-    window.naviesEditableMemberSocials = Object.fromEntries(home.members.map((member) => [member.id, { label:member.socialLabel, url:member.socialUrl }]));
+    window.naviesEditableMemberSocials = Object.fromEntries(home.members.map((member) => [member.id, [
+      { label:member.socialLabel, url:member.socialUrl },
+      { label:member.socialLabel2, url:member.socialUrl2 },
+      { label:member.socialLabel3, url:member.socialUrl3 }
+    ].filter((social) => social.url)]));
     const liveTitle = document.querySelector('.tv-coming-soon h1');
     const liveDescription = document.querySelector('.tv-coming-soon > p');
     if (liveTitle) liveTitle.textContent = home.live.title;
@@ -353,12 +358,12 @@ function closeAudioDialog() {
 document.querySelector('.audio-dialog-close').addEventListener('click', closeAudioDialog);
 audioDialog.addEventListener('click', (event) => { if (event.target === audioDialog) closeAudioDialog(); });
 
-const editContentButton = document.createElement('button');
+const editContentButton = document.createElement('a');
 editContentButton.className = 'content-editor-trigger';
-editContentButton.type = 'button';
-editContentButton.innerHTML = `<span aria-hidden="true">✦</span> ${editorText.edit}`;
+editContentButton.href = '#edicion-del-sitio';
+editContentButton.textContent = editorText.siteEditing;
 editContentButton.hidden = true;
-document.body.append(editContentButton);
+document.querySelector('#main-nav [data-route="espacio-navy"]')?.after(editContentButton);
 
 const contentEditor = document.createElement('section');
 contentEditor.className = 'content-editor';
@@ -367,10 +372,10 @@ contentEditor.innerHTML = `
   <div class="content-editor-shell">
     <header class="content-editor-header">
       <div><p class="eyebrow"><span></span> THE NAVIES</p><h2>${editorText.title}</h2><p>${editorText.intro}</p></div>
-      <button class="content-editor-back" type="button" aria-label="${editorText.back}">←</button>
+      <nav class="content-editor-tabs"><button type="button" data-editor-tab="home" aria-pressed="true">${editorText.home}</button><button type="button" data-editor-tab="space" aria-pressed="false">${editorText.space}</button><button type="button" data-editor-tab="general" aria-pressed="false">${editorText.general}</button></nav>
+      <div class="content-editor-actions"><p class="content-editor-status" aria-live="polite"></p><button class="editor-save" type="submit" form="content-editor-form">${editorText.save}</button></div>
     </header>
-    <form class="content-editor-form">
-      <nav class="content-editor-tabs"><button type="button" data-editor-tab="home" aria-pressed="true">${editorText.home}</button><button type="button" data-editor-tab="navies-live" aria-pressed="false">${editorText.live}</button><button type="button" data-editor-tab="space" aria-pressed="false">${editorText.space}</button></nav>
+    <form class="content-editor-form" id="content-editor-form">
       <div class="editor-page" data-editor-page="home">
       <section class="editor-section">
         <div class="editor-section-head"><div><span>01</span><h3>${editorText.mainTexts}</h3><p>${editorText.mainTextsCopy}</p></div></div>
@@ -389,9 +394,6 @@ contentEditor.innerHTML = `
         <div class="editor-list" data-editor-list="socials"></div>
       </section>
       </div>
-      <div class="editor-page" data-editor-page="navies-live" hidden>
-        <section class="editor-section"><div class="editor-section-head"><div><span>01</span><h3>Navies Live</h3><p>${editorText.liveDescription}</p></div></div><div class="editor-text-grid" data-editor-live-texts></div></section>
-      </div>
       <div class="editor-page" data-editor-page="space" hidden>
       <section class="editor-section">
         <div class="editor-section-head"><div><span>01</span><h3>${editorText.dates}</h3><p>${editorText.datesCopy}</p></div><button type="button" data-editor-add="event">${editorText.addDate}</button></div>
@@ -406,7 +408,9 @@ contentEditor.innerHTML = `
         <div class="editor-list" data-editor-list="links"></div>
       </section>
       </div>
-      <footer class="content-editor-actions"><p class="content-editor-status" aria-live="polite"></p><button class="editor-save" type="submit">${editorText.save}</button></footer>
+      <div class="editor-page" data-editor-page="general" hidden>
+        <section class="editor-section"><div class="editor-section-head"><div><span>01</span><h3>${editorText.general}</h3><p>${editorText.generalCopy}</p></div></div><div class="editor-settings" data-editor-settings></div></section>
+      </div>
     </form>
   </div>`;
 document.querySelector('.space-shell').append(contentEditor);
@@ -537,14 +541,15 @@ function memberEditorRow(member = {}) {
   const row = document.createElement('div');
   row.className = 'editor-row editor-member-row';
   row.dataset.id = member.id || '';
-  row.append(field(editorText.instrument, 'instrument', member.instrument, 'text', { maxlength:'160', required:'' }), field(editorText.cardTitle, 'title', member.title, 'text', { maxlength:'160', required:'' }), field(editorText.dialogTitle, 'dialogTitle', member.dialogTitle, 'text', { maxlength:'160', required:'' }), textAreaField(editorText.short, 'summary', member.summary, 300), textAreaField(editorText.long, 'bio', member.bio, 800), field(editorText.socialLabel, 'socialLabel', member.socialLabel, 'text', { maxlength:'160' }), field(editorText.socialUrl, 'socialUrl', member.socialUrl, 'url', { maxlength:'500', placeholder:'https://…' }));
+  row.append(field(editorText.instrument, 'instrument', member.instrument, 'text', { maxlength:'160', required:'' }), field(editorText.cardTitle, 'title', member.title, 'text', { maxlength:'160', required:'' }), field(editorText.dialogTitle, 'dialogTitle', member.dialogTitle, 'text', { maxlength:'160', required:'' }), textAreaField(editorText.short, 'summary', member.summary, 300), textAreaField(editorText.long, 'bio', member.bio, 800), field(member.id === 'vocals' ? `${editorText.singer} 1 · ${editorText.socialLabel}` : editorText.socialLabel, 'socialLabel', member.socialLabel, 'text', { maxlength:'160' }), field(member.id === 'vocals' ? `${editorText.singer} 1 · ${editorText.socialUrl}` : editorText.socialUrl, 'socialUrl', member.socialUrl, 'url', { maxlength:'500', placeholder:'https://…' }));
+  if (member.id === 'vocals') row.append(field(`${editorText.singer} 2 · ${editorText.socialLabel}`, 'socialLabel2', member.socialLabel2, 'text', { maxlength:'160' }), field(`${editorText.singer} 2 · ${editorText.socialUrl}`, 'socialUrl2', member.socialUrl2, 'url', { maxlength:'500', placeholder:'https://…' }), field(`${editorText.singer} 3 · ${editorText.socialLabel}`, 'socialLabel3', member.socialLabel3, 'text', { maxlength:'160' }), field(`${editorText.singer} 3 · ${editorText.socialUrl}`, 'socialUrl3', member.socialUrl3, 'url', { maxlength:'500', placeholder:'https://…' }));
   return row;
 }
 
 function populateEditor() {
   if (!navyContent) return;
   const homeTexts = contentEditor.querySelector('[data-editor-home-texts]');
-  const liveTexts = contentEditor.querySelector('[data-editor-live-texts]');
+  const settings = contentEditor.querySelector('[data-editor-settings]');
   const concertList = contentEditor.querySelector('[data-editor-list="concerts"]');
   const memberList = contentEditor.querySelector('[data-editor-list="members"]');
   const socialList = contentEditor.querySelector('[data-editor-list="socials"]');
@@ -552,7 +557,14 @@ function populateEditor() {
   const songList = contentEditor.querySelector('[data-editor-list="songs"]');
   const linkList = contentEditor.querySelector('[data-editor-list="links"]');
   homeTexts.replaceChildren(textAreaField(editorText.presentation, 'heroIntro', navyContent.home.texts.heroIntro), textAreaField(editorText.sound, 'soundBody', navyContent.home.texts.soundBody), textAreaField(editorText.band, 'bandBody', navyContent.home.texts.bandBody));
-  liveTexts.replaceChildren(field(editorText.liveTitle, 'title', navyContent.home.live.title, 'text', { maxlength:'160', required:'' }), textAreaField(editorText.liveDescription, 'description', navyContent.home.live.description));
+  const seasonField = document.createElement('label');
+  seasonField.innerHTML = `<span>${editorText.defaultSeason}</span>`;
+  const seasonSelect = document.createElement('select');
+  seasonSelect.name = 'defaultSeason';
+  const seasonNames = ({ es:{ spring:'🌸 Primavera', summer:'☀️ Verano', autumn:'🍁 Otoño', winter:'❄️ Invierno' }, ca:{ spring:'🌸 Primavera', summer:'☀️ Estiu', autumn:'🍁 Tardor', winter:'❄️ Hivern' }, en:{ spring:'🌸 Spring', summer:'☀️ Summer', autumn:'🍁 Autumn', winter:'❄️ Winter' }, fr:{ spring:'🌸 Printemps', summer:'☀️ Été', autumn:'🍁 Automne', winter:'❄️ Hiver' }, it:{ spring:'🌸 Primavera', summer:'☀️ Estate', autumn:'🍁 Autunno', winter:'❄️ Inverno' } })[portalLanguage];
+  Object.entries(seasonNames).forEach(([value, label]) => { const option = document.createElement('option'); option.value = value; option.textContent = label; option.selected = navyContent.home.settings?.defaultSeason === value; seasonSelect.append(option); });
+  seasonField.append(seasonSelect);
+  settings.replaceChildren(seasonField);
   concertList.replaceChildren(...navyContent.home.concerts.map(concertEditorRow));
   memberList.replaceChildren(...navyContent.home.members.map(memberEditorRow));
   socialList.replaceChildren(...navyContent.home.socials.map(socialEditorRow));
@@ -564,7 +576,7 @@ function populateEditor() {
 
 function editorContent() {
   const homeTexts = contentEditor.querySelector('[data-editor-home-texts]');
-  const liveTexts = contentEditor.querySelector('[data-editor-live-texts]');
+  const defaultSeason = contentEditor.querySelector('[name="defaultSeason"]').value;
   const concerts = [...contentEditor.querySelectorAll('.editor-concert-row')].map((row, index) => ({
     id:row.dataset.id || `${slugify(row.querySelector('[name="name"]').value)}-${Date.now()}-${index}`,
     name:row.querySelector('[name="name"]').value.trim(),
@@ -583,7 +595,11 @@ function editorContent() {
     summary:row.querySelector('[name="summary"]').value.trim(),
     bio:row.querySelector('[name="bio"]').value.trim(),
     socialLabel:row.querySelector('[name="socialLabel"]').value.trim(),
-    socialUrl:row.querySelector('[name="socialUrl"]').value.trim()
+    socialUrl:row.querySelector('[name="socialUrl"]').value.trim(),
+    socialLabel2:row.querySelector('[name="socialLabel2"]')?.value.trim() || '',
+    socialUrl2:row.querySelector('[name="socialUrl2"]')?.value.trim() || '',
+    socialLabel3:row.querySelector('[name="socialLabel3"]')?.value.trim() || '',
+    socialUrl3:row.querySelector('[name="socialUrl3"]')?.value.trim() || ''
   }));
   const usedSocialIds = new Set();
   const socials = [...contentEditor.querySelectorAll('.editor-social-row')].map((row, index) => {
@@ -617,7 +633,7 @@ function editorContent() {
     usedLinkIds.add(id);
     return { id, label, url:row.querySelector('[name="url"]').value.trim() };
   });
-  return { home:{ live:{ title:liveTexts.querySelector('[name="title"]').value.trim(), description:liveTexts.querySelector('[name="description"]').value.trim() }, texts:{ heroIntro:homeTexts.querySelector('[name="heroIntro"]').value.trim(), soundBody:homeTexts.querySelector('[name="soundBody"]').value.trim(), bandBody:homeTexts.querySelector('[name="bandBody"]').value.trim() }, concerts, members, socials }, events, songs, links };
+  return { home:{ settings:{ defaultSeason }, live:navyContent.home.live, texts:{ heroIntro:homeTexts.querySelector('[name="heroIntro"]').value.trim(), soundBody:homeTexts.querySelector('[name="soundBody"]').value.trim(), bandBody:homeTexts.querySelector('[name="bandBody"]').value.trim() }, concerts, members, socials }, events, songs, links };
 }
 
 function syncEditorAccess() {
@@ -628,13 +644,16 @@ function syncEditorAccess() {
 }
 
 function selectEditorPage(route) {
-  const page = route === 'navies-live' ? 'navies-live' : route === 'home' ? 'home' : 'space';
+  const page = route === 'home' ? 'home' : route === 'espacio-navy' ? 'space' : 'general';
   contentEditor.querySelectorAll('[data-editor-tab]').forEach((item) => item.setAttribute('aria-pressed', String(item.dataset.editorTab === page)));
   contentEditor.querySelectorAll('[data-editor-page]').forEach((item) => { item.hidden = item.dataset.editorPage !== page; });
 }
 
-editContentButton.addEventListener('click', async () => {
+editContentButton.addEventListener('click', async (event) => {
+  event.preventDefault();
   if (!contentSession()) return syncEditorAccess();
+  const menuToggle = document.querySelector('.menu-toggle');
+  if (menuToggle?.getAttribute('aria-expanded') === 'true') menuToggle.click();
   editorOriginRoute = document.documentElement.dataset.route || 'home';
   if (!navyContent) await loadNavyContent();
   if (!navyContent) {
@@ -651,6 +670,8 @@ editContentButton.addEventListener('click', async () => {
     contentEditor.hidden = false;
     window.scrollTo({ top:0, behavior:'smooth' });
     requestAnimationFrame(() => contentEditor.classList.add('is-visible'));
+    document.querySelectorAll('#main-nav a').forEach((link) => link.classList.toggle('active', link === editContentButton));
+    document.title = `${editorText.siteEditing} — The Navies`;
   }, editorOriginRoute === 'espacio-navy' ? 0 : 240);
 });
 
@@ -660,15 +681,12 @@ function closeContentEditor(immediate = false) {
   contentEditor.classList.remove('is-visible');
   const finish = () => {
     contentEditor.hidden = true;
-    if (editorOriginRoute === 'espacio-navy' && localStorage.getItem('navies-member-session')) dashboard.hidden = false;
-    else if (editorOriginRoute !== 'espacio-navy') document.querySelector(`#main-nav [data-route="${editorOriginRoute}"]`)?.click();
+    if (localStorage.getItem('navies-member-session')) dashboard.hidden = false;
     window.scrollTo({ top:0, behavior:immediate ? 'instant' : 'smooth' });
   };
   if (immediate) finish();
   else window.setTimeout(finish, 260);
 }
-
-contentEditor.querySelector('.content-editor-back').addEventListener('click', () => closeContentEditor());
 
 contentEditor.querySelectorAll('[data-editor-tab]').forEach((button) => {
   button.addEventListener('click', () => {
@@ -676,6 +694,15 @@ contentEditor.querySelectorAll('[data-editor-tab]').forEach((button) => {
     contentEditor.querySelectorAll('[data-editor-page]').forEach((page) => { page.hidden = page.dataset.editorPage !== button.dataset.editorTab; });
   });
 });
+
+document.querySelectorAll('#main-nav [data-route]').forEach((link) => link.addEventListener('click', () => {
+  if (!contentEditorOpen) return;
+  contentEditorOpen = false;
+  contentEditor.classList.remove('is-visible');
+  contentEditor.hidden = true;
+  editContentButton.classList.remove('active');
+  dashboard.hidden = link.dataset.route !== 'espacio-navy';
+}));
 
 contentEditor.addEventListener('click', (event) => {
   const add = event.target.closest('[data-editor-add]');

@@ -1212,6 +1212,7 @@ function setSeason(season, persist = true) {
   document.querySelectorAll('.season-option').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.season === selected)));
   if (persist) localStorage.setItem('the-navies-season', selected);
 }
+window.naviesSetSeason = setSeason;
 setSeason(window.__naviesInitialSeason || localStorage.getItem('the-navies-season') || 'autumn', false);
 requestAnimationFrame(() => document.documentElement.classList.add('theme-ready'));
 seasonControl.querySelectorAll('.season-option').forEach((button) => button.addEventListener('click', () => setSeason(button.dataset.season)));
@@ -1387,11 +1388,24 @@ function openMember(member) {
   dialogName.textContent = editableTitle || displayNames[member] || (translations[currentLanguage] || translations.es)[memberTitleKeys[member]];
   const editableBio = currentLanguage === 'es' ? window.naviesEditableMemberBios?.[member] : '';
   dialogBio.innerHTML = editableBio || (memberDialogBios[currentLanguage] || memberDialogBios.es)[member];
-  const editableSocial = currentLanguage === 'es' ? window.naviesEditableMemberSocials?.[member] : null;
-  if (editableSocial?.url) {
-    dialogSocial.href = editableSocial.url;
-    dialogSocial.textContent = `${editableSocial.label || 'Enlace'} ↗`;
+  memberDialog.querySelectorAll('.dialog-social-extra').forEach((link) => link.remove());
+  const editableSocials = currentLanguage === 'es' ? window.naviesEditableMemberSocials?.[member] : null;
+  if (editableSocials?.length) {
+    const [first, ...rest] = editableSocials;
+    dialogSocial.href = first.url;
+    dialogSocial.textContent = `${first.label || 'Enlace'} ↗`;
     dialogSocial.hidden = false;
+    let anchor = dialogSocial;
+    rest.forEach((social) => {
+      const link = dialogSocial.cloneNode();
+      link.id = '';
+      link.classList.add('dialog-social-extra');
+      link.href = social.url;
+      link.textContent = `${social.label || 'Enlace'} ↗`;
+      link.hidden = false;
+      anchor.after(link);
+      anchor = link;
+    });
   } else {
     dialogSocial.hidden = member !== 'drums';
   }
