@@ -17,11 +17,11 @@ const editorCopies = {
 };
 const editorText = editorCopies[portalLanguage] || editorCopies.es;
 Object.assign(editorText, ({
-  es:{ live:'Navies Live', liveTitle:'Título de Navies Live', liveDescription:'Descripción de Navies Live', socialNetworks:'Redes sociales', socialNetworksCopy:'Enlaces públicos mostrados en la página de Inicio.', addSocial:'Añadir red', dialogTitle:'Título interior', socialLabel:'Texto del enlace', socialUrl:'Enlace personal', siteEditing:'Edición del sitio', general:'Ajustes generales', generalCopy:'Preferencias comunes para toda la web.', defaultSeason:'Tema predeterminado', singer:'Cantante' },
-  ca:{ live:'Navies Live', liveTitle:'Títol de Navies Live', liveDescription:'Descripció de Navies Live', socialNetworks:'Xarxes socials', socialNetworksCopy:'Enllaços públics mostrats a la pàgina d’Inici.', addSocial:'Afegir xarxa', dialogTitle:'Títol interior', socialLabel:'Text de l’enllaç', socialUrl:'Enllaç personal', siteEditing:'Edició del lloc', general:'Configuració general', generalCopy:'Preferències comunes per a tot el web.', defaultSeason:'Tema predeterminat', singer:'Cantant' },
-  en:{ live:'Navies Live', liveTitle:'Navies Live title', liveDescription:'Navies Live description', socialNetworks:'Social media', socialNetworksCopy:'Public links shown on the Home page.', addSocial:'Add social link', dialogTitle:'Inner title', socialLabel:'Link text', socialUrl:'Personal link', siteEditing:'Site editing', general:'General settings', generalCopy:'Shared preferences for the whole website.', defaultSeason:'Default theme', singer:'Singer' },
-  fr:{ live:'Navies Live', liveTitle:'Titre de Navies Live', liveDescription:'Description de Navies Live', socialNetworks:'Réseaux sociaux', socialNetworksCopy:'Liens publics affichés sur la page d’accueil.', addSocial:'Ajouter un réseau', dialogTitle:'Titre intérieur', socialLabel:'Texte du lien', socialUrl:'Lien personnel', siteEditing:'Édition du site', general:'Réglages généraux', generalCopy:'Préférences communes à tout le site.', defaultSeason:'Thème par défaut', singer:'Chanteuse' },
-  it:{ live:'Navies Live', liveTitle:'Titolo di Navies Live', liveDescription:'Descrizione di Navies Live', socialNetworks:'Social media', socialNetworksCopy:'Link pubblici mostrati nella pagina Home.', addSocial:'Aggiungi social', dialogTitle:'Titolo interno', socialLabel:'Testo del link', socialUrl:'Link personale', siteEditing:'Modifica sito', general:'Impostazioni generali', generalCopy:'Preferenze comuni per tutto il sito.', defaultSeason:'Tema predefinito', singer:'Cantante' }
+  es:{ live:'Navies Live', liveTitle:'Título de Navies Live', liveDescription:'Descripción de Navies Live', socialNetworks:'Redes sociales', socialNetworksCopy:'Enlaces públicos mostrados en la página de Inicio.', addSocial:'Añadir red', dialogTitle:'Título interior', socialLabel:'Texto del enlace', socialUrl:'Enlace personal', siteEditing:'Edición del sitio', general:'Ajustes generales', generalCopy:'Preferencias comunes para toda la web.', defaultSeason:'Tema predeterminado', initialPlayback:'Primera canción del reproductor', randomPlayback:'Aleatoria', customPlayback:'Canción personalizada', initialSong:'Canción inicial', countdownSetting:'Landing y cuenta atrás', enabled:'Activada', disabled:'Desactivada', initialVolume:'Volumen inicial', lowVolume:'Bajo', mediumVolume:'Medio', highVolume:'Alto', fallbackLanguage:'Idioma de respaldo', singer:'Cantante' },
+  ca:{ live:'Navies Live', liveTitle:'Títol de Navies Live', liveDescription:'Descripció de Navies Live', socialNetworks:'Xarxes socials', socialNetworksCopy:'Enllaços públics mostrats a la pàgina d’Inici.', addSocial:'Afegir xarxa', dialogTitle:'Títol interior', socialLabel:'Text de l’enllaç', socialUrl:'Enllaç personal', siteEditing:'Edició del lloc', general:'Configuració general', generalCopy:'Preferències comunes per a tot el web.', defaultSeason:'Tema predeterminat', initialPlayback:'Primera cançó del reproductor', randomPlayback:'Aleatòria', customPlayback:'Cançó personalitzada', initialSong:'Cançó inicial', countdownSetting:'Landing i compte enrere', enabled:'Activat', disabled:'Desactivat', initialVolume:'Volum inicial', lowVolume:'Baix', mediumVolume:'Mitjà', highVolume:'Alt', fallbackLanguage:'Idioma de reserva', singer:'Cantant' },
+  en:{ live:'Navies Live', liveTitle:'Navies Live title', liveDescription:'Navies Live description', socialNetworks:'Social media', socialNetworksCopy:'Public links shown on the Home page.', addSocial:'Add social link', dialogTitle:'Inner title', socialLabel:'Link text', socialUrl:'Personal link', siteEditing:'Site editing', general:'General settings', generalCopy:'Shared preferences for the whole website.', defaultSeason:'Default theme', initialPlayback:'First player track', randomPlayback:'Random', customPlayback:'Custom track', initialSong:'First track', countdownSetting:'Landing and countdown', enabled:'Enabled', disabled:'Disabled', initialVolume:'Initial volume', lowVolume:'Low', mediumVolume:'Medium', highVolume:'High', fallbackLanguage:'Fallback language', singer:'Singer' },
+  fr:{ live:'Navies Live', liveTitle:'Titre de Navies Live', liveDescription:'Description de Navies Live', socialNetworks:'Réseaux sociaux', socialNetworksCopy:'Liens publics affichés sur la page d’accueil.', addSocial:'Ajouter un réseau', dialogTitle:'Titre intérieur', socialLabel:'Texte du lien', socialUrl:'Lien personnel', siteEditing:'Édition du site', general:'Réglages généraux', generalCopy:'Préférences communes à tout le site.', defaultSeason:'Thème par défaut', initialPlayback:'Premier morceau du lecteur', randomPlayback:'Aléatoire', customPlayback:'Morceau personnalisé', initialSong:'Morceau initial', countdownSetting:'Accueil et compte à rebours', enabled:'Activé', disabled:'Désactivé', initialVolume:'Volume initial', lowVolume:'Faible', mediumVolume:'Moyen', highVolume:'Élevé', fallbackLanguage:'Langue de secours', singer:'Chanteuse' },
+  it:{ live:'Navies Live', liveTitle:'Titolo di Navies Live', liveDescription:'Descrizione di Navies Live', socialNetworks:'Social media', socialNetworksCopy:'Link pubblici mostrati nella pagina Home.', addSocial:'Aggiungi social', dialogTitle:'Titolo interno', socialLabel:'Testo del link', socialUrl:'Link personale', siteEditing:'Modifica sito', general:'Impostazioni generali', generalCopy:'Preferenze comuni per tutto il sito.', defaultSeason:'Tema predefinito', initialPlayback:'Primo brano del lettore', randomPlayback:'Casuale', customPlayback:'Brano personalizzato', initialSong:'Brano iniziale', countdownSetting:'Landing e conto alla rovescia', enabled:'Attivato', disabled:'Disattivato', initialVolume:'Volume iniziale', lowVolume:'Basso', mediumVolume:'Medio', highVolume:'Alto', fallbackLanguage:'Lingua di riserva', singer:'Cantante' }
 }[portalLanguage] || {}));
 
 localStorage.removeItem('navies-demo-chat');
@@ -180,6 +180,8 @@ function concertName(concert) {
 function renderHomeContent(home) {
   if (!home) return;
   if (home.settings?.defaultSeason) window.naviesSetSeason?.(home.settings.defaultSeason, false);
+  window.naviesConfigureSiteMusic?.(home.settings);
+  window.naviesApplyGeneralSettings?.(home.settings);
   const language = (document.documentElement.lang || 'es').slice(0, 2);
   if (language === 'es') {
     const textTargets = { heroIntro:'.hero-intro', soundBody:'#sonido .sound-copy [data-i18n="soundBody"]', bandBody:'#banda .about-copy [data-i18n="bandBody"]' };
@@ -576,7 +578,43 @@ function populateEditor() {
   const seasonNames = ({ es:{ spring:'🌸 Primavera', summer:'☀️ Verano', autumn:'🍁 Otoño', winter:'❄️ Invierno' }, ca:{ spring:'🌸 Primavera', summer:'☀️ Estiu', autumn:'🍁 Tardor', winter:'❄️ Hivern' }, en:{ spring:'🌸 Spring', summer:'☀️ Summer', autumn:'🍁 Autumn', winter:'❄️ Winter' }, fr:{ spring:'🌸 Printemps', summer:'☀️ Été', autumn:'🍁 Automne', winter:'❄️ Hiver' }, it:{ spring:'🌸 Primavera', summer:'☀️ Estate', autumn:'🍁 Autunno', winter:'❄️ Inverno' } })[portalLanguage];
   Object.entries(seasonNames).forEach(([value, label]) => { const option = document.createElement('option'); option.value = value; option.textContent = label; option.selected = navyContent.home.settings?.defaultSeason === value; seasonSelect.append(option); });
   seasonField.append(seasonSelect);
-  settings.replaceChildren(seasonField);
+  const playbackField = document.createElement('label');
+  playbackField.innerHTML = `<span>${editorText.initialPlayback}</span>`;
+  const playbackSelect = document.createElement('select');
+  playbackSelect.name = 'initialPlayback';
+  [{ value:'random', label:editorText.randomPlayback }, { value:'custom', label:editorText.customPlayback }].forEach(({ value, label }) => { const option = document.createElement('option'); option.value = value; option.textContent = label; option.selected = (navyContent.home.settings?.initialPlayback || 'random') === value; playbackSelect.append(option); });
+  playbackField.append(playbackSelect);
+  const initialSongField = document.createElement('label');
+  initialSongField.innerHTML = `<span>${editorText.initialSong}</span>`;
+  const initialSongSelect = document.createElement('select');
+  initialSongSelect.name = 'initialSongId';
+  const playableSongs = [
+    ['shake-it-off','Taylor Swift — Shake It Off'],
+    ['baby-one-more-time','Britney Spears — …Baby One More Time'],
+    ['sweet-caroline','Neil Diamond — Sweet Caroline'],
+    ['dont-look-back-in-anger',"Oasis — Don't Look Back in Anger"],
+    ['the-final-countdown','Europe — The Final Countdown'],
+    ['have-you-ever-seen-the-rain','Creedence Clearwater Revival — Have You Ever Seen the Rain?']
+  ];
+  playableSongs.forEach(([value, label]) => { const option = document.createElement('option'); option.value = value; option.textContent = label; option.selected = navyContent.home.settings?.initialSongId === value; initialSongSelect.append(option); });
+  initialSongField.append(initialSongSelect);
+  const syncInitialSong = () => { initialSongField.hidden = playbackSelect.value !== 'custom'; initialSongSelect.disabled = initialSongField.hidden; };
+  playbackSelect.addEventListener('change', syncInitialSong);
+  syncInitialSong();
+  const makeSettingsSelect = (name, title, options, current) => {
+    const wrapper = document.createElement('label');
+    wrapper.innerHTML = `<span>${title}</span>`;
+    const select = document.createElement('select');
+    select.name = name;
+    options.forEach(([value, label]) => { const option = document.createElement('option'); option.value = value; option.textContent = label; option.selected = String(current) === value; select.append(option); });
+    wrapper.append(select);
+    return wrapper;
+  };
+  const countdownField = makeSettingsSelect('countdownEnabled', editorText.countdownSetting, [['true',editorText.enabled],['false',editorText.disabled]], String(navyContent.home.settings?.countdownEnabled ?? true));
+  const volumeField = makeSettingsSelect('initialVolume', editorText.initialVolume, [['low',editorText.lowVolume],['medium',editorText.mediumVolume],['high',editorText.highVolume]], navyContent.home.settings?.initialVolume || 'medium');
+  const languageNames = { ca:'Català', es:'Castellano', en:'English', fr:'Français', it:'Italiano' };
+  const fallbackField = makeSettingsSelect('fallbackLanguage', editorText.fallbackLanguage, ['ca','es','en','fr','it'].map((code) => [code,languageNames[code]]), navyContent.home.settings?.fallbackLanguage || 'es');
+  settings.replaceChildren(seasonField, playbackField, initialSongField, countdownField, volumeField, fallbackField);
   concertList.replaceChildren(...navyContent.home.concerts.map(concertEditorRow));
   memberList.replaceChildren(...navyContent.home.members.map(memberEditorRow));
   socialList.replaceChildren(...navyContent.home.socials.map(socialEditorRow));
@@ -589,6 +627,11 @@ function populateEditor() {
 function editorContent() {
   const homeTexts = contentEditor.querySelector('[data-editor-home-texts]');
   const defaultSeason = contentEditor.querySelector('[name="defaultSeason"]').value;
+  const initialPlayback = contentEditor.querySelector('[name="initialPlayback"]').value;
+  const initialSongId = initialPlayback === 'custom' ? contentEditor.querySelector('[name="initialSongId"]').value : '';
+  const countdownEnabled = contentEditor.querySelector('[name="countdownEnabled"]').value === 'true';
+  const initialVolume = contentEditor.querySelector('[name="initialVolume"]').value;
+  const fallbackLanguage = contentEditor.querySelector('[name="fallbackLanguage"]').value;
   const concerts = [...contentEditor.querySelectorAll('.editor-concert-row')].map((row, index) => ({
     id:row.dataset.id || `${slugify(row.querySelector('[name="name"]').value)}-${Date.now()}-${index}`,
     name:row.querySelector('[name="name"]').value.trim(),
@@ -645,7 +688,7 @@ function editorContent() {
     usedLinkIds.add(id);
     return { id, label, url:row.querySelector('[name="url"]').value.trim() };
   });
-  return { home:{ settings:{ defaultSeason }, live:navyContent.home.live, texts:{ heroIntro:homeTexts.querySelector('[name="heroIntro"]').value.trim(), soundBody:homeTexts.querySelector('[name="soundBody"]').value.trim(), bandBody:homeTexts.querySelector('[name="bandBody"]').value.trim() }, concerts, members, socials }, events, songs, links };
+  return { home:{ settings:{ defaultSeason, initialPlayback, initialSongId, countdownEnabled, initialVolume, fallbackLanguage }, live:navyContent.home.live, texts:{ heroIntro:homeTexts.querySelector('[name="heroIntro"]').value.trim(), soundBody:homeTexts.querySelector('[name="soundBody"]').value.trim(), bandBody:homeTexts.querySelector('[name="bandBody"]').value.trim() }, concerts, members, socials }, events, songs, links };
 }
 
 function syncEditorAccess() {

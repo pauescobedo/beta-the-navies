@@ -65,7 +65,9 @@ const countdownTracks = [
   { file:'the-final-countdown', artist:'Europe', title:'The Final Countdown', start:244, fadeAtEnd:true },
   { file:'have-you-ever-seen-the-rain', artist:'Creedence Clearwater Revival', title:'Have You Ever Seen the Rain?', start:101, fadeAtEnd:true }
 ];
-const countdownMusicVolume = .24;
+let countdownMusicVolume = .24;
+let siteMusicVolume = .34;
+let countdownExperienceEnabled = true;
 const countdownFadeInDuration = 1600;
 const countdownFadeOutDuration = 2000;
 let countdownTrackIndex = Math.floor(Math.random() * countdownTracks.length);
@@ -410,6 +412,11 @@ function resetCountdownWelcomeState() {
 }
 
 function openCountdownWelcome({ showPreloader = true } = {}) {
+  if (!countdownExperienceEnabled) {
+    history.replaceState({ route:'home' }, '', '#inicio');
+    showPage('home', false);
+    return;
+  }
   if (document.documentElement.classList.contains('countdown-opening')) return;
   resetCountdownWelcomeState();
   if (!showPreloader) {
@@ -761,7 +768,7 @@ const memberBios = {
     aina:['Voz','Aina aporta una voz luminosa y una presencia natural sobre el escenario. Le gustan las melodías que empiezan cerca y terminan haciendo cantar a toda la plaza.'],
     candela:['Voz','Candela combina carácter, sensibilidad y una energía muy directa con el público. Su sitio favorito es justo donde una canción empieza a crecer.'],
     mariona:['Voz','Mariona completa el frente vocal con calidez y versatilidad. Disfruta construyendo armonías y encontrando una personalidad nueva en canciones conocidas.'],
-    emma:['Bajo','Emma sostiene el pulso de The Navies con líneas sólidas y musicales. Es el punto de unión entre el ritmo, las voces y todo lo que ocurre en el escenario.'],
+    emma:['Bajo','Emma Tubau sostiene el pulso de The Navies con líneas sólidas y musicales. Es el punto de unión entre el ritmo, las voces y todo lo que ocurre en el escenario.'],
     carles:['Guitarra','Carles da forma al sonido de la banda con guitarras precisas, texturas y el punto justo de energía rock. Siempre al servicio de la canción.'],
     fermito:['Teclados','Fermito abre el paisaje sonoro con pianos, sintetizadores y arreglos que hacen crecer cada tema sin perder su esencia.'],
     pau:['Batería','Pau impulsa el directo desde la batería: sólido, dinámico y atento a cada cambio. Su objetivo es sencillo: que la banda respire como una sola.']
@@ -771,7 +778,7 @@ memberBios.ca = {
   aina:['Veu','L’Aina aporta una veu lluminosa i una presència natural a l’escenari. Li agraden les melodies que comencen a prop i acaben fent cantar tota la plaça.'], candela:['Veu','La Candela combina caràcter, sensibilitat i una energia molt directa amb el públic. El seu lloc preferit és on una cançó comença a créixer.'], mariona:['Veu','La Mariona completa el front vocal amb calidesa i versatilitat. Gaudeix construint harmonies i trobant una nova personalitat en cançons conegudes.'], emma:['Baix','L’Emma sosté el pols de The Navies amb línies sòlides i musicals. És el punt d’unió entre el ritme, les veus i tot el que passa a l’escenari.'], carles:['Guitarra','En Carles dona forma al so de la banda amb guitarres precises, textures i el punt just d’energia rock. Sempre al servei de la cançó.'], fermito:['Teclats','En Fermito obre el paisatge sonor amb pianos, sintetitzadors i arranjaments que fan créixer cada tema sense perdre’n l’essència.'], pau:['Bateria','En Pau impulsa el directe des de la bateria: sòlid, dinàmic i atent a cada canvi. L’objectiu és que la banda respiri com una sola.']
 };
 memberBios.en = {
-  aina:['Vocals','Aina brings a bright voice and a natural stage presence. She loves melodies that begin intimately and end with the whole square singing.'], candela:['Vocals','Candela combines character, sensitivity and a direct connection with the audience. Her favourite place is where a song begins to grow.'], mariona:['Vocals','Mariona completes the vocal line-up with warmth and versatility. She enjoys building harmonies and finding new character in familiar songs.'], emma:['Bass','Emma holds The Navies together with solid, musical bass lines, linking the rhythm, the voices and everything happening on stage.'], carles:['Guitar','Carles shapes the band’s sound with precise guitars, texture and just the right amount of rock energy—always serving the song.'], fermito:['Keys','Fermito expands the sound with piano, synths and arrangements that help every track grow without losing its essence.'], pau:['Drums','Pau drives the live show from the drums: solid, dynamic and alert to every change. His aim is simple—to make the band breathe as one.']
+  aina:['Vocals','Aina brings a bright voice and a natural stage presence. She loves melodies that begin intimately and end with the whole square singing.'], candela:['Vocals','Candela combines character, sensitivity and a direct connection with the audience. Her favourite place is where a song begins to grow.'], mariona:['Vocals','Mariona completes the vocal line-up with warmth and versatility. She enjoys building harmonies and finding new character in familiar songs.'], emma:['Bass','Emma Tubau holds The Navies together with solid, musical bass lines, linking the rhythm, the voices and everything happening on stage.'], carles:['Guitar','Carles shapes the band’s sound with precise guitars, texture and just the right amount of rock energy—always serving the song.'], fermito:['Keys','Fermito expands the sound with piano, synths and arrangements that help every track grow without losing its essence.'], pau:['Drums','Pau drives the live show from the drums: solid, dynamic and alert to every change. His aim is simple—to make the band breathe as one.']
 };
 memberBios.it = { ...memberBios.en };
 memberBios.fr = { ...memberBios.en };
@@ -810,11 +817,11 @@ Object.assign(translations.ca, { adminAccess:'Accedir a administració' });
 Object.assign(translations.en, { adminAccess:'Access administration' });
 Object.assign(translations.it, { adminAccess:'Accedi all’amministrazione' });
 Object.assign(translations.fr, { adminAccess:'Accéder à l’administration' });
-Object.assign(translations.es, { groupVocals:'Tres cantantes', groupVocalsCopy:'Tres voces para melodías, armonías y coros.', groupBass:'Una bajista', groupBassCopy:'La base grave que une ritmo y armonía.', groupGuitar:'Un guitarrista', groupGuitarCopy:'Riffs, acordes y el carácter rock del grupo.', groupKeys:'Pau Fermosel', groupKeysCopy:'Pianos, sintetizadores y capas que amplían el sonido.', groupDrums:'Pau Escobedo', groupDrumsCopy:'El pulso que mueve la energía y mantiene unida a la banda.', provisionalBio:'Así se completa el sonido de The Navies.' });
-Object.assign(translations.ca, { groupVocals:'Tres cantants', groupVocalsCopy:'Tres veus per a melodies, harmonies i cors.', groupBass:'Una baixista', groupBassCopy:'La base greu que uneix ritme i harmonia.', groupGuitar:'Un guitarrista', groupGuitarCopy:'Riffs, acords i el caràcter rock del grup.', groupKeys:'Pau Fermosel', groupKeysCopy:'Pianos, sintetitzadors i capes que amplien el so.', groupDrums:'Pau Escobedo', groupDrumsCopy:'El pols que mou l’energia i manté unida la banda.', provisionalBio:'Així es completa el so de The Navies.' });
-Object.assign(translations.en, { groupVocals:'Three singers', groupVocalsCopy:'Three voices for melodies, harmonies and choruses.', groupBass:'One bassist', groupBassCopy:'The low-end foundation connecting rhythm and harmony.', groupGuitar:'One guitarist', groupGuitarCopy:'Riffs, chords and the band’s rock character.', groupKeys:'Pau Fermosel', groupKeysCopy:'Piano, synthesisers and layers that expand the sound.', groupDrums:'Pau Escobedo', groupDrumsCopy:'The pulse that drives the energy and holds the band together.', provisionalBio:'This is how The Navies completes its sound.' });
-Object.assign(translations.it, { groupVocals:'Tre cantanti', groupVocalsCopy:'Tre voci per melodie, armonie e cori.', groupBass:'Una bassista', groupBassCopy:'La base grave che unisce ritmo e armonia.', groupGuitar:'Un chitarrista', groupGuitarCopy:'Riff, accordi e il carattere rock della band.', groupKeys:'Pau Fermosel', groupKeysCopy:'Pianoforti, sintetizzatori e strati che ampliano il suono.', groupDrums:'Pau Escobedo', groupDrumsCopy:'Il ritmo che muove l’energia e tiene unita la band.', provisionalBio:'Così si completa il suono dei The Navies.' });
-Object.assign(translations.fr, { groupVocals:'Trois chanteuses', groupVocalsCopy:'Trois voix pour les mélodies, harmonies et chœurs.', groupBass:'Une bassiste', groupBassCopy:'La base grave qui relie rythme et harmonie.', groupGuitar:'Un guitariste', groupGuitarCopy:'Des riffs, des accords et le caractère rock du groupe.', groupKeys:'Pau Fermosel', groupKeysCopy:'Pianos, synthétiseurs et textures qui élargissent le son.', groupDrums:'Pau Escobedo', groupDrumsCopy:'Le rythme qui porte l’énergie et maintient le groupe uni.', provisionalBio:'Ainsi se construit le son de The Navies.' });
+Object.assign(translations.es, { groupVocals:'Aina, Candela González y Mariona Escobedo', groupVocalsCopy:'Tres voces para melodías, armonías y coros.', groupBass:'Emma Tubau', groupBassCopy:'La base grave que une ritmo y armonía.', groupGuitar:'Carles', groupGuitarCopy:'Riffs, acordes y el carácter rock del grupo.', groupKeys:'Pau Fermosel', groupKeysCopy:'Pianos, sintetizadores y capas que amplían el sonido.', groupDrums:'Pau Escobedo', groupDrumsCopy:'El pulso que mueve la energía y mantiene unida a la banda.', provisionalBio:'Así se completa el sonido de The Navies.' });
+Object.assign(translations.ca, { groupVocals:'Aina, Candela González i Mariona Escobedo', groupVocalsCopy:'Tres veus per a melodies, harmonies i cors.', groupBass:'Emma Tubau', groupBassCopy:'La base greu que uneix ritme i harmonia.', groupGuitar:'Carles', groupGuitarCopy:'Riffs, acords i el caràcter rock del grup.', groupKeys:'Pau Fermosel', groupKeysCopy:'Pianos, sintetitzadors i capes que amplien el so.', groupDrums:'Pau Escobedo', groupDrumsCopy:'El pols que mou l’energia i manté unida la banda.', provisionalBio:'Així es completa el so de The Navies.' });
+Object.assign(translations.en, { groupVocals:'Aina, Candela González and Mariona Escobedo', groupVocalsCopy:'Three voices for melodies, harmonies and choruses.', groupBass:'Emma Tubau', groupBassCopy:'The low-end foundation connecting rhythm and harmony.', groupGuitar:'Carles', groupGuitarCopy:'Riffs, chords and the band’s rock character.', groupKeys:'Pau Fermosel', groupKeysCopy:'Piano, synthesisers and layers that expand the sound.', groupDrums:'Pau Escobedo', groupDrumsCopy:'The pulse that drives the energy and holds the band together.', provisionalBio:'This is how The Navies completes its sound.' });
+Object.assign(translations.it, { groupVocals:'Aina, Candela González e Mariona Escobedo', groupVocalsCopy:'Tre voci per melodie, armonie e cori.', groupBass:'Emma Tubau', groupBassCopy:'La base grave che unisce ritmo e armonia.', groupGuitar:'Carles', groupGuitarCopy:'Riff, accordi e il carattere rock della band.', groupKeys:'Pau Fermosel', groupKeysCopy:'Pianoforti, sintetizzatori e strati che ampliano il suono.', groupDrums:'Pau Escobedo', groupDrumsCopy:'Il ritmo che muove l’energia e tiene unita la band.', provisionalBio:'Così si completa il suono dei The Navies.' });
+Object.assign(translations.fr, { groupVocals:'Aina, Candela González et Mariona Escobedo', groupVocalsCopy:'Trois voix pour les mélodies, harmonies et chœurs.', groupBass:'Emma Tubau', groupBassCopy:'La base grave qui relie rythme et harmonie.', groupGuitar:'Carles', groupGuitarCopy:'Des riffs, des accords et le caractère rock du groupe.', groupKeys:'Pau Fermosel', groupKeysCopy:'Pianos, synthétiseurs et textures qui élargissent le son.', groupDrums:'Pau Escobedo', groupDrumsCopy:'Le rythme qui porte l’énergie et maintient le groupe uni.', provisionalBio:'Ainsi se construit le son de The Navies.' });
 
 Object.assign(translations.es, { countdownWelcomeTitle:'Algo está a punto de sonar', countdownWelcomeCopy:'El 21 de noviembre, siete músicos y un escenario te esperan en Plaza Masadas. El resto, lo tendrás que descubrir en directo.', countdownWelcomeStart:'Descubrir', countdownEventDate:'21 DE NOVIEMBRE', countdownEventTime:'13:00', countdownPlaceLabel:'Lugar', countdownDays:'Días', countdownHours:'Horas', countdownMinutes:'Minutos', countdownSeconds:'Segundos', countdownEnter:'Ir a inicio', memberContinuation:'…a cargo de', memberDialogVocals:'En las <em>voces</em>…', memberDialogBass:'En el <em>bajo</em>…', memberDialogGuitar:'En la <em>guitarra</em>…', memberDialogKeys:'En los <em>teclados</em>…', memberDialogDrums:'En la <em>batería</em>…', countdownEventTime:'13:00', countdownEventVenue:'PLAZA MASADAS', countdownKicker:'Próximo concierto', countdownDateLabel:'Fecha', countdownTimeLabel:'Hora' });
 Object.assign(translations.ca, { countdownWelcomeTitle:'Alguna cosa està a punt de sonar', countdownWelcomeCopy:'El 21 de novembre, set músics i un escenari t’esperen a Plaza Masadas. La resta, l’hauràs de descobrir en directe.', countdownWelcomeStart:'Descobrir', countdownEventDate:'21 DE NOVEMBRE', countdownEventTime:'13:00', countdownEventVenue:'PLAZA MASADAS', countdownKicker:'Pròxim concert', countdownDateLabel:'Data', countdownTimeLabel:'Hora', countdownPlaceLabel:'Lloc', countdownDays:'Dies', countdownHours:'Hores', countdownMinutes:'Minuts', countdownSeconds:'Segons', countdownEnter:'Anar a l’inici', memberInCharge:'A càrrec de', memberDialogKeys:'Als <em>teclats</em>', memberDialogDrums:'A la <em>bateria</em>' });
@@ -976,6 +983,55 @@ let siteMusicHistory = [];
 let siteMusicFadeFrame = null;
 let siteMusicEndFadeStarted = false;
 
+window.naviesConfigureSiteMusic = (settings = {}) => {
+  if (siteMusicIndex >= 0) return;
+  const customIndex = settings.initialPlayback === 'custom'
+    ? countdownTracks.findIndex((track) => track.file === settings.initialSongId)
+    : -1;
+  if (customIndex >= 0) {
+    siteMusicQueue = [customIndex, ...shuffledTrackIndexes(customIndex).filter((index) => index !== customIndex)];
+  } else {
+    siteMusicQueue = shuffledTrackIndexes();
+  }
+};
+
+window.naviesApplyGeneralSettings = (settings = {}) => {
+  const volumeLevels = {
+    low:{ countdown:.16, player:.22 },
+    medium:{ countdown:.24, player:.34 },
+    high:{ countdown:.34, player:.48 }
+  };
+  const levels = volumeLevels[settings.initialVolume] || volumeLevels.medium;
+  countdownMusicVolume = levels.countdown;
+  siteMusicVolume = levels.player;
+  countdownExperienceEnabled = settings.countdownEnabled !== false;
+  const fallbackLanguage = ['ca','es','en','fr','it'].includes(settings.fallbackLanguage) ? settings.fallbackLanguage : 'es';
+  localStorage.setItem('the-navies-fallback-language', fallbackLanguage);
+  sessionStorage.setItem('the-navies-countdown-enabled', countdownExperienceEnabled ? '1' : '0');
+  const wantsCountdown = !location.hash || location.hash === '#countdown';
+  const root = document.documentElement;
+  if (!countdownExperienceEnabled && root.classList.contains('countdown-entry')) {
+    window.clearTimeout(countdownPreloadTimer);
+    if (countdownTimer !== null) {
+      window.clearInterval(countdownTimer);
+      countdownTimer = null;
+    }
+    stopCountdownFade();
+    countdownPreparationId += 1;
+    countdownPreparation = null;
+    countdownAudio.pause();
+    countdownAudio.currentTime = 0;
+    countdownLanding?.setAttribute('aria-hidden', 'true');
+    root.classList.remove('countdown-entry','countdown-welcome','countdown-entering','countdown-preloading','countdown-opening','countdown-opening-active');
+    history.replaceState({ route:'home' }, '', '#inicio');
+    showPage('home', false);
+    window.scrollTo({ top:0, behavior:'auto' });
+  } else if (countdownExperienceEnabled) {
+    countdownLanding?.removeAttribute('aria-hidden');
+    if (wantsCountdown && !root.classList.contains('countdown-entry')) openCountdownWelcome();
+  }
+};
+
 function siteMusicSource(index) {
   const prefix = window.__naviesForcedLanguage ? '../' : '';
   return `${prefix}audios/${countdownTracks[index].file}.mp3`;
@@ -1026,7 +1082,7 @@ function fadeSiteMusicIn(duration = 2000) {
   const animate = (now) => {
     const progress = Math.min(1, (now - startedAt) / duration);
     const eased = progress * progress * (3 - (2 * progress));
-    setAudioLevel(siteMusicAudio, .34 * eased);
+    setAudioLevel(siteMusicAudio, siteMusicVolume * eased);
     if (progress < 1) siteMusicFadeFrame = requestAnimationFrame(animate);
     else siteMusicFadeFrame = null;
   };
@@ -1054,7 +1110,7 @@ window.naviesResumeSiteMusicAfterNavyAudio = function naviesResumeSiteMusicAfter
     showFooterQuickTrack();
     updateSiteMusicUI();
   }).catch(() => {
-    setAudioLevel(siteMusicAudio, .34);
+    setAudioLevel(siteMusicAudio, siteMusicVolume);
     updateSiteMusicUI();
   });
 };
@@ -1067,7 +1123,7 @@ async function playSiteMusic(index, rememberCurrent = true) {
   siteMusicIndex = index;
   siteMusicEndFadeStarted = false;
   const fadeFromStart = countdownTracks[index].file === 'have-you-ever-seen-the-rain';
-  setAudioLevel(siteMusicAudio, fadeFromStart ? 0 : .34);
+  setAudioLevel(siteMusicAudio, fadeFromStart ? 0 : siteMusicVolume);
   siteMusicProgress.value = '0';
   siteMusicProgress.style.setProperty('--music-progress', '0%');
   siteMusicAudio.src = siteMusicSource(index);
@@ -1089,7 +1145,7 @@ function prepareSiteMusicFromCountdown(index) {
   siteMusicEndFadeStarted = false;
   siteMusicQueue = siteMusicQueue.filter((trackIndex) => trackIndex !== index);
   const fadeFromStart = countdownTracks[index].file === 'have-you-ever-seen-the-rain';
-  setAudioLevel(siteMusicAudio, fadeFromStart ? 0 : .34);
+  setAudioLevel(siteMusicAudio, fadeFromStart ? 0 : siteMusicVolume);
   setAudioMuted(siteMusicAudio, false);
   siteMusicProgress.value = '0';
   siteMusicProgress.style.setProperty('--music-progress', '0%');
@@ -1128,7 +1184,7 @@ siteMusicProgress.addEventListener('input', () => {
   if (siteMusicFadeFrame !== null) cancelAnimationFrame(siteMusicFadeFrame);
   siteMusicFadeFrame = null;
   siteMusicEndFadeStarted = false;
-  setAudioLevel(siteMusicAudio, .34);
+  setAudioLevel(siteMusicAudio, siteMusicVolume);
   siteMusicAudio.currentTime = (Number(siteMusicProgress.value) / 1000) * siteMusicAudio.duration;
 });
 function toggleSiteMusicPlayback() {
@@ -1149,7 +1205,7 @@ function toggleSiteMusicPlayback() {
       showFooterQuickTrack();
       updateSiteMusicUI();
     }).catch(() => {
-      setAudioLevel(siteMusicAudio, .34);
+      setAudioLevel(siteMusicAudio, siteMusicVolume);
       updateSiteMusicUI();
     });
     return;
@@ -1304,7 +1360,7 @@ const forcedLanguage = supportedLanguages.includes(window.__naviesForcedLanguage
 const browserLanguage = [navigator.language, ...(navigator.languages || [])]
   .filter(Boolean)
   .map((language) => language.toLowerCase().split('-')[0])
-  .find((language) => supportedLanguages.includes(language)) || 'es';
+  .find((language) => supportedLanguages.includes(language)) || (supportedLanguages.includes(localStorage.getItem('the-navies-fallback-language')) ? localStorage.getItem('the-navies-fallback-language') : 'es');
 const isSearchCrawler = /bot|crawler|spider|slurp|bingpreview|google-inspectiontool/i.test(navigator.userAgent);
 const initialLanguage = forcedLanguage || (hasManualLanguage && savedLanguage && supportedLanguages.includes(savedLanguage)
   ? savedLanguage
@@ -1339,44 +1395,44 @@ const dialogBio = document.querySelector('#dialog-bio');
 const dialogSocial = document.querySelector('#dialog-social');
 const memberTitleKeys = { vocals:'visualVocals', bass:'visualBass', guitar:'visualGuitar', keys:'visualKeys', drums:'visualDrums' };
 const memberDisplayNames = {
-  es:{ vocals:'Aina, Candela y Mariona', bass:'Emma', guitar:'Carles', keys:'Pau Fermosel', drums:'Pau Escobedo' },
-  ca:{ vocals:'Aina, Candela i Mariona', bass:'Emma', guitar:'Carles', keys:'Pau Fermosel', drums:'Pau Escobedo' },
-  en:{ vocals:'Aina, Candela and Mariona', bass:'Emma', guitar:'Carles', keys:'Pau Fermosel', drums:'Pau Escobedo' },
-  it:{ vocals:'Aina, Candela e Mariona', bass:'Emma', guitar:'Carles', keys:'Pau Fermosel', drums:'Pau Escobedo' },
-  fr:{ vocals:'Aina, Candela et Mariona', bass:'Emma', guitar:'Carles', keys:'Pau Fermosel', drums:'Pau Escobedo' }
+  es:{ vocals:'Aina, Candela González y Mariona Escobedo', bass:'Emma Tubau', guitar:'Carles', keys:'Pau Fermosel', drums:'Pau Escobedo' },
+  ca:{ vocals:'Aina, Candela González i Mariona Escobedo', bass:'Emma Tubau', guitar:'Carles', keys:'Pau Fermosel', drums:'Pau Escobedo' },
+  en:{ vocals:'Aina, Candela González and Mariona Escobedo', bass:'Emma Tubau', guitar:'Carles', keys:'Pau Fermosel', drums:'Pau Escobedo' },
+  it:{ vocals:'Aina, Candela González e Mariona Escobedo', bass:'Emma Tubau', guitar:'Carles', keys:'Pau Fermosel', drums:'Pau Escobedo' },
+  fr:{ vocals:'Aina, Candela González et Mariona Escobedo', bass:'Emma Tubau', guitar:'Carles', keys:'Pau Fermosel', drums:'Pau Escobedo' }
 };
 const memberDialogBios = {
   es: {
-    vocals:'En las <em>voces</em>, Aina, Candela y Mariona comparten melodías, armonías y coros para dar fuerza y emoción a cada canción.',
-    bass:'En el <em>bajo</em>, Emma sostiene la base grave y conecta el ritmo con la armonía.',
+    vocals:'En las <em>voces</em>, Aina, Candela González y Mariona Escobedo comparten melodías, armonías y coros para dar fuerza y emoción a cada canción.',
+    bass:'En el <em>bajo</em>, Emma Tubau sostiene la base grave y conecta el ritmo con la armonía.',
     guitar:'En la <em>guitarra</em>, Carles aporta riffs, acordes y el carácter rock del repertorio.',
     keys:'En los <em>teclados</em>, Pau Fermosel aporta pianos, sintetizadores y arreglos que amplían el sonido.',
     drums:'En la <em>batería</em>, Pau Escobedo marca el pulso, mueve la energía y mantiene unida a la banda.'
   },
   ca: {
-    vocals:'A les <em>veus</em>, Aina, Candela i Mariona comparteixen melodies, harmonies i cors per donar força i emoció a cada cançó.',
+    vocals:'A les <em>veus</em>, Aina, Candela González i Mariona Escobedo comparteixen melodies, harmonies i cors per donar força i emoció a cada cançó.',
     bass:'Al <em>baix</em>, Emma sosté la base greu i connecta el ritme amb l’harmonia.',
     guitar:'A la <em>guitarra</em>, Carles aporta riffs, acords i el caràcter rock del repertori.',
     keys:'Als <em>teclats</em>, Pau Fermosel aporta pianos, sintetitzadors i arranjaments que amplien el so.',
     drums:'A la <em>bateria</em>, Pau Escobedo marca el pols, mou l’energia i manté unida la banda.'
   },
   en: {
-    vocals:'On <em>vocals</em>, Aina, Candela and Mariona share melodies, harmonies and choruses to bring power and emotion to every song.',
-    bass:'On <em>bass</em>, Emma anchors the low end and connects rhythm with harmony.',
+    vocals:'On <em>vocals</em>, Aina, Candela González and Mariona Escobedo share melodies, harmonies and choruses to bring power and emotion to every song.',
+    bass:'On <em>bass</em>, Emma Tubau anchors the low end and connects rhythm with harmony.',
     guitar:'On <em>guitar</em>, Carles brings riffs, chords and the rock character of the set.',
     keys:'On <em>keyboards</em>, Pau Fermosel adds piano, synthesisers and arrangements that expand the sound.',
     drums:'On <em>drums</em>, Pau Escobedo sets the pulse, drives the energy and holds the band together.'
   },
   it: {
-    vocals:'Alle <em>voci</em>, Aina, Candela e Mariona condividono melodie, armonie e cori per dare forza ed emozione a ogni brano.',
-    bass:'Al <em>basso</em>, Emma sostiene le frequenze basse e collega ritmo e armonia.',
+    vocals:'Alle <em>voci</em>, Aina, Candela González e Mariona Escobedo condividono melodie, armonie e cori per dare forza ed emozione a ogni brano.',
+    bass:'Al <em>basso</em>, Emma Tubau sostiene le frequenze basse e collega ritmo e armonia.',
     guitar:'Alla <em>chitarra</em>, Carles porta riff, accordi e il carattere rock del repertorio.',
     keys:'Alle <em>tastiere</em>, Pau Fermosel aggiunge pianoforti, sintetizzatori e arrangiamenti che ampliano il suono.',
     drums:'Alla <em>batteria</em>, Pau Escobedo segna il ritmo, muove l’energia e tiene unita la band.'
   },
   fr: {
-    vocals:'Aux <em>voix</em>, Aina, Candela et Mariona partagent mélodies, harmonies et chœurs pour donner force et émotion à chaque morceau.',
-    bass:'À la <em>basse</em>, Emma soutient les graves et relie le rythme à l’harmonie.',
+    vocals:'Aux <em>voix</em>, Aina, Candela González et Mariona Escobedo partagent mélodies, harmonies et chœurs pour donner force et émotion à chaque morceau.',
+    bass:'À la <em>basse</em>, Emma Tubau soutient les graves et relie le rythme à l’harmonie.',
     guitar:'À la <em>guitare</em>, Carles apporte riffs, accords et le caractère rock du répertoire.',
     keys:'Aux <em>claviers</em>, Pau Fermosel ajoute pianos, synthétiseurs et arrangements pour élargir le son.',
     drums:'À la <em>batterie</em>, Pau Escobedo donne le rythme, porte l’énergie et maintient le groupe uni.'
@@ -1464,7 +1520,7 @@ const navyMemberNames = {
   candelagonzalez: 'Candela',
   carlesgonzalez: 'Carles',
   ainasalmeron: 'Aina',
-  emmatuabu: 'Emma'
+  emmatuabu: 'Emma Tubau'
 };
 const accountDialog = document.createElement('dialog');
 accountDialog.className = 'account-dialog';

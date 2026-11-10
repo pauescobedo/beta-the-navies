@@ -134,7 +134,8 @@ body.route-media .content-editor-trigger { color:var(--lime); }
 .editor-member-row { grid-template-columns:repeat(2,minmax(0,1fr)); align-items:start; }
 .editor-member-row label:nth-child(4),.editor-member-row label:nth-child(5) { grid-column:1/-1; }
 .editor-social-row { grid-template-columns:minmax(150px,.7fr) minmax(250px,1.6fr) auto; }
-.editor-settings { max-width:520px; }
+.editor-settings { max-width:520px; display:grid; gap:16px; }
+.editor-settings label[hidden] { display:none; }
 .editor-settings label { display:grid; gap:8px; }
 .editor-settings label > span { color:var(--ink-soft); font-size:9px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
 .editor-settings select { width:100%; height:48px; padding:0 14px; border:1px solid var(--line); border-radius:13px; color:var(--ink); background:white; font:600 13px "DM Sans",sans-serif; }

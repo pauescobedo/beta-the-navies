@@ -18,7 +18,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="navies-build" content="20261106-168">
+  <meta name="navies-build" content="20261110-172">
   <title>The Navies</title>
   <link rel="canonical" href="https://thenavies.com/es/">
   <link rel="alternate" hreflang="x-default" href="https://thenavies.com/">
@@ -80,19 +80,19 @@
   </script>
   <style>html:not(.nav-ready) #main-nav>a::after{opacity:0!important}html.countdown-entry,html.countdown-entry body{background:#17304a!important}html.countdown-entry .countdown-landing{position:fixed;inset:0;background:#17304a}html.countdown-entry.countdown-entering .countdown-landing>*{visibility:hidden}@media(max-width:900px){html:not(.nav-ready) #main-nav{display:none!important}}</style>
   <script>if('scrollRestoration'in history)history.scrollRestoration='manual'</script>
-  <script>try{const n=performance.getEntriesByType('navigation')[0],r=n&&n.type==='reload',c=!location.hash||location.hash==='#countdown',i=sessionStorage.getItem('the-navies-internal-navigation')==='1',v=sessionStorage.getItem('the-navies-countdown-revealed')==='1';if(c){document.documentElement.classList.add('countdown-entry');if(r||!(i&&v))document.documentElement.classList.add('countdown-welcome','countdown-entering','countdown-preloading')}}catch(e){}</script>
+  <script>try{const n=performance.getEntriesByType('navigation')[0],r=n&&n.type==='reload',c=!location.hash||location.hash==='#countdown',i=sessionStorage.getItem('the-navies-internal-navigation')==='1',v=sessionStorage.getItem('the-navies-countdown-revealed')==='1',e=sessionStorage.getItem('the-navies-countdown-enabled');if(c&&e!=='0'){document.documentElement.classList.add('countdown-entry');if(r||!(i&&v))document.documentElement.classList.add('countdown-welcome','countdown-entering','countdown-preloading')}}catch(e){}</script>
   <script>try{const b=document.querySelector('meta[name="navies-build"]').content;fetch(`${location.pathname}?comprobar=${Date.now()}`,{cache:'no-store'}).then(r=>r.text()).then(h=>{const n=h.match(/<meta name="navies-build" content="([^"]+)"/)?.[1];if(n&&n!==b){const u=new URL(location.href);u.searchParams.set('version',n);location.replace(u)}}).catch(()=>{})}catch(e){}</script>
   <script>try{const c={spring:'#F4A7C1',summer:'#FFD76A',autumn:'#C77B52',winter:'#A8DADC'},n=performance.getEntriesByType('navigation')[0],i=sessionStorage.getItem('the-navies-internal-navigation')==='1',k=i||(n&&n.type==='back_forward');sessionStorage.removeItem('the-navies-internal-navigation');if(!k)localStorage.removeItem('the-navies-season');const s=k&&localStorage.getItem('the-navies-season')||'autumn';window.__naviesInitialSeason=c[s]?s:'autumn';document.documentElement.dataset.season=window.__naviesInitialSeason;document.documentElement.style.setProperty('--accent',c[window.__naviesInitialSeason])}catch(e){document.documentElement.dataset.season='autumn'}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="preload" href="../script.js?v=20261106-168" as="script">
-  <link rel="stylesheet" href="../styles.css?v=20261106-168">
-  <link rel="stylesheet" href="../subpages.css?v=20261106-168">
-  <script defer src="../script.js?v=20261106-168"></script>
-  <script defer src="../admin-config.js?v=20261106-168"></script>
-  <script defer src="../admin.js?v=20261106-168"></script>
-  <script defer src="../portal.js?v=20261106-168"></script>
+  <link rel="preload" href="../script.js?v=20261110-172" as="script">
+  <link rel="stylesheet" href="../styles.css?v=20261110-172">
+  <link rel="stylesheet" href="../subpages.css?v=20261110-172">
+  <script defer src="../script.js?v=20261110-172"></script>
+  <script defer src="../admin-config.js?v=20261110-172"></script>
+  <script defer src="../admin.js?v=20261110-172"></script>
+  <script defer src="../portal.js?v=20261110-172"></script>
 </head>
 <body>
   <div class="noise" aria-hidden="true"></div>
@@ -246,9 +246,9 @@
         <p class="band-collaboration" data-i18n-html="bcnIntro">En este camino contamos con la colaboración de <strong class="bcn-highlight">BCN Fusió</strong>, que nos acompaña y nos ayuda a seguir creciendo como banda.</p>
       </div>
       <div class="members">
-        <article class="member reveal" role="button" tabindex="0" data-member="vocals"><div class="avatar"><span class="instrument-word" data-i18n="visualVocals">Voces</span></div><div><h3 data-i18n="groupVocals">Tres cantantes</h3><p data-i18n="groupVocalsCopy">Tres voces para melodías, armonías y coros.</p></div></article>
-        <article class="member reveal" role="button" tabindex="0" data-member="bass"><div class="avatar alt"><span class="instrument-word" data-i18n="visualBass">Bajo</span></div><div><h3 data-i18n="groupBass">Una bajista</h3><p data-i18n="groupBassCopy">La base grave que une ritmo y armonía.</p></div></article>
-        <article class="member reveal" role="button" tabindex="0" data-member="guitar"><div class="avatar warm"><span class="instrument-word" data-i18n="visualGuitar">Guitarra</span></div><div><h3 data-i18n="groupGuitar">Un guitarrista</h3><p data-i18n="groupGuitarCopy">Riffs, acordes y el carácter rock del grupo.</p></div></article>
+        <article class="member reveal" role="button" tabindex="0" data-member="vocals"><div class="avatar"><span class="instrument-word" data-i18n="visualVocals">Voces</span></div><div><h3 data-i18n="groupVocals">Aina, Candela González y Mariona Escobedo</h3><p data-i18n="groupVocalsCopy">Tres voces para melodías, armonías y coros.</p></div></article>
+        <article class="member reveal" role="button" tabindex="0" data-member="bass"><div class="avatar alt"><span class="instrument-word" data-i18n="visualBass">Bajo</span></div><div><h3 data-i18n="groupBass">Emma Tubau</h3><p data-i18n="groupBassCopy">La base grave que une ritmo y armonía.</p></div></article>
+        <article class="member reveal" role="button" tabindex="0" data-member="guitar"><div class="avatar warm"><span class="instrument-word" data-i18n="visualGuitar">Guitarra</span></div><div><h3 data-i18n="groupGuitar">Carles</h3><p data-i18n="groupGuitarCopy">Riffs, acordes y el carácter rock del grupo.</p></div></article>
         <article class="member reveal" role="button" tabindex="0" data-member="keys"><div class="avatar pale"><span class="instrument-word" data-i18n="visualKeys">Teclados</span></div><div><h3 data-i18n="groupKeys">Pau Fermosel</h3><p data-i18n="groupKeysCopy">Pianos, sintetizadores y capas de sonido.</p></div></article>
         <article class="member reveal" role="button" tabindex="0" data-member="drums"><div class="avatar"><span class="instrument-word" data-i18n="visualDrums">Batería</span></div><div><h3 data-i18n="groupDrums">Pau Escobedo</h3><p data-i18n="groupDrumsCopy">El pulso que sostiene y empuja todo el directo.</p></div></article>
       </div>
