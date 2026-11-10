@@ -375,8 +375,8 @@ contentEditor.innerHTML = `
     <header class="content-editor-header">
       <div><p class="eyebrow"><span></span> THE NAVIES</p><h2>${editorText.title}</h2><p>${editorText.intro}</p></div>
       <div class="content-editor-controls">
-        <nav class="content-editor-tabs"><button type="button" data-editor-tab="home" aria-pressed="true">${editorText.home}</button><button type="button" data-editor-tab="space" aria-pressed="false">${editorText.space}</button><button type="button" data-editor-tab="general" aria-pressed="false">${editorText.general}</button></nav>
         <div class="content-editor-actions"><button class="editor-save" type="submit" form="content-editor-form">${editorText.save}</button><p class="content-editor-status" aria-live="polite"></p></div>
+        <nav class="content-editor-tabs"><button type="button" data-editor-tab="home" aria-pressed="true">${editorText.home}</button><button type="button" data-editor-tab="space" aria-pressed="false">${editorText.space}</button><button type="button" data-editor-tab="general" aria-pressed="false">${editorText.general}</button></nav>
       </div>
     </header>
     <form class="content-editor-form" id="content-editor-form">
