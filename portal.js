@@ -17,11 +17,11 @@ const editorCopies = {
 };
 const editorText = editorCopies[portalLanguage] || editorCopies.es;
 Object.assign(editorText, ({
-  es:{ live:'Navies Live', liveTitle:'Título de Navies Live', liveDescription:'Descripción de Navies Live', socialNetworks:'Redes sociales', socialNetworksCopy:'Enlaces públicos mostrados en la página de Inicio.', addSocial:'Añadir red', dialogTitle:'Título interior', socialLabel:'Texto del enlace', socialUrl:'Enlace personal', siteEditing:'Edición del sitio', general:'Ajustes generales', generalCopy:'Preferencias comunes para toda la web.', defaultSeason:'Tema predeterminado', initialPlayback:'Primera canción del reproductor', randomPlayback:'Aleatoria', customPlayback:'Canción personalizada', initialSong:'Canción inicial', countdownSetting:'Landing y cuenta atrás', enabled:'Activada', disabled:'Desactivada', initialVolume:'Volumen inicial', lowVolume:'Bajo', mediumVolume:'Medio', highVolume:'Alto', fallbackLanguage:'Idioma de respaldo', singer:'Cantante' },
-  ca:{ live:'Navies Live', liveTitle:'Títol de Navies Live', liveDescription:'Descripció de Navies Live', socialNetworks:'Xarxes socials', socialNetworksCopy:'Enllaços públics mostrats a la pàgina d’Inici.', addSocial:'Afegir xarxa', dialogTitle:'Títol interior', socialLabel:'Text de l’enllaç', socialUrl:'Enllaç personal', siteEditing:'Edició del lloc', general:'Configuració general', generalCopy:'Preferències comunes per a tot el web.', defaultSeason:'Tema predeterminat', initialPlayback:'Primera cançó del reproductor', randomPlayback:'Aleatòria', customPlayback:'Cançó personalitzada', initialSong:'Cançó inicial', countdownSetting:'Landing i compte enrere', enabled:'Activat', disabled:'Desactivat', initialVolume:'Volum inicial', lowVolume:'Baix', mediumVolume:'Mitjà', highVolume:'Alt', fallbackLanguage:'Idioma de reserva', singer:'Cantant' },
-  en:{ live:'Navies Live', liveTitle:'Navies Live title', liveDescription:'Navies Live description', socialNetworks:'Social media', socialNetworksCopy:'Public links shown on the Home page.', addSocial:'Add social link', dialogTitle:'Inner title', socialLabel:'Link text', socialUrl:'Personal link', siteEditing:'Site editing', general:'General settings', generalCopy:'Shared preferences for the whole website.', defaultSeason:'Default theme', initialPlayback:'First player track', randomPlayback:'Random', customPlayback:'Custom track', initialSong:'First track', countdownSetting:'Landing and countdown', enabled:'Enabled', disabled:'Disabled', initialVolume:'Initial volume', lowVolume:'Low', mediumVolume:'Medium', highVolume:'High', fallbackLanguage:'Fallback language', singer:'Singer' },
-  fr:{ live:'Navies Live', liveTitle:'Titre de Navies Live', liveDescription:'Description de Navies Live', socialNetworks:'Réseaux sociaux', socialNetworksCopy:'Liens publics affichés sur la page d’accueil.', addSocial:'Ajouter un réseau', dialogTitle:'Titre intérieur', socialLabel:'Texte du lien', socialUrl:'Lien personnel', siteEditing:'Édition du site', general:'Réglages généraux', generalCopy:'Préférences communes à tout le site.', defaultSeason:'Thème par défaut', initialPlayback:'Premier morceau du lecteur', randomPlayback:'Aléatoire', customPlayback:'Morceau personnalisé', initialSong:'Morceau initial', countdownSetting:'Accueil et compte à rebours', enabled:'Activé', disabled:'Désactivé', initialVolume:'Volume initial', lowVolume:'Faible', mediumVolume:'Moyen', highVolume:'Élevé', fallbackLanguage:'Langue de secours', singer:'Chanteuse' },
-  it:{ live:'Navies Live', liveTitle:'Titolo di Navies Live', liveDescription:'Descrizione di Navies Live', socialNetworks:'Social media', socialNetworksCopy:'Link pubblici mostrati nella pagina Home.', addSocial:'Aggiungi social', dialogTitle:'Titolo interno', socialLabel:'Testo del link', socialUrl:'Link personale', siteEditing:'Modifica sito', general:'Impostazioni generali', generalCopy:'Preferenze comuni per tutto il sito.', defaultSeason:'Tema predefinito', initialPlayback:'Primo brano del lettore', randomPlayback:'Casuale', customPlayback:'Brano personalizzato', initialSong:'Brano iniziale', countdownSetting:'Landing e conto alla rovescia', enabled:'Attivato', disabled:'Disattivato', initialVolume:'Volume iniziale', lowVolume:'Basso', mediumVolume:'Medio', highVolume:'Alto', fallbackLanguage:'Lingua di riserva', singer:'Cantante' }
+  es:{ live:'Navies Live', liveTitle:'Título de Navies Live', liveDescription:'Descripción de Navies Live', socialNetworks:'Redes sociales', socialNetworksCopy:'Enlaces públicos mostrados en la página de Inicio.', addSocial:'Añadir red', dialogTitle:'Título interior', socialLabel:'Texto del enlace', socialUrl:'Enlace personal', siteEditing:'Edición del sitio', general:'Ajustes generales', generalCopy:'Preferencias comunes para toda la web.', defaultSeason:'Tema predeterminado', initialPlayback:'Primera canción del reproductor', randomPlayback:'Aleatoria', customPlayback:'Canción personalizada', initialSong:'Canción inicial', countdownSetting:'Landing y cuenta atrás', enabled:'Activada', disabled:'Desactivada', initialVolume:'Volumen inicial', lowVolume:'Bajo', mediumVolume:'Medio', highVolume:'Alto', fallbackLanguage:'Idioma de respaldo', faviconMode:'Icono de la pestaña', dynamicFavicon:'Dinámico · color estacional', staticFavicon:'Estático · punto verde', saveBeforeExit:'Hay cambios sin guardar. ¿Quieres guardarlos antes de salir?', singer:'Cantante' },
+  ca:{ live:'Navies Live', liveTitle:'Títol de Navies Live', liveDescription:'Descripció de Navies Live', socialNetworks:'Xarxes socials', socialNetworksCopy:'Enllaços públics mostrats a la pàgina d’Inici.', addSocial:'Afegir xarxa', dialogTitle:'Títol interior', socialLabel:'Text de l’enllaç', socialUrl:'Enllaç personal', siteEditing:'Edició del lloc', general:'Configuració general', generalCopy:'Preferències comunes per a tot el web.', defaultSeason:'Tema predeterminat', initialPlayback:'Primera cançó del reproductor', randomPlayback:'Aleatòria', customPlayback:'Cançó personalitzada', initialSong:'Cançó inicial', countdownSetting:'Landing i compte enrere', enabled:'Activat', disabled:'Desactivat', initialVolume:'Volum inicial', lowVolume:'Baix', mediumVolume:'Mitjà', highVolume:'Alt', fallbackLanguage:'Idioma de reserva', faviconMode:'Icona de la pestanya', dynamicFavicon:'Dinàmica · color estacional', staticFavicon:'Estàtica · punt verd', saveBeforeExit:'Hi ha canvis sense desar. Vols desar-los abans de sortir?', singer:'Cantant' },
+  en:{ live:'Navies Live', liveTitle:'Navies Live title', liveDescription:'Navies Live description', socialNetworks:'Social media', socialNetworksCopy:'Public links shown on the Home page.', addSocial:'Add social link', dialogTitle:'Inner title', socialLabel:'Link text', socialUrl:'Personal link', siteEditing:'Site editing', general:'General settings', generalCopy:'Shared preferences for the whole website.', defaultSeason:'Default theme', initialPlayback:'First player track', randomPlayback:'Random', customPlayback:'Custom track', initialSong:'First track', countdownSetting:'Landing and countdown', enabled:'Enabled', disabled:'Disabled', initialVolume:'Initial volume', lowVolume:'Low', mediumVolume:'Medium', highVolume:'High', fallbackLanguage:'Fallback language', faviconMode:'Browser tab icon', dynamicFavicon:'Dynamic · seasonal colour', staticFavicon:'Static · green dot', saveBeforeExit:'There are unsaved changes. Save them before leaving?', singer:'Singer' },
+  fr:{ live:'Navies Live', liveTitle:'Titre de Navies Live', liveDescription:'Description de Navies Live', socialNetworks:'Réseaux sociaux', socialNetworksCopy:'Liens publics affichés sur la page d’accueil.', addSocial:'Ajouter un réseau', dialogTitle:'Titre intérieur', socialLabel:'Texte du lien', socialUrl:'Lien personnel', siteEditing:'Édition du site', general:'Réglages généraux', generalCopy:'Préférences communes à tout le site.', defaultSeason:'Thème par défaut', initialPlayback:'Premier morceau du lecteur', randomPlayback:'Aléatoire', customPlayback:'Morceau personnalisé', initialSong:'Morceau initial', countdownSetting:'Accueil et compte à rebours', enabled:'Activé', disabled:'Désactivé', initialVolume:'Volume initial', lowVolume:'Faible', mediumVolume:'Moyen', highVolume:'Élevé', fallbackLanguage:'Langue de secours', faviconMode:'Icône de l’onglet', dynamicFavicon:'Dynamique · couleur saisonnière', staticFavicon:'Statique · point vert', saveBeforeExit:'Des modifications ne sont pas enregistrées. Les enregistrer avant de quitter ?', singer:'Chanteuse' },
+  it:{ live:'Navies Live', liveTitle:'Titolo di Navies Live', liveDescription:'Descrizione di Navies Live', socialNetworks:'Social media', socialNetworksCopy:'Link pubblici mostrati nella pagina Home.', addSocial:'Aggiungi social', dialogTitle:'Titolo interno', socialLabel:'Testo del link', socialUrl:'Link personale', siteEditing:'Modifica sito', general:'Impostazioni generali', generalCopy:'Preferenze comuni per tutto il sito.', defaultSeason:'Tema predefinito', initialPlayback:'Primo brano del lettore', randomPlayback:'Casuale', customPlayback:'Brano personalizzato', initialSong:'Brano iniziale', countdownSetting:'Landing e conto alla rovescia', enabled:'Attivato', disabled:'Disattivato', initialVolume:'Volume iniziale', lowVolume:'Basso', mediumVolume:'Medio', highVolume:'Alto', fallbackLanguage:'Lingua di riserva', faviconMode:'Icona della scheda', dynamicFavicon:'Dinamica · colore stagionale', staticFavicon:'Statica · punto verde', saveBeforeExit:'Ci sono modifiche non salvate. Vuoi salvarle prima di uscire?', singer:'Cantante' }
 }[portalLanguage] || {}));
 
 localStorage.removeItem('navies-demo-chat');
@@ -422,6 +422,7 @@ document.querySelector('.space-shell').append(contentEditor);
 const editorForm = contentEditor.querySelector('.content-editor-form');
 const editorStatus = contentEditor.querySelector('.content-editor-status');
 let editorStatusTimer;
+let editorDirty = false;
 function setEditorStatus(message, temporary = false) {
   window.clearTimeout(editorStatusTimer);
   editorStatus.textContent = message;
@@ -578,13 +579,27 @@ function populateEditor() {
   const seasonNames = ({ es:{ spring:'🌸 Primavera', summer:'☀️ Verano', autumn:'🍁 Otoño', winter:'❄️ Invierno' }, ca:{ spring:'🌸 Primavera', summer:'☀️ Estiu', autumn:'🍁 Tardor', winter:'❄️ Hivern' }, en:{ spring:'🌸 Spring', summer:'☀️ Summer', autumn:'🍁 Autumn', winter:'❄️ Winter' }, fr:{ spring:'🌸 Printemps', summer:'☀️ Été', autumn:'🍁 Automne', winter:'❄️ Hiver' }, it:{ spring:'🌸 Primavera', summer:'☀️ Estate', autumn:'🍁 Autunno', winter:'❄️ Inverno' } })[portalLanguage];
   Object.entries(seasonNames).forEach(([value, label]) => { const option = document.createElement('option'); option.value = value; option.textContent = label; option.selected = navyContent.home.settings?.defaultSeason === value; seasonSelect.append(option); });
   seasonField.append(seasonSelect);
-  const playbackField = document.createElement('label');
+  const playbackField = document.createElement('div');
+  playbackField.className = 'editor-setting-card editor-playback-setting';
   playbackField.innerHTML = `<span>${editorText.initialPlayback}</span>`;
-  const playbackSelect = document.createElement('select');
-  playbackSelect.name = 'initialPlayback';
-  [{ value:'random', label:editorText.randomPlayback }, { value:'custom', label:editorText.customPlayback }].forEach(({ value, label }) => { const option = document.createElement('option'); option.value = value; option.textContent = label; option.selected = (navyContent.home.settings?.initialPlayback || 'random') === value; playbackSelect.append(option); });
-  playbackField.append(playbackSelect);
-  const initialSongField = document.createElement('label');
+  const playbackControl = document.createElement('div');
+  playbackControl.className = 'editor-segmented';
+  const currentPlayback = navyContent.home.settings?.initialPlayback || 'random';
+  [['random',editorText.randomPlayback],['custom',editorText.customPlayback]].forEach(([value, label]) => {
+    const optionLabel = document.createElement('label');
+    const input = document.createElement('input');
+    input.type = 'radio';
+    input.name = 'initialPlayback';
+    input.value = value;
+    input.checked = currentPlayback === value;
+    const text = document.createElement('span');
+    text.textContent = label;
+    optionLabel.append(input, text);
+    playbackControl.append(optionLabel);
+  });
+  playbackField.append(playbackControl);
+  const initialSongField = document.createElement('div');
+  initialSongField.className = 'editor-nested-setting';
   initialSongField.innerHTML = `<span>${editorText.initialSong}</span>`;
   const initialSongSelect = document.createElement('select');
   initialSongSelect.name = 'initialSongId';
@@ -598,8 +613,9 @@ function populateEditor() {
   ];
   playableSongs.forEach(([value, label]) => { const option = document.createElement('option'); option.value = value; option.textContent = label; option.selected = navyContent.home.settings?.initialSongId === value; initialSongSelect.append(option); });
   initialSongField.append(initialSongSelect);
-  const syncInitialSong = () => { initialSongField.hidden = playbackSelect.value !== 'custom'; initialSongSelect.disabled = initialSongField.hidden; };
-  playbackSelect.addEventListener('change', syncInitialSong);
+  playbackField.append(initialSongField);
+  const syncInitialSong = () => { initialSongField.hidden = !playbackControl.querySelector('[value="custom"]').checked; initialSongSelect.disabled = initialSongField.hidden; };
+  playbackControl.addEventListener('change', syncInitialSong);
   syncInitialSong();
   const makeSettingsSelect = (name, title, options, current) => {
     const wrapper = document.createElement('label');
@@ -610,28 +626,65 @@ function populateEditor() {
     wrapper.append(select);
     return wrapper;
   };
-  const countdownField = makeSettingsSelect('countdownEnabled', editorText.countdownSetting, [['true',editorText.enabled],['false',editorText.disabled]], String(navyContent.home.settings?.countdownEnabled ?? true));
-  const volumeField = makeSettingsSelect('initialVolume', editorText.initialVolume, [['low',editorText.lowVolume],['medium',editorText.mediumVolume],['high',editorText.highVolume]], navyContent.home.settings?.initialVolume || 'medium');
-  const languageNames = { ca:'Català', es:'Castellano', en:'English', fr:'Français', it:'Italiano' };
+  const countdownField = document.createElement('label');
+  countdownField.className = 'editor-toggle-setting';
+  const countdownTitle = document.createElement('span');
+  countdownTitle.textContent = editorText.countdownSetting;
+  const countdownSwitch = document.createElement('span');
+  countdownSwitch.className = 'editor-switch';
+  const countdownInput = document.createElement('input');
+  countdownInput.type = 'checkbox';
+  countdownInput.name = 'countdownEnabled';
+  countdownInput.checked = navyContent.home.settings?.countdownEnabled ?? true;
+  const countdownTrack = document.createElement('i');
+  countdownTrack.setAttribute('aria-hidden', 'true');
+  const countdownState = document.createElement('b');
+  const syncCountdownState = () => { countdownState.textContent = countdownInput.checked ? editorText.enabled : editorText.disabled; };
+  countdownInput.addEventListener('change', syncCountdownState);
+  syncCountdownState();
+  countdownSwitch.append(countdownInput, countdownTrack, countdownState);
+  countdownField.append(countdownTitle, countdownSwitch);
+  const volumeField = document.createElement('div');
+  volumeField.className = 'editor-setting-card editor-volume-setting';
+  volumeField.innerHTML = `<span>${editorText.initialVolume}</span>`;
+  const volumeSlider = document.createElement('input');
+  volumeSlider.type = 'range';
+  volumeSlider.name = 'initialVolume';
+  volumeSlider.min = '0';
+  volumeSlider.max = '2';
+  volumeSlider.step = '1';
+  volumeSlider.value = String({ low:0, medium:1, high:2 }[navyContent.home.settings?.initialVolume] ?? 1);
+  volumeSlider.setAttribute('aria-label', editorText.initialVolume);
+  const syncVolumeSlider = () => volumeSlider.style.setProperty('--volume-track', `${Number(volumeSlider.value) * 50}%`);
+  volumeSlider.addEventListener('input', syncVolumeSlider);
+  syncVolumeSlider();
+  const volumeLabels = document.createElement('div');
+  volumeLabels.className = 'editor-volume-labels';
+  volumeLabels.innerHTML = `<span>${editorText.lowVolume}</span><span>${editorText.mediumVolume}</span><span>${editorText.highVolume}</span>`;
+  volumeField.append(volumeSlider, volumeLabels);
+  const languageNames = { ca:'🟨🟥 Català', es:'🇪🇸 Castellano', en:'🇬🇧 English', fr:'🇫🇷 Français', it:'🇮🇹 Italiano' };
   const fallbackField = makeSettingsSelect('fallbackLanguage', editorText.fallbackLanguage, ['ca','es','en','fr','it'].map((code) => [code,languageNames[code]]), navyContent.home.settings?.fallbackLanguage || 'es');
-  settings.replaceChildren(seasonField, playbackField, initialSongField, countdownField, volumeField, fallbackField);
+  const faviconField = makeSettingsSelect('faviconMode', editorText.faviconMode, [['dynamic',editorText.dynamicFavicon],['static',editorText.staticFavicon]], navyContent.home.settings?.faviconMode || 'dynamic');
+  settings.replaceChildren(seasonField, playbackField, countdownField, volumeField, fallbackField, faviconField);
   concertList.replaceChildren(...navyContent.home.concerts.map(concertEditorRow));
   memberList.replaceChildren(...navyContent.home.members.map(memberEditorRow));
   socialList.replaceChildren(...navyContent.home.socials.map(socialEditorRow));
   eventList.replaceChildren(...navyContent.events.map(eventEditorRow));
   songList.replaceChildren(...navyContent.songs.map(songEditorRow));
   linkList.replaceChildren(...navyContent.links.map(linkEditorRow));
+  editorDirty = false;
   setEditorStatus('');
 }
 
 function editorContent() {
   const homeTexts = contentEditor.querySelector('[data-editor-home-texts]');
   const defaultSeason = contentEditor.querySelector('[name="defaultSeason"]').value;
-  const initialPlayback = contentEditor.querySelector('[name="initialPlayback"]').value;
+  const initialPlayback = contentEditor.querySelector('[name="initialPlayback"]:checked').value;
   const initialSongId = initialPlayback === 'custom' ? contentEditor.querySelector('[name="initialSongId"]').value : '';
-  const countdownEnabled = contentEditor.querySelector('[name="countdownEnabled"]').value === 'true';
-  const initialVolume = contentEditor.querySelector('[name="initialVolume"]').value;
+  const countdownEnabled = contentEditor.querySelector('[name="countdownEnabled"]').checked;
+  const initialVolume = ['low','medium','high'][Number(contentEditor.querySelector('[name="initialVolume"]').value)] || 'medium';
   const fallbackLanguage = contentEditor.querySelector('[name="fallbackLanguage"]').value;
+  const faviconMode = contentEditor.querySelector('[name="faviconMode"]').value;
   const concerts = [...contentEditor.querySelectorAll('.editor-concert-row')].map((row, index) => ({
     id:row.dataset.id || `${slugify(row.querySelector('[name="name"]').value)}-${Date.now()}-${index}`,
     name:row.querySelector('[name="name"]').value.trim(),
@@ -688,7 +741,7 @@ function editorContent() {
     usedLinkIds.add(id);
     return { id, label, url:row.querySelector('[name="url"]').value.trim() };
   });
-  return { home:{ settings:{ defaultSeason, initialPlayback, initialSongId, countdownEnabled, initialVolume, fallbackLanguage }, live:navyContent.home.live, texts:{ heroIntro:homeTexts.querySelector('[name="heroIntro"]').value.trim(), soundBody:homeTexts.querySelector('[name="soundBody"]').value.trim(), bandBody:homeTexts.querySelector('[name="bandBody"]').value.trim() }, concerts, members, socials }, events, songs, links };
+  return { home:{ settings:{ defaultSeason, initialPlayback, initialSongId, countdownEnabled, initialVolume, fallbackLanguage, faviconMode }, live:navyContent.home.live, texts:{ heroIntro:homeTexts.querySelector('[name="heroIntro"]').value.trim(), soundBody:homeTexts.querySelector('[name="soundBody"]').value.trim(), bandBody:homeTexts.querySelector('[name="bandBody"]').value.trim() }, concerts, members, socials }, events, songs, links };
 }
 
 function syncEditorAccess() {
@@ -750,14 +803,14 @@ contentEditor.querySelectorAll('[data-editor-tab]').forEach((button) => {
   });
 });
 
-document.querySelectorAll('#main-nav [data-route]').forEach((link) => link.addEventListener('click', () => {
+window.addEventListener('navies-route-change', (event) => {
+  editContentButton.classList.remove('active');
   if (!contentEditorOpen) return;
   contentEditorOpen = false;
   contentEditor.classList.remove('is-visible');
   contentEditor.hidden = true;
-  editContentButton.classList.remove('active');
-  dashboard.hidden = link.dataset.route !== 'espacio-navy';
-}));
+  dashboard.hidden = event.detail?.route !== 'espacio-navy';
+});
 
 contentEditor.addEventListener('click', (event) => {
   const add = event.target.closest('[data-editor-add]');
@@ -766,6 +819,7 @@ contentEditor.addEventListener('click', (event) => {
     const list = contentEditor.querySelector(`[data-editor-list="${kind}s"]`);
     const row = kind === 'event' ? eventEditorRow({ type:'rehearsal', name:'', date:localToday(), time:'17:30', location:'' }) : kind === 'song' ? songEditorRow() : kind === 'concert' ? concertEditorRow({ name:editorText.newConcert, day:'', month:'12', year:String(new Date().getFullYear()), time:'', location:'' }) : kind === 'social' ? socialEditorRow() : linkEditorRow();
     list.append(row);
+    editorDirty = true;
     list.lastElementChild.scrollIntoView({ behavior:'smooth', block:'center' });
     return;
   }
@@ -773,21 +827,25 @@ contentEditor.addEventListener('click', (event) => {
   if (!action) return;
   const row = action.closest('.editor-row');
   if (action.dataset.editorAction === 'remove') {
-    if (window.confirm(editorText.confirmDelete)) row.remove();
+    if (window.confirm(editorText.confirmDelete)) { row.remove(); editorDirty = true; }
   } else if (action.dataset.editorAction === 'up' && row.previousElementSibling) {
     row.parentNode.insertBefore(row, row.previousElementSibling);
+    editorDirty = true;
   } else if (action.dataset.editorAction === 'down' && row.nextElementSibling) {
     row.parentNode.insertBefore(row.nextElementSibling, row);
+    editorDirty = true;
   }
 });
 
-editorForm.addEventListener('submit', async (event) => {
-  event.preventDefault();
+editorForm.addEventListener('input', () => { editorDirty = true; });
+editorForm.addEventListener('change', () => { editorDirty = true; });
+
+async function saveEditorChanges() {
   const session = contentSession();
   if (!session) {
     setEditorStatus(editorText.expired);
     syncEditorAccess();
-    return;
+    return false;
   }
   const save = contentEditor.querySelector('.editor-save');
   save.disabled = true;
@@ -801,12 +859,33 @@ editorForm.addEventListener('submit', async (event) => {
     const result = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(result.error || 'save_failed');
     renderNavyContent(result.content);
+    editorDirty = false;
     setEditorStatus(editorText.saved, true);
+    return true;
   } catch (error) {
     setEditorStatus(error.message === 'invalid_session' ? editorText.expiredAgain : editorText.saveError);
+    return false;
   } finally {
     save.disabled = false;
   }
+}
+
+editorForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  await saveEditorChanges();
+});
+
+window.naviesRequestEditorExit = async () => {
+  if (!contentEditorOpen || !editorDirty) return true;
+  if (window.confirm(editorText.saveBeforeExit)) return saveEditorChanges();
+  editorDirty = false;
+  return true;
+};
+
+window.addEventListener('beforeunload', (event) => {
+  if (!contentEditorOpen || !editorDirty) return;
+  event.preventDefault();
+  event.returnValue = '';
 });
 
 window.addEventListener('navies-admin-change', syncEditorAccess);

@@ -526,6 +526,8 @@ function routeFromHash() {
 function showPage(route, updateHistory = true) {
   const selectedRoute = routeDetails[route] ? route : 'home';
   const selectedView = pageViews.find((view) => view.dataset.pageView === selectedRoute);
+  navigation.querySelector('.content-editor-trigger')?.classList.remove('active');
+  window.dispatchEvent(new CustomEvent('navies-route-change', { detail:{ route:selectedRoute } }));
   document.documentElement.dataset.route = selectedRoute;
   pageViews.forEach((view) => {
     view.classList.remove('route-entering');
@@ -571,8 +573,9 @@ function showPage(route, updateHistory = true) {
   });
 }
 
-navigation.querySelectorAll('[data-route]').forEach((link) => link.addEventListener('click', (event) => {
+navigation.querySelectorAll('[data-route]').forEach((link) => link.addEventListener('click', async (event) => {
   event.preventDefault();
+  if (window.naviesRequestEditorExit && !(await window.naviesRequestEditorExit())) return;
   const route = link.dataset.route;
   const isMobile = window.matchMedia('(max-width: 900px)').matches;
   if (isMobile) navigation.classList.add('selection-pending');
@@ -580,8 +583,9 @@ navigation.querySelectorAll('[data-route]').forEach((link) => link.addEventListe
   closeMenu();
   setTimeout(() => showPage(route), isMobile ? 190 : 0);
 }));
-document.querySelectorAll('a.brand[data-route]').forEach((brand) => brand.addEventListener('click', (event) => {
+document.querySelectorAll('a.brand[data-route]').forEach((brand) => brand.addEventListener('click', async (event) => {
   event.preventDefault();
+  if (window.naviesRequestEditorExit && !(await window.naviesRequestEditorExit())) return;
   openCountdownWelcome({ showPreloader:false });
 }));
 document.querySelectorAll('[data-scroll-target]').forEach((link) => link.addEventListener('click', (event) => {
@@ -595,7 +599,14 @@ document.querySelectorAll('[data-scroll-target]').forEach((link) => link.addEven
   });
   history.replaceState(history.state, '', `#${link.dataset.scrollTarget}`);
 }));
-window.addEventListener('popstate', () => showPage(routeFromHash(), false));
+window.addEventListener('popstate', async () => {
+  if (window.naviesRequestEditorExit && !(await window.naviesRequestEditorExit())) {
+    const currentRoute = document.documentElement.dataset.route || 'home';
+    history.pushState({ route:currentRoute }, '', routeDetails[currentRoute]?.hash || '#inicio');
+    return;
+  }
+  showPage(routeFromHash(), false);
+});
 showPage(routeFromHash(), false);
 document.documentElement.classList.add('nav-ready');
 window.addEventListener('pageshow', () => {
@@ -860,6 +871,7 @@ const seasonThemes = {
   autumn: { color:'#C77B52', icon:'🍁' },
   winter: { color:'#A8DADC', icon:'❄️' }
 };
+let naviesFaviconMode = 'dynamic';
 let siteFooter = document.querySelector('footer');
 if (!siteFooter) {
   siteFooter = document.createElement('footer');
@@ -993,6 +1005,8 @@ window.naviesConfigureSiteMusic = (settings = {}) => {
   } else {
     siteMusicQueue = shuffledTrackIndexes();
   }
+  const preparedIndex = siteMusicQueue.shift();
+  if (Number.isInteger(preparedIndex)) prepareSiteMusicFromCountdown(preparedIndex);
 };
 
 window.naviesApplyGeneralSettings = (settings = {}) => {
@@ -1004,8 +1018,13 @@ window.naviesApplyGeneralSettings = (settings = {}) => {
   const levels = volumeLevels[settings.initialVolume] || volumeLevels.medium;
   countdownMusicVolume = levels.countdown;
   siteMusicVolume = levels.player;
+  if (siteMusicIndex >= 0 && siteMusicAudio.paused) {
+    setAudioLevel(siteMusicAudio, countdownTracks[siteMusicIndex].file === 'have-you-ever-seen-the-rain' ? 0 : siteMusicVolume);
+  }
   countdownExperienceEnabled = settings.countdownEnabled !== false;
   const fallbackLanguage = ['ca','es','en','fr','it'].includes(settings.fallbackLanguage) ? settings.fallbackLanguage : 'es';
+  naviesFaviconMode = settings.faviconMode === 'static' ? 'static' : 'dynamic';
+  setSeason(document.documentElement.dataset.season || 'autumn', false);
   localStorage.setItem('the-navies-fallback-language', fallbackLanguage);
   sessionStorage.setItem('the-navies-countdown-enabled', countdownExperienceEnabled ? '1' : '0');
   const wantsCountdown = !location.hash || location.hash === '#countdown';
@@ -1141,6 +1160,7 @@ function prepareSiteMusicFromCountdown(index) {
   if (index < 0 || index >= countdownTracks.length) return;
   if (siteMusicFadeFrame !== null) cancelAnimationFrame(siteMusicFadeFrame);
   siteMusicAudio.pause();
+  if (siteMusicIndex >= 0 && siteMusicIndex !== index && !siteMusicQueue.includes(siteMusicIndex)) siteMusicQueue.unshift(siteMusicIndex);
   siteMusicIndex = index;
   siteMusicEndFadeStarted = false;
   siteMusicQueue = siteMusicQueue.filter((trackIndex) => trackIndex !== index);
@@ -1261,7 +1281,8 @@ function setSeason(season, persist = true) {
   const selected = seasonThemes[season] ? season : 'autumn';
   document.documentElement.dataset.season = selected;
   document.documentElement.style.setProperty('--accent', seasonThemes[selected].color);
-  const seasonalIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#173c5b"/><circle cx="50" cy="14" r="6" fill="${seasonThemes[selected].color}"/><text x="9" y="42" fill="#fff" font-family="Arial,Helvetica,sans-serif" font-size="28" font-weight="700" letter-spacing="-2">TN</text></svg>`;
+  const faviconAccent = naviesFaviconMode === 'static' ? '#d7f27d' : seasonThemes[selected].color;
+  const seasonalIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#173c5b"/><circle cx="50" cy="14" r="6" fill="${faviconAccent}"/><text x="9" y="42" fill="#fff" font-family="Arial,Helvetica,sans-serif" font-size="28" font-weight="700" letter-spacing="-2">TN</text></svg>`;
   const seasonalFavicon = document.querySelector('#seasonal-favicon');
   const crawlerRequest = /bot|crawler|spider|slurp|bingpreview|google-inspectiontool/i.test(navigator.userAgent);
   if (seasonalFavicon && !crawlerRequest) seasonalFavicon.href = `data:image/svg+xml,${encodeURIComponent(seasonalIcon)}`;
