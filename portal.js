@@ -23,6 +23,13 @@ Object.assign(editorText, ({
   fr:{ live:'Navies Live', liveTitle:'Titre de Navies Live', liveDescription:'Description de Navies Live', socialNetworks:'Réseaux sociaux', socialNetworksCopy:'Liens publics affichés sur la page d’accueil.', addSocial:'Ajouter un réseau', dialogTitle:'Titre intérieur', socialLabel:'Texte du lien', socialUrl:'Lien personnel', siteEditing:'Édition du site', general:'Réglages généraux', generalCopy:'Préférences communes à tout le site.', defaultSeason:'Thème par défaut', initialPlayback:'Premier morceau du lecteur', randomPlayback:'Aléatoire', customPlayback:'Morceau personnalisé', initialSong:'Morceau initial', countdownSetting:'Accueil et compte à rebours', enabled:'Activé', disabled:'Désactivé', initialVolume:'Volume initial', lowVolume:'Faible', mediumVolume:'Moyen', highVolume:'Élevé', fallbackLanguage:'Langue de secours', faviconMode:'Icône de l’onglet', dynamicFavicon:'Dynamique · couleur saisonnière', staticFavicon:'Statique · point vert', saveBeforeExit:'Des modifications ne sont pas enregistrées. Les enregistrer avant de quitter ?', singer:'Chanteuse' },
   it:{ live:'Navies Live', liveTitle:'Titolo di Navies Live', liveDescription:'Descrizione di Navies Live', socialNetworks:'Social media', socialNetworksCopy:'Link pubblici mostrati nella pagina Home.', addSocial:'Aggiungi social', dialogTitle:'Titolo interno', socialLabel:'Testo del link', socialUrl:'Link personale', siteEditing:'Modifica sito', general:'Impostazioni generali', generalCopy:'Preferenze comuni per tutto il sito.', defaultSeason:'Tema predefinito', initialPlayback:'Primo brano del lettore', randomPlayback:'Casuale', customPlayback:'Brano personalizzato', initialSong:'Brano iniziale', countdownSetting:'Landing e conto alla rovescia', enabled:'Attivato', disabled:'Disattivato', initialVolume:'Volume iniziale', lowVolume:'Basso', mediumVolume:'Medio', highVolume:'Alto', fallbackLanguage:'Lingua di riserva', faviconMode:'Icona della scheda', dynamicFavicon:'Dinamica · colore stagionale', staticFavicon:'Statica · punto verde', saveBeforeExit:'Ci sono modifiche non salvate. Vuoi salvarle prima di uscire?', singer:'Cantante' }
 }[portalLanguage] || {}));
+Object.assign(editorText, ({
+  es:{ unsavedTitle:'¿Quieres guardar los cambios?', unsavedCopy:'Tienes cambios sin guardar. Elige qué quieres hacer antes de salir de la edición.', saveAndExit:'Guardar y salir', exitWithoutSaving:'Salir sin guardar', returnToEditing:'Volver a la edición' },
+  ca:{ unsavedTitle:'Vols desar els canvis?', unsavedCopy:'Tens canvis sense desar. Tria què vols fer abans de sortir de l’edició.', saveAndExit:'Desar i sortir', exitWithoutSaving:'Sortir sense desar', returnToEditing:'Tornar a l’edició' },
+  en:{ unsavedTitle:'Save your changes?', unsavedCopy:'You have unsaved changes. Choose what to do before leaving the editor.', saveAndExit:'Save and leave', exitWithoutSaving:'Leave without saving', returnToEditing:'Return to editing' },
+  fr:{ unsavedTitle:'Enregistrer les modifications ?', unsavedCopy:'Des modifications ne sont pas enregistrées. Choisissez quoi faire avant de quitter l’édition.', saveAndExit:'Enregistrer et quitter', exitWithoutSaving:'Quitter sans enregistrer', returnToEditing:'Revenir à l’édition' },
+  it:{ unsavedTitle:'Salvare le modifiche?', unsavedCopy:'Ci sono modifiche non salvate. Scegli cosa fare prima di uscire dalla modifica.', saveAndExit:'Salva ed esci', exitWithoutSaving:'Esci senza salvare', returnToEditing:'Torna alla modifica' }
+}[portalLanguage] || {}));
 
 localStorage.removeItem('navies-demo-chat');
 localStorage.removeItem('navies-demo-member');
@@ -375,7 +382,6 @@ contentEditor.innerHTML = `
     <header class="content-editor-header">
       <div><p class="eyebrow"><span></span> THE NAVIES</p><h2>${editorText.title}</h2><p>${editorText.intro}</p></div>
       <div class="content-editor-controls">
-        <div class="content-editor-actions"><button class="editor-save" type="submit" form="content-editor-form">${editorText.save}</button><p class="content-editor-status" aria-live="polite"></p></div>
         <nav class="content-editor-tabs"><button type="button" data-editor-tab="home" aria-pressed="true">${editorText.home}</button><button type="button" data-editor-tab="space" aria-pressed="false">${editorText.space}</button><button type="button" data-editor-tab="general" aria-pressed="false">${editorText.general}</button></nav>
       </div>
     </header>
@@ -415,12 +421,26 @@ contentEditor.innerHTML = `
       <div class="editor-page" data-editor-page="general" hidden>
         <section class="editor-section"><div class="editor-section-head"><div><span>01</span><h3>${editorText.general}</h3><p>${editorText.generalCopy}</p></div></div><div class="editor-settings" data-editor-settings></div></section>
       </div>
+      <div class="content-editor-bottom-actions"><div class="content-editor-actions"><button class="editor-save" type="submit">${editorText.save}</button><p class="content-editor-status" aria-live="polite"></p></div></div>
     </form>
-  </div>`;
+  </div>
+  <dialog class="editor-exit-dialog" aria-labelledby="editor-exit-title">
+    <div class="editor-exit-panel">
+      <p class="eyebrow"><span></span> THE NAVIES</p>
+      <h2 id="editor-exit-title">${editorText.unsavedTitle}</h2>
+      <p>${editorText.unsavedCopy}</p>
+      <div class="editor-exit-actions">
+        <button type="button" class="editor-exit-save" data-editor-exit="save">${editorText.saveAndExit}</button>
+        <button type="button" class="editor-exit-discard" data-editor-exit="discard">${editorText.exitWithoutSaving}</button>
+        <button type="button" class="editor-exit-cancel" data-editor-exit="cancel">${editorText.returnToEditing}</button>
+      </div>
+    </div>
+  </dialog>`;
 document.querySelector('.space-shell').append(contentEditor);
 
 const editorForm = contentEditor.querySelector('.content-editor-form');
 const editorStatus = contentEditor.querySelector('.content-editor-status');
+const editorExitDialog = contentEditor.querySelector('.editor-exit-dialog');
 let editorStatusTimer;
 let editorDirty = false;
 function setEditorStatus(message, temporary = false) {
@@ -875,18 +895,41 @@ editorForm.addEventListener('submit', async (event) => {
   await saveEditorChanges();
 });
 
-window.naviesRequestEditorExit = async () => {
-  if (!contentEditorOpen || !editorDirty) return true;
-  if (window.confirm(editorText.saveBeforeExit)) return saveEditorChanges();
-  editorDirty = false;
-  return true;
-};
+let editorExitResolver = null;
+function resolveEditorExit(result) {
+  if (editorExitDialog.open) editorExitDialog.close();
+  const resolve = editorExitResolver;
+  editorExitResolver = null;
+  resolve?.(result);
+}
 
-window.addEventListener('beforeunload', (event) => {
-  if (!contentEditorOpen || !editorDirty) return;
+editorExitDialog.addEventListener('cancel', (event) => {
   event.preventDefault();
-  event.returnValue = '';
+  resolveEditorExit(false);
 });
+editorExitDialog.addEventListener('click', (event) => {
+  if (event.target === editorExitDialog) resolveEditorExit(false);
+});
+editorExitDialog.querySelectorAll('[data-editor-exit]').forEach((button) => button.addEventListener('click', async () => {
+  const action = button.dataset.editorExit;
+  if (action === 'cancel') return resolveEditorExit(false);
+  if (action === 'discard') {
+    editorDirty = false;
+    return resolveEditorExit(true);
+  }
+  const buttons = [...editorExitDialog.querySelectorAll('button')];
+  buttons.forEach((item) => { item.disabled = true; });
+  const saved = await saveEditorChanges();
+  buttons.forEach((item) => { item.disabled = false; });
+  resolveEditorExit(saved);
+}));
+
+window.naviesRequestEditorExit = () => {
+  if (!contentEditorOpen || !editorDirty) return Promise.resolve(true);
+  if (editorExitResolver) return Promise.resolve(false);
+  editorExitDialog.showModal();
+  return new Promise((resolve) => { editorExitResolver = resolve; });
+};
 
 window.addEventListener('navies-admin-change', syncEditorAccess);
 window.addEventListener('navies-auth-change', syncEditorAccess);
