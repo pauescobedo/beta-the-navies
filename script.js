@@ -48,7 +48,7 @@ let localizedSpaceTitle = 'Espacio Navy';
 const routeDetails = {
   home: { hash:'#inicio', title:'The Navies' },
   'navies-live': { hash:'#navies-live', title:'Navies Live' },
-  'espacio-navy': { hash:'#espacio-navy', title:'Espacio Navy' }
+  'espacio-navy': { hash:'#navy', title:'Espacio Navy' }
 };
 
 const countdownLanding = document.querySelector('#countdown-landing');
@@ -56,7 +56,7 @@ const countdownStart = document.querySelector('#countdown-start');
 const countdownEnter = document.querySelector('#countdown-enter');
 const countdownAudio = document.querySelector('#countdown-audio');
 const countdownVolume = document.querySelector('#countdown-volume');
-const concertMoment = new Date('2026-11-21T13:30:00+01:00').getTime();
+const concertMoment = new Date('2026-11-21T14:00:00+01:00').getTime();
 const countdownTracks = [
   { file:'shake-it-off', artist:'Taylor Swift', title:'Shake It Off', start:163, end:216, fadeAtEnd:true },
   { file:'baby-one-more-time', artist:'Britney Spears', title:'…Baby One More Time', start:166, end:210, fadeAtEnd:true },
@@ -519,7 +519,7 @@ if (countdownLanding) {
 
 function routeFromHash() {
   if (location.hash === '#navies-live') return 'navies-live';
-  if (location.hash === '#espacio-navy') return 'espacio-navy';
+  if (location.hash === '#navy' || location.hash === '#espacio-navy') return 'espacio-navy';
   return 'home';
 }
 
@@ -1299,8 +1299,8 @@ Object.assign(translations.en, { navVideos:'Navies Live', time:'13:00h', tvSoonT
 Object.assign(translations.it, { navVideos:'Navies Live', time:'13:00h', tvSoonTitle:'Stiamo accordando<br><em>lo schermo.</em>', tvSoonCopy:'Presto pubblicheremo qui i primi video dei The Navies.' });
 Object.assign(translations.fr, { navVideos:'Navies Live', time:'13:00h', tvSoonTitle:'Nous accordons<br><em>l’écran.</em>', tvSoonCopy:'Les premières vidéos de The Navies seront bientôt disponibles ici.' });
 Object.values(translations).forEach((copy) => {
-  copy.time = '13:30h';
-  copy.countdownEventTime = '13:30';
+  copy.time = '14:00h';
+  copy.countdownEventTime = '14:00';
 });
 
 const contactEmails = {
@@ -1533,7 +1533,7 @@ const year = document.querySelector('#year');
 if (year) year.textContent = new Date().getFullYear();
 document.querySelectorAll('.footer-year').forEach((element) => { element.textContent = new Date().getFullYear(); });
 
-const navyMembers = ['pauescobedo', 'marionaescobedo', 'paufermosel', 'candelagonzalez', 'carlesgonzalez', 'ainasalmeron', 'emmatuabu'];
+const navyMembers = ['pauescobedo', 'marionaescobedo', 'paufermosel', 'candelagonzalez', 'carlesgonzalez', 'ainasalmeron', 'emmatuabu', 'juliabel', 'elsacuenca', 'conjuntcordes', 'corband'];
 const navyMemberNames = {
   pauescobedo: 'Pau',
   marionaescobedo: 'Mariona',
@@ -1541,7 +1541,11 @@ const navyMemberNames = {
   candelagonzalez: 'Candela',
   carlesgonzalez: 'Carles',
   ainasalmeron: 'Aina',
-  emmatuabu: 'Emma Tubau'
+  emmatuabu: 'Emma Tubau',
+  juliabel: 'Julia',
+  elsacuenca: 'Elsa',
+  conjuntcordes: 'Conjunto de Cuerdas',
+  corband: 'Cor-Band'
 };
 const accountDialog = document.createElement('dialog');
 accountDialog.className = 'account-dialog';
@@ -1619,9 +1623,17 @@ function showAuthToast(message, state = 'active', host = document.body) {
 }
 
 function validNavyMember() {
-  const member = localStorage.getItem('navies-member-session');
-  return navyMembers.includes(member) ? member : null;
+  try {
+    const auth = JSON.parse(localStorage.getItem('navies-member-auth'));
+    if (!auth?.member?.username || !auth.token || auth.expiresAt <= Date.now()) return null;
+    navyMemberNames[auth.member.username] = auth.member.name || auth.member.username;
+    return auth.member.username;
+  } catch (_) { return null; }
 }
+
+function memberAuth() { try { return JSON.parse(localStorage.getItem('navies-member-auth')) || null; } catch (_) { return null; } }
+window.naviesCurrentMember = validNavyMember;
+window.naviesMemberAccess = () => memberAuth()?.member?.access || [];
 
 function updateAccountTriggers(member = validNavyMember(), animate = false) {
   document.querySelectorAll('.account-trigger').forEach((trigger) => {
@@ -1629,7 +1641,7 @@ function updateAccountTriggers(member = validNavyMember(), animate = false) {
     const avatar = trigger.querySelector('.account-avatar');
     guest.hidden = Boolean(member);
     avatar.hidden = !member;
-    avatar.textContent = member ? member.charAt(0).toUpperCase() : '';
+    avatar.textContent = member ? (navyMemberNames[member] || member).charAt(0).toUpperCase() : '';
     trigger.setAttribute('aria-label', member ? `Cuenta de ${navyMemberNames[member]}` : 'Iniciar sesión');
     if (member && animate) {
       avatar.classList.remove('account-avatar-entering');
@@ -1654,7 +1666,7 @@ function updateAccountUI() {
   const adminPanel = accountDialog.querySelector('.account-admin-panel');
   adminPanel.hidden = member !== 'pauescobedo';
   accountDialog.querySelector('.account-member-greeting').textContent = member ? `${copy.hello || translations.es.hello}, ${navyMemberNames[member]}.` : '';
-  accountDialog.querySelector('.account-member-icon').textContent = member ? member.charAt(0).toUpperCase() : '';
+  accountDialog.querySelector('.account-member-icon').textContent = member ? (navyMemberNames[member] || member).charAt(0).toUpperCase() : '';
 }
 
 function openAccountDialog() {
@@ -1678,9 +1690,17 @@ function animateMemberView() {
   memberView.classList.add('member-entering');
 }
 
-window.naviesLogin = (username, password, { openMemberPanel = false } = {}) => {
-  const member = String(username).trim().toLowerCase();
-  if (!navyMembers.includes(member) || password !== 'navies2026') return false;
+window.naviesLogin = async (username, password, { openMemberPanel = false } = {}) => {
+  const apiUrl = String(window.NAVIES_ADMIN_API_URL || '').replace(/\/$/, '');
+  let result;
+  try {
+    const response = await fetch(`${apiUrl}/member-login`, { method:'POST', headers:{ 'Content-Type':'application/json' }, body:JSON.stringify({ username, password }) });
+    result = await response.json().catch(() => ({}));
+    if (!response.ok || !result.member?.username) return false;
+  } catch (_) { return false; }
+  const member = result.member.username;
+  navyMemberNames[member] = result.member.name || member;
+  localStorage.setItem('navies-member-auth', JSON.stringify({ token:result.token, expiresAt:result.expiresAt, member:result.member }));
   localStorage.setItem('navies-member-session', member);
   updateAccountTriggers(member, true);
   window.dispatchEvent(new CustomEvent('navies-auth-change', { detail: { member } }));
@@ -1725,6 +1745,7 @@ window.naviesLogin = (username, password, { openMemberPanel = false } = {}) => {
 
 window.naviesLogout = () => {
   localStorage.removeItem('navies-member-session');
+  localStorage.removeItem('navies-member-auth');
   updateAccountTriggers(null, true);
   const dialogWasOpen = accountDialog.open;
   closeAccountDialog();
@@ -1743,11 +1764,11 @@ document.querySelectorAll('.account-trigger').forEach((trigger) => trigger.addEv
 accountDialog.querySelector('.account-close').addEventListener('click', closeAccountDialog);
 accountDialog.addEventListener('click', (event) => { if (event.target === accountDialog) closeAccountDialog(); });
 accountDialog.addEventListener('cancel', (event) => { event.preventDefault(); closeAccountDialog(); });
-accountDialog.querySelector('.account-login-form').addEventListener('submit', (event) => {
+accountDialog.querySelector('.account-login-form').addEventListener('submit', async (event) => {
   event.preventDefault();
   const submittedForm = event.currentTarget;
   const data = new FormData(submittedForm);
-  const success = window.naviesLogin(data.get('username'), data.get('password'), { openMemberPanel:true });
+  const success = await window.naviesLogin(data.get('username'), data.get('password'), { openMemberPanel:true });
   accountDialog.querySelector('.account-error').textContent = success ? '' : 'Usuario o contraseña incorrectos.';
   if (success) {
     const resetDelay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 20 : 300;

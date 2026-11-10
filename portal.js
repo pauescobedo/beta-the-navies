@@ -24,6 +24,13 @@ Object.assign(editorText, ({
   it:{ live:'Navies Live', liveTitle:'Titolo di Navies Live', liveDescription:'Descrizione di Navies Live', socialNetworks:'Social media', socialNetworksCopy:'Link pubblici mostrati nella pagina Home.', addSocial:'Aggiungi social', dialogTitle:'Titolo interno', socialLabel:'Testo del link', socialUrl:'Link personale', siteEditing:'Modifica sito', general:'Impostazioni generali', generalCopy:'Preferenze comuni per tutto il sito.', defaultSeason:'Tema predefinito', initialPlayback:'Primo brano del lettore', randomPlayback:'Casuale', customPlayback:'Brano personalizzato', initialSong:'Brano iniziale', countdownSetting:'Landing e conto alla rovescia', enabled:'Attivato', disabled:'Disattivato', initialVolume:'Volume iniziale', lowVolume:'Basso', mediumVolume:'Medio', highVolume:'Alto', fallbackLanguage:'Lingua di riserva', faviconMode:'Icona della scheda', dynamicFavicon:'Dinamica · colore stagionale', staticFavicon:'Statica · punto verde', saveBeforeExit:'Ci sono modifiche non salvate. Vuoi salvarle prima di uscire?', singer:'Cantante' }
 }[portalLanguage] || {}));
 Object.assign(editorText, ({
+  es:{ users:'Usuarios', usersCopy:'Gestiona credenciales y acceso a cada formación.', addUser:'Añadir usuario', username:'Usuario', displayName:'Nombre visible', newPassword:'Nueva contraseña', accessNavies:'The Navies', accessCorBand:'Cor-Band', accessStrings:'Conjunto de Cuerdas' },
+  ca:{ users:'Usuaris', usersCopy:'Gestiona credencials i accés a cada formació.', addUser:'Afegir usuari', username:'Usuari', displayName:'Nom visible', newPassword:'Contrasenya nova', accessNavies:'The Navies', accessCorBand:'Cor-Band', accessStrings:'Conjunt de Cordes' },
+  en:{ users:'Users', usersCopy:'Manage credentials and access to each ensemble.', addUser:'Add user', username:'Username', displayName:'Display name', newPassword:'New password', accessNavies:'The Navies', accessCorBand:'Cor-Band', accessStrings:'String Ensemble' },
+  fr:{ users:'Utilisateurs', usersCopy:'Gérez les identifiants et les accès à chaque formation.', addUser:'Ajouter', username:'Utilisateur', displayName:'Nom affiché', newPassword:'Nouveau mot de passe', accessNavies:'The Navies', accessCorBand:'Cor-Band', accessStrings:'Ensemble à cordes' },
+  it:{ users:'Utenti', usersCopy:'Gestisci credenziali e accesso a ogni formazione.', addUser:'Aggiungi utente', username:'Utente', displayName:'Nome visibile', newPassword:'Nuova password', accessNavies:'The Navies', accessCorBand:'Cor-Band', accessStrings:"Ensemble d’archi" }
+}[portalLanguage] || {}));
+Object.assign(editorText, ({
   es:{ unsavedTitle:'¿Quieres guardar los cambios?', unsavedCopy:'Tienes cambios sin guardar. Elige qué quieres hacer antes de salir de la edición.', saveAndExit:'Guardar y salir', exitWithoutSaving:'Salir sin guardar', returnToEditing:'Volver a la edición' },
   ca:{ unsavedTitle:'Vols desar els canvis?', unsavedCopy:'Tens canvis sense desar. Tria què vols fer abans de sortir de l’edició.', saveAndExit:'Desar i sortir', exitWithoutSaving:'Sortir sense desar', returnToEditing:'Tornar a l’edició' },
   en:{ unsavedTitle:'Save your changes?', unsavedCopy:'You have unsaved changes. Choose what to do before leaving the editor.', saveAndExit:'Save and leave', exitWithoutSaving:'Leave without saving', returnToEditing:'Return to editing' },
@@ -39,29 +46,71 @@ const scoreRoot = `${portalAssetPrefix}scores`;
 const audioRoot = `${portalAssetPrefix}audios`;
 const scoreLibrary = {
   'shake-it-off': [
-    ['Letra', 'letra.pdf'], ['Acordes', 'acordes.pdf'], ['Teclado', 'teclado.pdf'], ['Bajo', 'bajo.pdf']
+    ['lyrics', 'letra.pdf'], ['chords', 'acordes.pdf'], ['keyboard', 'teclado.pdf'], ['bass', 'bajo.pdf']
   ],
   'baby-one-more-time': [
-    ['Letra', 'letra.pdf'], ['Acordes', 'acordes.pdf'], ['Teclado', 'teclado.pdf'], ['Bajo', 'bajo.pdf']
+    ['lyrics', 'letra.pdf'], ['chords', 'acordes.pdf'], ['keyboard', 'teclado.pdf'], ['bass', 'bajo.pdf']
   ],
   'sweet-caroline': [
-    ['Letra', 'letra.pdf'], ['Acordes', 'acordes.pdf'], ['Teclado', 'teclado.pdf'], ['Bajo', 'bajo.pdf']
+    ['lyrics', 'letra.pdf'], ['chords', 'acordes.pdf'], ['keyboard', 'teclado.pdf'], ['bass', 'bajo.pdf']
   ],
   'dont-look-back-in-anger': [
-    ['Letra', 'letra.pdf'], ['Acordes', 'acordes.pdf'], ['Bajo', 'bajo.pdf']
+    ['lyrics', 'letra.pdf'], ['chords', 'acordes.pdf'], ['bass', 'bajo.pdf']
   ],
   'the-final-countdown': [
-    ['Letra', 'letra.pdf'], ['Acordes', 'acordes.pdf'], ['Teclado', 'teclado.pdf'], ['Bajo', 'bajo.pdf']
+    ['lyrics', 'letra.pdf'], ['chords', 'acordes.pdf'], ['keyboard', 'teclado.pdf'], ['bass', 'bajo.pdf']
   ],
   'have-you-ever-seen-the-rain': [
-    ['Letra', 'letra.pdf'], ['Acordes', 'acordes.pdf'], ['Teclado', 'teclado.pdf'], ['Bajo', 'bajo.pdf']
+    ['lyrics', 'letra.pdf'], ['chords', 'acordes.pdf'], ['keyboard', 'teclado.pdf'], ['bass', 'bajo.pdf']
   ],
   'the-final-countdown-reprise': [
-    ['Acordes', 'acordes.pdf'], ['Teclado', 'teclado.pdf'], ['Bajo', 'bajo.pdf']
-  ]
+    ['chords', 'acordes.pdf'], ['keyboard', 'teclado.pdf'], ['bass', 'bajo.pdf']
+  ],
+  'cor-band/billie-jean':[['lyrics','lletra.pdf']],
+  'cor-band/stayin-alive':[['lyrics','lletra.pdf']],
+  'cor-band/mystical-magical':[['lyrics','lletra.pdf'],['chords','acords.pdf']],
+  'cor-band/texas-hold-em':[['lyrics','lletra.pdf'],['chords','acords.pdf']],
+  'cor-band/training-season':[['lyrics','lletra.pdf'],['chords','acords.pdf']],
+  'cor-band/livin-on-a-prayer':[['lyrics','lletra.pdf'],['keyboard','teclat.pdf']],
+  'conjunt-de-cordes/balfourd-road':[['standard','estandard.pdf']],
+  'conjunt-de-cordes/calliope-house':[['violin','violi.pdf'],['viola','viola.pdf'],['chords','acords.pdf']]
 };
 
+const auxiliarySongIds = new Set(Object.keys(scoreLibrary).filter((id) => id.includes('/')));
+const ensembleCopies = {
+  es:{ strings:'Conjunto de Cuerdas' }, ca:{ strings:'Conjunt de Cordes' }, en:{ strings:'String Ensemble' }, fr:{ strings:'Ensemble à cordes' }, it:{ strings:"Ensemble d’archi" }
+};
+const ensembleCopy = ensembleCopies[portalLanguage] || ensembleCopies.es;
+const ensembleContent = {
+  'cor-band':{
+    numbered:false,
+    songs:[
+      { id:'cor-band/billie-jean', title:'Billie Jean' }, { id:'cor-band/stayin-alive', title:"Stayin’ Alive" },
+      { id:'cor-band/mystical-magical', title:'Mystical Magical' }, { id:'cor-band/texas-hold-em', title:"Texas Hold’Em" },
+      { id:'cor-band/training-season', title:'Training Season' }, { id:'cor-band/livin-on-a-prayer', title:"Livin’ On A Prayer" }
+    ],
+    events:[
+      { id:'cor-band-2026-11-13', type:'rehearsal', name:'Ensayo', date:'2026-11-13', time:'19:30–21:30', location:'BCN Fusió Sant Andreu' },
+      { id:'cor-band-2026-11-20', type:'general', name:'Ensayo General', date:'2026-11-20', time:'19:30–21:30', location:'BCN Fusió Sant Andreu' },
+      { id:'cor-band-concert-2026-11-21', type:'concert', name:'Fiestas de La Sagrera 2026', date:'2026-11-21', time:'13:30', location:'Plaza Masadas' }
+    ]
+  },
+  strings:{
+    numbered:true,
+    songs:[
+      { id:'conjunt-de-cordes/balfourd-road', title:'Balfourd Road' },
+      { id:'conjunt-de-cordes/calliope-house', title:'Calliope House' }
+    ],
+    events:[
+      { id:'strings-2026-11-18', type:'rehearsal', name:'Ensayo', date:'2026-11-18', time:'20:00–20:30', location:'BCN Fusió La Sagrera' },
+      { id:'strings-concert-2026-11-21', type:'concert', name:'Fiestas de La Sagrera 2026', date:'2026-11-21', time:'13:20', location:'Plaza Masadas' }
+    ]
+  }
+};
+let selectedEnsemble = 'the-navies';
+
 let navyContent = null;
+let editorUsers = [];
 
 function contentSession() {
   try {
@@ -89,16 +138,17 @@ function isCanonicalEventName(name) {
   return eventTypeKeys.some((type) => Object.values(editorCopies).some((copy) => copy[type] === name));
 }
 
-function renderSetlist(songs) {
+function renderSetlist(songs, numbered = true) {
   const setlist = document.querySelector('.setlist');
   if (!setlist) return;
   setlist.replaceChildren();
+  setlist.classList.toggle('setlist-unnumbered', !numbered);
   songs.forEach((song, index) => {
     const row = document.createElement('div');
     row.className = 'song-row';
     const number = document.createElement('span');
     number.className = 'song-number';
-    number.textContent = String(index + 1).padStart(2, '0');
+    number.textContent = numbered ? String(index + 1).padStart(2, '0') : '';
     const title = document.createElement('strong');
     title.textContent = song.title;
     const materials = document.createElement('div');
@@ -276,10 +326,31 @@ function monthLabel(month, language = 'es') {
 
 function renderNavyContent(content) {
   navyContent = structuredClone(content);
-  renderHomeContent(content.home);
-  renderSetlist(content.songs);
+  const featuredConcert = navyContent.home?.concerts?.find((concert) => concert.id === 'sagrera-2026');
+  if (featuredConcert) featuredConcert.time = '14:00';
+  const calendarConcert = navyContent.events?.find((event) => event.id === 'concert-2026-11-21');
+  if (calendarConcert) calendarConcert.time = '14:00';
+  const normalRehearsal = navyContent.events?.find((event) => event.id === 'rehearsal-2026-11-13');
+  if (normalRehearsal) Object.assign(normalRehearsal, { time:'17:30–19:30', location:'BCN Fusió Sant Andreu' });
+  const extraRehearsal = navyContent.events?.find((event) => event.id === 'extra-2026-11-14');
+  if (extraRehearsal) Object.assign(extraRehearsal, { time:'18:00–20:00', location:'BCN Fusió La Sagrera' });
+  const generalRehearsal = navyContent.events?.find((event) => event.id === 'general-2026-11-20');
+  if (generalRehearsal) Object.assign(generalRehearsal, { time:'17:30–19:30', location:'BCN Fusió Sant Andreu' });
+  renderHomeContent(navyContent.home);
+  renderSelectedEnsemble();
+  renderLinks(navyContent.links);
+}
+
+function theNaviesUpcomingEvents() {
+  return navyContent?.events || [];
+}
+
+function renderSelectedEnsemble() {
+  if (!navyContent) return;
+  const content = selectedEnsemble === 'the-navies' ? { songs:navyContent.songs, events:theNaviesUpcomingEvents(), numbered:true } : ensembleContent[selectedEnsemble];
+  renderSetlist(content.songs, content.numbered);
   renderEvents(content.events);
-  renderLinks(content.links);
+  document.querySelectorAll('[data-ensemble]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.ensemble === selectedEnsemble)));
 }
 
 async function loadNavyContent() {
@@ -295,11 +366,20 @@ async function loadNavyContent() {
 }
 
 function decorateScoreSongs() {
+  const materialCopies = {
+    es:{ lyrics:'Letra', chords:'Acordes', keyboard:'Teclado', bass:'Bajo', standard:'Estándar', violin:'Violín', viola:'Viola' },
+    ca:{ lyrics:'Lletra', chords:'Acords', keyboard:'Teclat', bass:'Baix', standard:'Estàndard', violin:'Violí', viola:'Viola' },
+    en:{ lyrics:'Lyrics', chords:'Chords', keyboard:'Keys', bass:'Bass', standard:'Standard', violin:'Violin', viola:'Viola' },
+    fr:{ lyrics:'Paroles', chords:'Accords', keyboard:'Clavier', bass:'Basse', standard:'Standard', violin:'Violon', viola:'Alto' },
+    it:{ lyrics:'Testo', chords:'Accordi', keyboard:'Tastiere', bass:'Basso', standard:'Standard', violin:'Violino', viola:'Viola' }
+  };
+  const labels = materialCopies[portalLanguage] || materialCopies.es;
   document.querySelectorAll('[data-score-song]').forEach((container) => {
     container.replaceChildren();
     const song = container.dataset.scoreSong;
     const songTitle = container.closest('.song-row').querySelector('strong').textContent;
-    (scoreLibrary[song] || []).forEach(([label, filename]) => {
+    (scoreLibrary[song] || []).forEach(([labelKey, filename]) => {
+      const label = labels[labelKey] || labelKey;
       const source = `${scoreRoot}/${song}/${filename}`;
       const item = document.createElement('span');
       item.className = 'score-file';
@@ -313,6 +393,7 @@ function decorateScoreSongs() {
       item.append(link);
       container.append(item);
     });
+    if (auxiliarySongIds.has(song)) return;
     const audioSource = `${audioRoot}/${song}.mp3`;
     const divider = document.createElement('span');
     divider.className = 'audio-divider';
@@ -329,6 +410,39 @@ function decorateScoreSongs() {
   });
 }
 decorateScoreSongs();
+
+const ensembleSwitcher = document.createElement('div');
+ensembleSwitcher.className = 'ensemble-switcher';
+ensembleSwitcher.setAttribute('aria-label', ({ es:'Seleccionar formación', ca:'Seleccionar formació', en:'Select ensemble', fr:'Sélectionner la formation', it:'Seleziona formazione' })[portalLanguage] || 'Seleccionar formación');
+ensembleSwitcher.innerHTML = `<button type="button" data-ensemble="the-navies" aria-pressed="true">The Navies</button><button type="button" data-ensemble="cor-band" aria-pressed="false">Cor-Band</button><button type="button" data-ensemble="strings" aria-pressed="false">${ensembleCopy.strings}</button>`;
+dashboardBar?.insertAdjacentElement('afterend', ensembleSwitcher);
+ensembleSwitcher.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-ensemble]');
+  if (!button || button.dataset.ensemble === selectedEnsemble) return;
+  selectedEnsemble = button.dataset.ensemble;
+  const grid = dashboard.querySelector('.dashboard-grid');
+  grid.classList.add('ensemble-changing');
+  window.setTimeout(() => {
+    renderSelectedEnsemble();
+    grid.classList.remove('ensemble-changing');
+    grid.classList.add('ensemble-entering');
+    window.setTimeout(() => grid.classList.remove('ensemble-entering'), 420);
+  }, 160);
+});
+
+function syncEnsembleAccess() {
+  const access = window.naviesMemberAccess?.() || [];
+  const buttons = [...ensembleSwitcher.querySelectorAll('[data-ensemble]')];
+  buttons.forEach((button) => { button.hidden = !access.includes(button.dataset.ensemble); });
+  const available = buttons.filter((button) => !button.hidden);
+  ensembleSwitcher.hidden = available.length <= 1;
+  const grid = dashboard.querySelector('.dashboard-grid');
+  if (grid) grid.hidden = available.length === 0;
+  if (available.length && !access.includes(selectedEnsemble)) {
+    selectedEnsemble = available[0].dataset.ensemble;
+    renderSelectedEnsemble();
+  }
+}
 
 const audioDialog = document.querySelector('#audio-dialog');
 const audioPlayer = document.querySelector('#audio-player');
@@ -382,7 +496,7 @@ contentEditor.innerHTML = `
     <header class="content-editor-header">
       <div><p class="eyebrow"><span></span> THE NAVIES</p><h2>${editorText.title}</h2><p>${editorText.intro}</p></div>
       <div class="content-editor-controls">
-        <nav class="content-editor-tabs"><button type="button" data-editor-tab="home" aria-pressed="true">${editorText.home}</button><button type="button" data-editor-tab="space" aria-pressed="false">${editorText.space}</button><button type="button" data-editor-tab="general" aria-pressed="false">${editorText.general}</button></nav>
+        <nav class="content-editor-tabs"><button type="button" data-editor-tab="home" aria-pressed="true">${editorText.home}</button><button type="button" data-editor-tab="space" aria-pressed="false">${editorText.space}</button><button type="button" data-editor-tab="general" aria-pressed="false">${editorText.general}</button><button type="button" data-editor-tab="users" aria-pressed="false">${editorText.users}</button></nav>
       </div>
     </header>
     <form class="content-editor-form" id="content-editor-form">
@@ -420,6 +534,9 @@ contentEditor.innerHTML = `
       </div>
       <div class="editor-page" data-editor-page="general" hidden>
         <section class="editor-section"><div class="editor-section-head"><div><span>01</span><h3>${editorText.general}</h3><p>${editorText.generalCopy}</p></div></div><div class="editor-settings" data-editor-settings></div></section>
+      </div>
+      <div class="editor-page" data-editor-page="users" hidden>
+        <section class="editor-section"><div class="editor-section-head"><div><span>01</span><h3>${editorText.users}</h3><p>${editorText.usersCopy}</p></div><button type="button" data-editor-add="user">${editorText.addUser}</button></div><div class="editor-list" data-editor-list="users"></div></section>
       </div>
       <div class="content-editor-bottom-actions"><div class="content-editor-actions"><button class="editor-save" type="submit">${editorText.save}</button><p class="content-editor-status" aria-live="polite"></p></div></div>
     </form>
@@ -523,7 +640,7 @@ function eventEditorRow(event = {}) {
   const syncAlternative = () => { alternateInput.required = select.value === 'other'; };
   select.addEventListener('change', syncAlternative);
   syncAlternative();
-  row.append(typeLabel, alternate, field(editorText.date, 'date', event.date, 'date', { required:'' }), field(editorText.time, 'time', event.time, 'time'), field(editorText.place, 'location', event.location, 'text', { maxlength:'160' }), rowActions('event'));
+  row.append(typeLabel, alternate, field(editorText.date, 'date', event.date, 'date', { required:'' }), field(editorText.time, 'time', event.time, 'text', { maxlength:'20', placeholder:'17:30–19:30' }), field(editorText.place, 'location', event.location, 'text', { maxlength:'160' }), rowActions('event'));
   return row;
 }
 
@@ -549,6 +666,44 @@ function socialEditorRow(social = {}) {
   row.dataset.id = social.id || '';
   row.append(field(editorText.name, 'label', social.label, 'text', { maxlength:'160', required:'' }), field(editorText.web, 'url', social.url, 'url', { maxlength:'500', required:'', placeholder:'https://…' }), rowActions('social'));
   return row;
+}
+
+function userEditorRow(user = {}) {
+  const row = document.createElement('div');
+  row.className = 'editor-row editor-user-row';
+  row.append(field(editorText.username, 'username', user.username, 'text', { maxlength:'40', required:'', autocapitalize:'none' }), field(editorText.displayName, 'name', user.name, 'text', { maxlength:'80', required:'' }), field(editorText.newPassword, 'password', '', 'password', { maxlength:'100', placeholder:user.username ? '••••••••' : '' }));
+  const permissions = document.createElement('div');
+  permissions.className = 'editor-user-access';
+  [['the-navies',editorText.accessNavies],['cor-band',editorText.accessCorBand],['strings',editorText.accessStrings]].forEach(([value, label]) => {
+    const option = document.createElement('label');
+    const input = document.createElement('input');
+    input.type = 'checkbox'; input.name = 'access'; input.value = value; input.checked = user.access?.includes(value);
+    const text = document.createElement('span'); text.textContent = label;
+    option.append(input, text); permissions.append(option);
+  });
+  row.append(permissions, rowActions('user'));
+  return row;
+}
+
+async function loadEditorUsers() {
+  const session = contentSession();
+  if (!session) return false;
+  try {
+    const response = await fetch(`${portalApiUrl}/users`, { headers:{ Authorization:`Bearer ${session.token}` } });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(result.error || 'users_failed');
+    editorUsers = result.users || [];
+    return true;
+  } catch (_) { setEditorStatus(editorText.loadError); return false; }
+}
+
+function usersFromEditor() {
+  return [...contentEditor.querySelectorAll('.editor-user-row')].map((row) => ({
+    username:row.querySelector('[name="username"]').value.trim().toLowerCase(),
+    name:row.querySelector('[name="name"]').value.trim(),
+    password:row.querySelector('[name="password"]').value,
+    access:[...row.querySelectorAll('[name="access"]:checked')].map((input) => input.value)
+  }));
 }
 
 function concertEditorRow(concert = {}) {
@@ -591,6 +746,7 @@ function populateEditor() {
   const eventList = contentEditor.querySelector('[data-editor-list="events"]');
   const songList = contentEditor.querySelector('[data-editor-list="songs"]');
   const linkList = contentEditor.querySelector('[data-editor-list="links"]');
+  const userList = contentEditor.querySelector('[data-editor-list="users"]');
   homeTexts.replaceChildren(textAreaField(editorText.presentation, 'heroIntro', navyContent.home.texts.heroIntro), textAreaField(editorText.sound, 'soundBody', navyContent.home.texts.soundBody), textAreaField(editorText.band, 'bandBody', navyContent.home.texts.bandBody));
   const seasonField = document.createElement('label');
   seasonField.innerHTML = `<span>${editorText.defaultSeason}</span>`;
@@ -682,7 +838,7 @@ function populateEditor() {
   volumeLabels.className = 'editor-volume-labels';
   volumeLabels.innerHTML = `<span>${editorText.lowVolume}</span><span>${editorText.mediumVolume}</span><span>${editorText.highVolume}</span>`;
   volumeField.append(volumeSlider, volumeLabels);
-  const languageNames = { ca:'🟨🟥 Català', es:'🇪🇸 Castellano', en:'🇬🇧 English', fr:'🇫🇷 Français', it:'🇮🇹 Italiano' };
+  const languageNames = { ca:'Català', es:'Castellano', en:'English', fr:'Français', it:'Italiano' };
   const fallbackField = makeSettingsSelect('fallbackLanguage', editorText.fallbackLanguage, ['ca','es','en','fr','it'].map((code) => [code,languageNames[code]]), navyContent.home.settings?.fallbackLanguage || 'es');
   const faviconField = makeSettingsSelect('faviconMode', editorText.faviconMode, [['dynamic',editorText.dynamicFavicon],['static',editorText.staticFavicon]], navyContent.home.settings?.faviconMode || 'dynamic');
   settings.replaceChildren(seasonField, playbackField, countdownField, volumeField, fallbackField, faviconField);
@@ -692,6 +848,7 @@ function populateEditor() {
   eventList.replaceChildren(...navyContent.events.map(eventEditorRow));
   songList.replaceChildren(...navyContent.songs.map(songEditorRow));
   linkList.replaceChildren(...navyContent.links.map(linkEditorRow));
+  userList.replaceChildren(...editorUsers.map(userEditorRow));
   editorDirty = false;
   setEditorStatus('');
 }
@@ -788,6 +945,7 @@ editContentButton.addEventListener('click', async (event) => {
     setEditorStatus(editorText.loadError);
     return;
   }
+  await loadEditorUsers();
   populateEditor();
   selectEditorPage(editorOriginRoute);
   dashboard.hidden = true;
@@ -837,7 +995,7 @@ contentEditor.addEventListener('click', (event) => {
   if (add) {
     const kind = add.dataset.editorAdd;
     const list = contentEditor.querySelector(`[data-editor-list="${kind}s"]`);
-    const row = kind === 'event' ? eventEditorRow({ type:'rehearsal', name:'', date:localToday(), time:'17:30', location:'' }) : kind === 'song' ? songEditorRow() : kind === 'concert' ? concertEditorRow({ name:editorText.newConcert, day:'', month:'12', year:String(new Date().getFullYear()), time:'', location:'' }) : kind === 'social' ? socialEditorRow() : linkEditorRow();
+    const row = kind === 'event' ? eventEditorRow({ type:'rehearsal', name:'', date:localToday(), time:'17:30', location:'' }) : kind === 'song' ? songEditorRow() : kind === 'concert' ? concertEditorRow({ name:editorText.newConcert, day:'', month:'12', year:String(new Date().getFullYear()), time:'', location:'' }) : kind === 'social' ? socialEditorRow() : kind === 'user' ? userEditorRow({ access:[] }) : linkEditorRow();
     list.append(row);
     editorDirty = true;
     list.lastElementChild.scrollIntoView({ behavior:'smooth', block:'center' });
@@ -878,6 +1036,14 @@ async function saveEditorChanges() {
     });
     const result = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(result.error || 'save_failed');
+    const usersResponse = await fetch(`${portalApiUrl}/users`, {
+      method:'PUT',
+      headers:{ 'Content-Type':'application/json', Authorization:`Bearer ${session.token}` },
+      body:JSON.stringify({ users:usersFromEditor() })
+    });
+    const usersResult = await usersResponse.json().catch(() => ({}));
+    if (!usersResponse.ok) throw new Error(usersResult.error || 'users_failed');
+    editorUsers = usersResult.users || [];
     renderNavyContent(result.content);
     editorDirty = false;
     setEditorStatus(editorText.saved, true);
@@ -949,9 +1115,10 @@ function applyPortalState(isLoggedIn) {
 }
 
 function syncPortal() {
-  const member = localStorage.getItem('navies-member-session');
-  const isLoggedIn = ['pauescobedo', 'marionaescobedo', 'paufermosel', 'candelagonzalez', 'carlesgonzalez', 'ainasalmeron', 'emmatuabu'].includes(member);
+  const member = window.naviesCurrentMember?.();
+  const isLoggedIn = Boolean(member);
   if (isLoggedIn) memberName.textContent = window.naviesMemberName(member);
+  syncEnsembleAccess();
 
   if (!portalReady) {
     applyPortalState(isLoggedIn);
@@ -978,10 +1145,10 @@ function syncPortal() {
   }, 210);
 }
 
-loginForm.addEventListener('submit', (event) => {
+loginForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
-  if (window.naviesLogin(data.get('username'), data.get('password'))) {
+  if (await window.naviesLogin(data.get('username'), data.get('password'))) {
     loginError.textContent = '';
     event.currentTarget.reset();
     if (window.matchMedia('(max-width: 900px)').matches) {
