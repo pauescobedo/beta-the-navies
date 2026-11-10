@@ -519,14 +519,13 @@ if (countdownLanding) {
 
 function routeFromHash() {
   if (location.hash === '#navies-live') return 'navies-live';
-  if (location.hash === '#navy' || location.hash === '#espacio-navy') return 'espacio-navy';
+  if (location.hash === '#navy' || location.hash === '#espacio-navy' || location.hash === '#edicion' || location.hash === '#edicion-del-sitio') return 'espacio-navy';
   return 'home';
 }
 
-function showPage(route, updateHistory = true) {
+function showPage(route, updateHistory = true, editorLinkActive = false) {
   const selectedRoute = routeDetails[route] ? route : 'home';
   const selectedView = pageViews.find((view) => view.dataset.pageView === selectedRoute);
-  navigation.querySelector('.content-editor-trigger')?.classList.remove('active');
   window.dispatchEvent(new CustomEvent('navies-route-change', { detail:{ route:selectedRoute } }));
   document.documentElement.dataset.route = selectedRoute;
   pageViews.forEach((view) => {
@@ -552,8 +551,9 @@ function showPage(route, updateHistory = true) {
     quickPlayer.addEventListener('animationend', () => quickPlayer.classList.remove('quick-route-entering'), { once:true });
   }
   navigation.querySelectorAll('[data-route]').forEach((link) => {
-    link.classList.toggle('active', link.dataset.route === selectedRoute);
+    link.classList.toggle('active', !editorLinkActive && link.dataset.route === selectedRoute);
   });
+  navigation.querySelector('.content-editor-trigger')?.classList.toggle('active', editorLinkActive);
   document.body.classList.toggle('route-media', selectedRoute === 'navies-live');
   document.body.classList.toggle('route-space', selectedRoute === 'espacio-navy');
   document.title = selectedRoute === 'espacio-navy' ? localizedSpaceTitle : routeDetails[selectedRoute].title;
@@ -572,6 +572,16 @@ function showPage(route, updateHistory = true) {
     });
   });
 }
+
+function setEditorAddress(replace = false) {
+  history[replace ? 'replaceState' : 'pushState']({ route:'editor' }, '', '#edicion');
+}
+window.naviesShowEditorHost = () => {
+  showPage('espacio-navy', false, true);
+  setEditorAddress(false);
+};
+window.naviesMarkEditorRoute = () => setEditorAddress(false);
+window.naviesRestoreEditorRoute = (route) => showPage(routeDetails[route] ? route : 'home', true, false);
 
 navigation.querySelectorAll('[data-route]').forEach((link) => link.addEventListener('click', async (event) => {
   event.preventDefault();
@@ -607,7 +617,7 @@ window.addEventListener('popstate', async () => {
   }
   showPage(routeFromHash(), false);
 });
-showPage(routeFromHash(), false);
+showPage(routeFromHash(), false, location.hash === '#edicion' || location.hash === '#edicion-del-sitio');
 document.documentElement.classList.add('nav-ready');
 window.addEventListener('pageshow', () => {
   requestAnimationFrame(() => requestAnimationFrame(() => {
@@ -773,6 +783,11 @@ Object.assign(translations.ca, { usefulLinks:'Enllaços útils', usefulLinksCopy
 Object.assign(translations.en, { usefulLinks:'Useful links', usefulLinksCopy:'Quick access to the band’s shared resources.', driveLinkCopy:'Shared files', spotifyLinkCopy:'The Navies playlist', appleMusicLinkCopy:'The Navies playlist' });
 Object.assign(translations.it, { usefulLinks:'Link utili', usefulLinksCopy:'Accesso rapido alle risorse condivise della band.', driveLinkCopy:'File condivisi', spotifyLinkCopy:'Playlist dei The Navies', appleMusicLinkCopy:'Playlist dei The Navies' });
 Object.assign(translations.fr, { usefulLinks:'Liens utiles', usefulLinksCopy:'Accès direct aux ressources partagées du groupe.', driveLinkCopy:'Fichiers partagés', spotifyLinkCopy:'Playlist de The Navies', appleMusicLinkCopy:'Playlist de The Navies' });
+Object.assign(translations.es, { usefulLinks:'Listas de reproducción' });
+Object.assign(translations.ca, { usefulLinks:'Llistes de reproducció' });
+Object.assign(translations.en, { usefulLinks:'Playlists' });
+Object.assign(translations.fr, { usefulLinks:'Listes de lecture' });
+Object.assign(translations.it, { usefulLinks:'Playlist' });
 
 const memberBios = {
   es: {
@@ -833,6 +848,11 @@ Object.assign(translations.ca, { groupVocals:'Aina, Candela González i Mariona 
 Object.assign(translations.en, { groupVocals:'Aina, Candela González and Mariona Escobedo', groupVocalsCopy:'Three voices for melodies, harmonies and choruses.', groupBass:'Emma Tubau', groupBassCopy:'The low-end foundation connecting rhythm and harmony.', groupGuitar:'Carles', groupGuitarCopy:'Riffs, chords and the band’s rock character.', groupKeys:'Pau Fermosel', groupKeysCopy:'Piano, synthesisers and layers that expand the sound.', groupDrums:'Pau Escobedo', groupDrumsCopy:'The pulse that drives the energy and holds the band together.', provisionalBio:'This is how The Navies completes its sound.' });
 Object.assign(translations.it, { groupVocals:'Aina, Candela González e Mariona Escobedo', groupVocalsCopy:'Tre voci per melodie, armonie e cori.', groupBass:'Emma Tubau', groupBassCopy:'La base grave che unisce ritmo e armonia.', groupGuitar:'Carles', groupGuitarCopy:'Riff, accordi e il carattere rock della band.', groupKeys:'Pau Fermosel', groupKeysCopy:'Pianoforti, sintetizzatori e strati che ampliano il suono.', groupDrums:'Pau Escobedo', groupDrumsCopy:'Il ritmo che muove l’energia e tiene unita la band.', provisionalBio:'Così si completa il suono dei The Navies.' });
 Object.assign(translations.fr, { groupVocals:'Aina, Candela González et Mariona Escobedo', groupVocalsCopy:'Trois voix pour les mélodies, harmonies et chœurs.', groupBass:'Emma Tubau', groupBassCopy:'La base grave qui relie rythme et harmonie.', groupGuitar:'Carles', groupGuitarCopy:'Des riffs, des accords et le caractère rock du groupe.', groupKeys:'Pau Fermosel', groupKeysCopy:'Pianos, synthétiseurs et textures qui élargissent le son.', groupDrums:'Pau Escobedo', groupDrumsCopy:'Le rythme qui porte l’énergie et maintient le groupe uni.', provisionalBio:'Ainsi se construit le son de The Navies.' });
+Object.assign(translations.es, { groupVocals:'Aina, Candela y Mariona Escobedo', groupBass:'Emma' });
+Object.assign(translations.ca, { groupVocals:'Aina, Candela i Mariona Escobedo', groupBass:'Emma' });
+Object.assign(translations.en, { groupVocals:'Aina, Candela and Mariona Escobedo', groupBass:'Emma' });
+Object.assign(translations.fr, { groupVocals:'Aina, Candela et Mariona Escobedo', groupBass:'Emma' });
+Object.assign(translations.it, { groupVocals:'Aina, Candela e Mariona Escobedo', groupBass:'Emma' });
 
 Object.assign(translations.es, { countdownWelcomeTitle:'Algo está a punto de sonar', countdownWelcomeCopy:'El 21 de noviembre, siete músicos y un escenario te esperan en Plaza Masadas. El resto, lo tendrás que descubrir en directo.', countdownWelcomeStart:'Descubrir', countdownEventDate:'21 DE NOVIEMBRE', countdownEventTime:'13:00', countdownPlaceLabel:'Lugar', countdownDays:'Días', countdownHours:'Horas', countdownMinutes:'Minutos', countdownSeconds:'Segundos', countdownEnter:'Ir a inicio', memberContinuation:'…a cargo de', memberDialogVocals:'En las <em>voces</em>…', memberDialogBass:'En el <em>bajo</em>…', memberDialogGuitar:'En la <em>guitarra</em>…', memberDialogKeys:'En los <em>teclados</em>…', memberDialogDrums:'En la <em>batería</em>…', countdownEventTime:'13:00', countdownEventVenue:'PLAZA MASADAS', countdownKicker:'Próximo concierto', countdownDateLabel:'Fecha', countdownTimeLabel:'Hora' });
 Object.assign(translations.ca, { countdownWelcomeTitle:'Alguna cosa està a punt de sonar', countdownWelcomeCopy:'El 21 de novembre, set músics i un escenari t’esperen a Plaza Masadas. La resta, l’hauràs de descobrir en directe.', countdownWelcomeStart:'Descobrir', countdownEventDate:'21 DE NOVEMBRE', countdownEventTime:'13:00', countdownEventVenue:'PLAZA MASADAS', countdownKicker:'Pròxim concert', countdownDateLabel:'Data', countdownTimeLabel:'Hora', countdownPlaceLabel:'Lloc', countdownDays:'Dies', countdownHours:'Hores', countdownMinutes:'Minuts', countdownSeconds:'Segons', countdownEnter:'Anar a l’inici', memberInCharge:'A càrrec de', memberDialogKeys:'Als <em>teclats</em>', memberDialogDrums:'A la <em>bateria</em>' });
@@ -1541,7 +1561,7 @@ const navyMemberNames = {
   candelagonzalez: 'Candela',
   carlesgonzalez: 'Carles',
   ainasalmeron: 'Aina',
-  emmatuabu: 'Emma Tubau',
+  emmatuabu: 'Emma',
   juliabel: 'Julia',
   elsacuenca: 'Elsa',
   conjuntcordes: 'Conjunto de Cuerdas',
@@ -1665,7 +1685,7 @@ function updateAccountUI() {
   accountDialog.querySelector('.account-logout').textContent = copy.signOut || translations.es.signOut;
   const adminPanel = accountDialog.querySelector('.account-admin-panel');
   adminPanel.hidden = member !== 'pauescobedo';
-  accountDialog.querySelector('.account-member-greeting').textContent = member ? `${copy.hello || translations.es.hello}, ${navyMemberNames[member]}.` : '';
+  accountDialog.querySelector('.account-member-greeting').textContent = member ? `${copy.hello || translations.es.hello}, ${navyMemberNames[member]}` : '';
   accountDialog.querySelector('.account-member-icon').textContent = member ? (navyMemberNames[member] || member).charAt(0).toUpperCase() : '';
 }
 

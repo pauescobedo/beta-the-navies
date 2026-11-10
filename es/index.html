@@ -18,7 +18,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="navies-build" content="20261110-186">
+  <meta name="navies-build" content="20261111-218">
   <title>The Navies</title>
   <link rel="canonical" href="https://thenavies.com/es/">
   <link rel="alternate" hreflang="x-default" href="https://thenavies.com/">
@@ -79,20 +79,20 @@
   }
   </script>
   <style>html:not(.nav-ready) #main-nav>a::after{opacity:0!important}html.countdown-entry,html.countdown-entry body{background:#17304a!important}html.countdown-entry .countdown-landing{position:fixed;inset:0;background:#17304a}html.countdown-entry.countdown-entering .countdown-landing>*{visibility:hidden}@media(max-width:900px){html:not(.nav-ready) #main-nav{display:none!important}}</style>
-  <script>if('scrollRestoration'in history)history.scrollRestoration='manual'</script>
+  <script>if('scrollRestoration'in history)history.scrollRestoration='manual';if(location.hash==='#edicion'||location.hash==='#edicion-del-sitio')document.documentElement.classList.add('editor-route-pending')</script>
   <script>try{const n=performance.getEntriesByType('navigation')[0],r=n&&n.type==='reload',c=!location.hash||location.hash==='#countdown',i=sessionStorage.getItem('the-navies-internal-navigation')==='1',v=sessionStorage.getItem('the-navies-countdown-revealed')==='1',e=sessionStorage.getItem('the-navies-countdown-enabled');if(c&&e!=='0'){document.documentElement.classList.add('countdown-entry');if(r||!(i&&v))document.documentElement.classList.add('countdown-welcome','countdown-entering','countdown-preloading')}}catch(e){}</script>
   <script>try{const b=document.querySelector('meta[name="navies-build"]').content;fetch(`${location.pathname}?comprobar=${Date.now()}`,{cache:'no-store'}).then(r=>r.text()).then(h=>{const n=h.match(/<meta name="navies-build" content="([^"]+)"/)?.[1];if(n&&n!==b){const u=new URL(location.href);u.searchParams.set('version',n);location.replace(u)}}).catch(()=>{})}catch(e){}</script>
   <script>try{const c={spring:'#F4A7C1',summer:'#FFD76A',autumn:'#C77B52',winter:'#A8DADC'},n=performance.getEntriesByType('navigation')[0],i=sessionStorage.getItem('the-navies-internal-navigation')==='1',k=i||(n&&n.type==='back_forward');sessionStorage.removeItem('the-navies-internal-navigation');if(!k)localStorage.removeItem('the-navies-season');const s=k&&localStorage.getItem('the-navies-season')||'autumn';window.__naviesInitialSeason=c[s]?s:'autumn';document.documentElement.dataset.season=window.__naviesInitialSeason;document.documentElement.style.setProperty('--accent',c[window.__naviesInitialSeason])}catch(e){document.documentElement.dataset.season='autumn'}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="preload" href="../script.js?v=20261110-186" as="script">
-  <link rel="stylesheet" href="../styles.css?v=20261110-186">
-  <link rel="stylesheet" href="../subpages.css?v=20261110-186">
-  <script defer src="../script.js?v=20261110-186"></script>
-  <script defer src="../admin-config.js?v=20261110-186"></script>
-  <script defer src="../admin.js?v=20261110-186"></script>
-  <script defer src="../portal.js?v=20261110-186"></script>
+  <link rel="preload" href="../script.js?v=20261111-218" as="script">
+  <link rel="stylesheet" href="../styles.css?v=20261111-218">
+  <link rel="stylesheet" href="../subpages.css?v=20261111-218">
+  <script defer src="../script.js?v=20261111-218"></script>
+  <script defer src="../admin-config.js?v=20261111-210"></script>
+  <script defer src="../admin.js?v=20261111-210"></script>
+  <script defer src="../portal.js?v=20261111-218"></script>
 </head>
 <body>
   <div class="noise" aria-hidden="true"></div>
@@ -311,7 +311,7 @@
     <section class="login-panel reveal" id="login"><h2 data-i18n="memberAccess">Acceso de miembros</h2><p data-i18n="loginCopy">Introduce tus credenciales para acceder al espacio interno.</p><form class="login-form" id="login-form"><input name="username" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="Usuario" required><input name="password" type="password" autocomplete="current-password" autocapitalize="none" spellcheck="false" placeholder="Contraseña" required><button type="submit" data-i18n="enterSpace">Entrar</button></form><p class="login-error" id="login-error" aria-live="polite"></p></section>
     </div>
     <section class="member-dashboard" id="member-dashboard" hidden>
-      <div class="dashboard-bar reveal"><div><p class="eyebrow"><span></span><span data-i18n="memberArea">Espacio de miembros</span></p><h2><span data-i18n="hello">Hola</span>, <span id="member-name">Navy</span>.</h2></div></div>
+      <div class="dashboard-bar reveal"><div><p class="eyebrow"><span></span><span data-i18n="memberArea">Espacio de miembros</span></p><h2><span data-i18n="hello">Hola</span>, <span id="member-name">Navy</span></h2></div></div>
       <div class="dashboard-grid">
         <article class="private-card repertoire-card reveal">
           <div class="card-heading"><div><p class="card-kicker">21 NOV · 2026</p><h3 data-i18n="sagreraFestName">Fiestas de La Sagrera 2026</h3></div><span class="concert-status" data-i18n="nextShow">Próximo concierto</span></div>
@@ -340,9 +340,8 @@
             <div class="event-item concert"><time datetime="2026-11-21"><strong>21</strong><span>NOV</span></time><div><b data-i18n="sagreraFestName">Fiestas de La Sagrera 2026</b><small>14:00h · Plaza Masadas</small></div></div>
           </div>
           <div class="calendar-useful-links">
-          <h4 data-i18n="usefulLinks">Enlaces útiles</h4>
+          <h4 data-i18n="usefulLinks">Listas de reproducción</h4>
           <div class="useful-links-list">
-            <a href="https://drive.google.com/drive/folders/1q_XGlt-PRw3ymWBn_mTIBS6Ul4XQuo0L?usp=drive_link" target="_blank" rel="noopener"><b>Google Drive</b><i aria-hidden="true">↗</i></a>
             <a href="https://open.spotify.com" target="_blank" rel="noopener"><b>Spotify</b><i aria-hidden="true">↗</i></a>
             <a href="https://music.apple.com" target="_blank" rel="noopener"><b>Apple Music</b><i aria-hidden="true">↗</i></a>
           </div>

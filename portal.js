@@ -17,11 +17,32 @@ const editorCopies = {
 };
 const editorText = editorCopies[portalLanguage] || editorCopies.es;
 Object.assign(editorText, ({
-  es:{ live:'Navies Live', liveTitle:'Título de Navies Live', liveDescription:'Descripción de Navies Live', socialNetworks:'Redes sociales', socialNetworksCopy:'Enlaces públicos mostrados en la página de Inicio.', addSocial:'Añadir red', dialogTitle:'Título interior', socialLabel:'Texto del enlace', socialUrl:'Enlace personal', siteEditing:'Edición del sitio', general:'Ajustes generales', generalCopy:'Preferencias comunes para toda la web.', defaultSeason:'Tema predeterminado', initialPlayback:'Primera canción del reproductor', randomPlayback:'Aleatoria', customPlayback:'Canción personalizada', initialSong:'Canción inicial', countdownSetting:'Landing y cuenta atrás', enabled:'Activada', disabled:'Desactivada', initialVolume:'Volumen inicial', lowVolume:'Bajo', mediumVolume:'Medio', highVolume:'Alto', fallbackLanguage:'Idioma de respaldo', faviconMode:'Icono de la pestaña', dynamicFavicon:'Dinámico · color estacional', staticFavicon:'Estático · punto verde', saveBeforeExit:'Hay cambios sin guardar. ¿Quieres guardarlos antes de salir?', singer:'Cantante' },
-  ca:{ live:'Navies Live', liveTitle:'Títol de Navies Live', liveDescription:'Descripció de Navies Live', socialNetworks:'Xarxes socials', socialNetworksCopy:'Enllaços públics mostrats a la pàgina d’Inici.', addSocial:'Afegir xarxa', dialogTitle:'Títol interior', socialLabel:'Text de l’enllaç', socialUrl:'Enllaç personal', siteEditing:'Edició del lloc', general:'Configuració general', generalCopy:'Preferències comunes per a tot el web.', defaultSeason:'Tema predeterminat', initialPlayback:'Primera cançó del reproductor', randomPlayback:'Aleatòria', customPlayback:'Cançó personalitzada', initialSong:'Cançó inicial', countdownSetting:'Landing i compte enrere', enabled:'Activat', disabled:'Desactivat', initialVolume:'Volum inicial', lowVolume:'Baix', mediumVolume:'Mitjà', highVolume:'Alt', fallbackLanguage:'Idioma de reserva', faviconMode:'Icona de la pestanya', dynamicFavicon:'Dinàmica · color estacional', staticFavicon:'Estàtica · punt verd', saveBeforeExit:'Hi ha canvis sense desar. Vols desar-los abans de sortir?', singer:'Cantant' },
-  en:{ live:'Navies Live', liveTitle:'Navies Live title', liveDescription:'Navies Live description', socialNetworks:'Social media', socialNetworksCopy:'Public links shown on the Home page.', addSocial:'Add social link', dialogTitle:'Inner title', socialLabel:'Link text', socialUrl:'Personal link', siteEditing:'Site editing', general:'General settings', generalCopy:'Shared preferences for the whole website.', defaultSeason:'Default theme', initialPlayback:'First player track', randomPlayback:'Random', customPlayback:'Custom track', initialSong:'First track', countdownSetting:'Landing and countdown', enabled:'Enabled', disabled:'Disabled', initialVolume:'Initial volume', lowVolume:'Low', mediumVolume:'Medium', highVolume:'High', fallbackLanguage:'Fallback language', faviconMode:'Browser tab icon', dynamicFavicon:'Dynamic · seasonal colour', staticFavicon:'Static · green dot', saveBeforeExit:'There are unsaved changes. Save them before leaving?', singer:'Singer' },
-  fr:{ live:'Navies Live', liveTitle:'Titre de Navies Live', liveDescription:'Description de Navies Live', socialNetworks:'Réseaux sociaux', socialNetworksCopy:'Liens publics affichés sur la page d’accueil.', addSocial:'Ajouter un réseau', dialogTitle:'Titre intérieur', socialLabel:'Texte du lien', socialUrl:'Lien personnel', siteEditing:'Édition du site', general:'Réglages généraux', generalCopy:'Préférences communes à tout le site.', defaultSeason:'Thème par défaut', initialPlayback:'Premier morceau du lecteur', randomPlayback:'Aléatoire', customPlayback:'Morceau personnalisé', initialSong:'Morceau initial', countdownSetting:'Accueil et compte à rebours', enabled:'Activé', disabled:'Désactivé', initialVolume:'Volume initial', lowVolume:'Faible', mediumVolume:'Moyen', highVolume:'Élevé', fallbackLanguage:'Langue de secours', faviconMode:'Icône de l’onglet', dynamicFavicon:'Dynamique · couleur saisonnière', staticFavicon:'Statique · point vert', saveBeforeExit:'Des modifications ne sont pas enregistrées. Les enregistrer avant de quitter ?', singer:'Chanteuse' },
-  it:{ live:'Navies Live', liveTitle:'Titolo di Navies Live', liveDescription:'Descrizione di Navies Live', socialNetworks:'Social media', socialNetworksCopy:'Link pubblici mostrati nella pagina Home.', addSocial:'Aggiungi social', dialogTitle:'Titolo interno', socialLabel:'Testo del link', socialUrl:'Link personale', siteEditing:'Modifica sito', general:'Impostazioni generali', generalCopy:'Preferenze comuni per tutto il sito.', defaultSeason:'Tema predefinito', initialPlayback:'Primo brano del lettore', randomPlayback:'Casuale', customPlayback:'Brano personalizzato', initialSong:'Brano iniziale', countdownSetting:'Landing e conto alla rovescia', enabled:'Attivato', disabled:'Disattivato', initialVolume:'Volume iniziale', lowVolume:'Basso', mediumVolume:'Medio', highVolume:'Alto', fallbackLanguage:'Lingua di riserva', faviconMode:'Icona della scheda', dynamicFavicon:'Dinamica · colore stagionale', staticFavicon:'Statica · punto verde', saveBeforeExit:'Ci sono modifiche non salvate. Vuoi salvarle prima di uscire?', singer:'Cantante' }
+  es:{ live:'Navies Live', liveTitle:'Título de Navies Live', liveDescription:'Descripción de Navies Live', socialNetworks:'Redes sociales', socialNetworksCopy:'Enlaces públicos mostrados en la página de Inicio.', addSocial:'Añadir red', dialogTitle:'Título interior', socialLabel:'Texto del enlace', socialUrl:'Enlace personal', siteEditing:'Edición del Sitio', general:'Ajustes generales', generalCopy:'Preferencias comunes para toda la web.', defaultSeason:'Tema predeterminado', initialPlayback:'Primera canción del reproductor', randomPlayback:'Aleatoria', customPlayback:'Canción personalizada', initialSong:'Canción inicial', countdownSetting:'Landing y cuenta atrás', enabled:'Activada', disabled:'Desactivada', initialVolume:'Volumen inicial', lowVolume:'Bajo', mediumVolume:'Medio', highVolume:'Alto', fallbackLanguage:'Idioma de respaldo', faviconMode:'Icono de la pestaña', dynamicFavicon:'Dinámico · color estacional', staticFavicon:'Estático · punto verde', saveBeforeExit:'Hay cambios sin guardar. ¿Quieres guardarlos antes de salir?', singer:'Cantante' },
+  ca:{ live:'Navies Live', liveTitle:'Títol de Navies Live', liveDescription:'Descripció de Navies Live', socialNetworks:'Xarxes socials', socialNetworksCopy:'Enllaços públics mostrats a la pàgina d’Inici.', addSocial:'Afegir xarxa', dialogTitle:'Títol interior', socialLabel:'Text de l’enllaç', socialUrl:'Enllaç personal', siteEditing:'Edició del Lloc', general:'Configuració general', generalCopy:'Preferències comunes per a tot el web.', defaultSeason:'Tema predeterminat', initialPlayback:'Primera cançó del reproductor', randomPlayback:'Aleatòria', customPlayback:'Cançó personalitzada', initialSong:'Cançó inicial', countdownSetting:'Landing i compte enrere', enabled:'Activat', disabled:'Desactivat', initialVolume:'Volum inicial', lowVolume:'Baix', mediumVolume:'Mitjà', highVolume:'Alt', fallbackLanguage:'Idioma de reserva', faviconMode:'Icona de la pestanya', dynamicFavicon:'Dinàmica · color estacional', staticFavicon:'Estàtica · punt verd', saveBeforeExit:'Hi ha canvis sense desar. Vols desar-los abans de sortir?', singer:'Cantant' },
+  en:{ live:'Navies Live', liveTitle:'Navies Live title', liveDescription:'Navies Live description', socialNetworks:'Social media', socialNetworksCopy:'Public links shown on the Home page.', addSocial:'Add social link', dialogTitle:'Inner title', socialLabel:'Link text', socialUrl:'Personal link', siteEditing:'Site Editing', general:'General settings', generalCopy:'Shared preferences for the whole website.', defaultSeason:'Default theme', initialPlayback:'First player track', randomPlayback:'Random', customPlayback:'Custom track', initialSong:'First track', countdownSetting:'Landing and countdown', enabled:'Enabled', disabled:'Disabled', initialVolume:'Initial volume', lowVolume:'Low', mediumVolume:'Medium', highVolume:'High', fallbackLanguage:'Fallback language', faviconMode:'Browser tab icon', dynamicFavicon:'Dynamic · seasonal colour', staticFavicon:'Static · green dot', saveBeforeExit:'There are unsaved changes. Save them before leaving?', singer:'Singer' },
+  fr:{ live:'Navies Live', liveTitle:'Titre de Navies Live', liveDescription:'Description de Navies Live', socialNetworks:'Réseaux sociaux', socialNetworksCopy:'Liens publics affichés sur la page d’accueil.', addSocial:'Ajouter un réseau', dialogTitle:'Titre intérieur', socialLabel:'Texte du lien', socialUrl:'Lien personnel', siteEditing:'Édition du Site', general:'Réglages généraux', generalCopy:'Préférences communes à tout le site.', defaultSeason:'Thème par défaut', initialPlayback:'Premier morceau du lecteur', randomPlayback:'Aléatoire', customPlayback:'Morceau personnalisé', initialSong:'Morceau initial', countdownSetting:'Accueil et compte à rebours', enabled:'Activé', disabled:'Désactivé', initialVolume:'Volume initial', lowVolume:'Faible', mediumVolume:'Moyen', highVolume:'Élevé', fallbackLanguage:'Langue de secours', faviconMode:'Icône de l’onglet', dynamicFavicon:'Dynamique · couleur saisonnière', staticFavicon:'Statique · point vert', saveBeforeExit:'Des modifications ne sont pas enregistrées. Les enregistrer avant de quitter ?', singer:'Chanteuse' },
+  it:{ live:'Navies Live', liveTitle:'Titolo di Navies Live', liveDescription:'Descrizione di Navies Live', socialNetworks:'Social media', socialNetworksCopy:'Link pubblici mostrati nella pagina Home.', addSocial:'Aggiungi social', dialogTitle:'Titolo interno', socialLabel:'Testo del link', socialUrl:'Link personale', siteEditing:'Modifica del Sito', general:'Impostazioni generali', generalCopy:'Preferenze comuni per tutto il sito.', defaultSeason:'Tema predefinito', initialPlayback:'Primo brano del lettore', randomPlayback:'Casuale', customPlayback:'Brano personalizzato', initialSong:'Brano iniziale', countdownSetting:'Landing e conto alla rovescia', enabled:'Attivato', disabled:'Disattivato', initialVolume:'Volum iniziale', lowVolume:'Basso', mediumVolume:'Medio', highVolume:'Alto', fallbackLanguage:'Lingua di riserva', faviconMode:'Icona della scheda', dynamicFavicon:'Dinamica · colore stagionale', staticFavicon:'Statica · punto verde', saveBeforeExit:'Ci sono modifiche non salvate. Vuoi salvarle prima di uscire?', singer:'Cantante' }
+}[portalLanguage] || {}));
+Object.assign(editorText, ({
+  es:{ links:'Listas de reproducción', linksCopy:'Listas musicales asociadas a esta formación.', addLink:'Añadir lista' },
+  ca:{ links:'Llistes de reproducció', linksCopy:'Llistes musicals associades a aquesta formació.', addLink:'Afegir llista' },
+  en:{ links:'Playlists', linksCopy:'Music playlists associated with this ensemble.', addLink:'Add playlist' },
+  fr:{ links:'Listes de lecture', linksCopy:'Listes musicales associées à cette formation.', addLink:'Ajouter une liste' },
+  it:{ links:'Playlist', linksCopy:'Playlist musicali associate a questa formazione.', addLink:'Aggiungi playlist' }
+}[portalLanguage] || {}));
+Object.assign(editorText, ({
+  es:{ ensembleEditing:'Formación', ensembleEditingCopy:'Elige qué grupo quieres editar.' },
+  ca:{ ensembleEditing:'Formació', ensembleEditingCopy:'Tria quin grup vols editar.' },
+  en:{ ensembleEditing:'Ensemble', ensembleEditingCopy:'Choose which group you want to edit.' },
+  fr:{ ensembleEditing:'Formation', ensembleEditingCopy:'Choisissez le groupe que vous souhaitez modifier.' },
+  it:{ ensembleEditing:'Formazione', ensembleEditingCopy:'Scegli quale gruppo vuoi modificare.' }
+}[portalLanguage] || {}));
+Object.assign(editorText, ({
+  es:{ siteProperties:'Propiedades del sitio' },
+  ca:{ siteProperties:'Propietats del lloc' },
+  en:{ siteProperties:'Site properties' },
+  fr:{ siteProperties:'Propriétés du site' },
+  it:{ siteProperties:'Proprietà del sito' }
 }[portalLanguage] || {}));
 Object.assign(editorText, ({
   es:{ users:'Usuarios', usersCopy:'Gestiona credenciales y acceso a cada formación.', addUser:'Añadir usuario', username:'Usuario', displayName:'Nombre visible', newPassword:'Nueva contraseña', accessNavies:'The Navies', accessCorBand:'Cor-Band', accessStrings:'Conjunto de Cuerdas' },
@@ -46,25 +67,25 @@ const scoreRoot = `${portalAssetPrefix}scores`;
 const audioRoot = `${portalAssetPrefix}audios`;
 const scoreLibrary = {
   'shake-it-off': [
-    ['lyrics', 'letra.pdf'], ['chords', 'acordes.pdf'], ['keyboard', 'teclado.pdf'], ['bass', 'bajo.pdf']
+    ['lyrics', 'letra.pdf'], ['chords', 'acordes.pdf'], ['keyboard', 'teclado.pdf'], ['bass', 'bajo.pdf'], ['general', 'general.pdf']
   ],
   'baby-one-more-time': [
-    ['lyrics', 'letra.pdf'], ['chords', 'acordes.pdf'], ['keyboard', 'teclado.pdf'], ['bass', 'bajo.pdf']
+    ['lyrics', 'letra.pdf'], ['chords', 'acordes.pdf'], ['chordsAm', 'acordes-am.pdf'], ['keyboard', 'teclado.pdf'], ['bass', 'bajo.pdf'], ['general', 'general.pdf']
   ],
   'sweet-caroline': [
-    ['lyrics', 'letra.pdf'], ['chords', 'acordes.pdf'], ['keyboard', 'teclado.pdf'], ['bass', 'bajo.pdf']
+    ['lyrics', 'letra.pdf'], ['chords', 'acordes.pdf'], ['chordsC', 'acordes-c.pdf'], ['keyboard', 'teclado.pdf'], ['bass', 'bajo.pdf'], ['general', 'general.pdf']
   ],
   'dont-look-back-in-anger': [
-    ['lyrics', 'letra.pdf'], ['chords', 'acordes.pdf'], ['bass', 'bajo.pdf']
+    ['lyrics', 'letra.pdf'], ['chords', 'acordes.pdf'], ['bass', 'bajo.pdf'], ['general', 'general.pdf']
   ],
   'the-final-countdown': [
-    ['lyrics', 'letra.pdf'], ['chords', 'acordes.pdf'], ['keyboard', 'teclado.pdf'], ['bass', 'bajo.pdf']
+    ['lyrics', 'letra.pdf'], ['chords', 'acordes.pdf'], ['keyboard', 'teclado.pdf'], ['bass', 'bajo.pdf'], ['general', 'general.pdf']
   ],
   'have-you-ever-seen-the-rain': [
-    ['lyrics', 'letra.pdf'], ['chords', 'acordes.pdf'], ['keyboard', 'teclado.pdf'], ['bass', 'bajo.pdf']
+    ['lyrics', 'letra.pdf'], ['chords', 'acordes.pdf'], ['keyboard', 'teclado.pdf'], ['bass', 'bajo.pdf'], ['violin', 'violin.pdf'], ['viola', 'viola.pdf'], ['general', 'general.pdf']
   ],
   'the-final-countdown-reprise': [
-    ['chords', 'acordes.pdf'], ['keyboard', 'teclado.pdf'], ['bass', 'bajo.pdf']
+    ['chords', 'acordes.pdf'], ['keyboard', 'teclado.pdf'], ['bass', 'bajo.pdf'], ['violin', 'violin.pdf'], ['viola', 'viola.pdf'], ['general', 'general.pdf']
   ],
   'cor-band/billie-jean':[['lyrics','lletra.pdf']],
   'cor-band/stayin-alive':[['lyrics','lletra.pdf']],
@@ -78,12 +99,16 @@ const scoreLibrary = {
 
 const auxiliarySongIds = new Set(Object.keys(scoreLibrary).filter((id) => id.includes('/')));
 const ensembleCopies = {
-  es:{ strings:'Conjunto de Cuerdas' }, ca:{ strings:'Conjunt de Cordes' }, en:{ strings:'String Ensemble' }, fr:{ strings:'Ensemble à cordes' }, it:{ strings:"Ensemble d’archi" }
+  es:{ strings:'Conjunt de Cordes' }, ca:{ strings:'Conjunt de Cordes' }, en:{ strings:'Conjunt de Cordes' }, fr:{ strings:'Conjunt de Cordes' }, it:{ strings:'Conjunt de Cordes' }
 };
 const ensembleCopy = ensembleCopies[portalLanguage] || ensembleCopies.es;
+const editorEnsembleNames = { 'the-navies':'The Navies', 'cor-band':'Cor-Band', strings:'Conjunt de Cordes' };
+const repertoireTitle = document.querySelector('.repertoire-card .card-heading h3');
+if (repertoireTitle) repertoireTitle.dataset.concertTitle = repertoireTitle.textContent.trim();
 const ensembleContent = {
   'cor-band':{
     numbered:false,
+    links:[],
     songs:[
       { id:'cor-band/billie-jean', title:'Billie Jean' }, { id:'cor-band/stayin-alive', title:"Stayin’ Alive" },
       { id:'cor-band/mystical-magical', title:'Mystical Magical' }, { id:'cor-band/texas-hold-em', title:"Texas Hold’Em" },
@@ -97,6 +122,7 @@ const ensembleContent = {
   },
   strings:{
     numbered:true,
+    links:[],
     songs:[
       { id:'conjunt-de-cordes/balfourd-road', title:'Balfourd Road' },
       { id:'conjunt-de-cordes/calliope-house', title:'Calliope House' }
@@ -129,13 +155,49 @@ function localToday() {
   return `${value.year}-${value.month}-${value.day}`;
 }
 
+const rehearsalEventTypes = new Set(['rehearsal','extra','general']);
+function eventDateValue(event) {
+  if (!event?.date) return Number.MAX_SAFE_INTEGER;
+  const time = String(event.time || '23:59').match(/^\d{1,2}:\d{2}/)?.[0] || '23:59';
+  const value = Date.parse(`${event.date}T${time}:00`);
+  return Number.isFinite(value) ? value : Number.MAX_SAFE_INTEGER;
+}
+function orderedEditableEvents(events = []) {
+  const today = localToday();
+  return [...events]
+    .filter((event) => !(rehearsalEventTypes.has(event.type) && event.date && event.date < today))
+    .sort((a, b) => eventDateValue(a) - eventDateValue(b));
+}
+function eventFromEditorRow(row) {
+  return {
+    id:row.dataset.id || `event-${Date.now()}`,
+    type:row.querySelector('[name="type"]').value,
+    name:row.querySelector('[name="name"]').value.trim(),
+    date:row.querySelector('[name="date"]').value,
+    time:row.querySelector('[name="time"]').value,
+    location:row.querySelector('[name="location"]').value.trim()
+  };
+}
+function sortEventEditorRows(list) {
+  const rows = [...list.querySelectorAll('.editor-event-row')];
+  rows.sort((a, b) => eventDateValue(eventFromEditorRow(a)) - eventDateValue(eventFromEditorRow(b)));
+  rows.forEach((row) => list.append(row));
+}
+
 const eventTypeKeys = ['rehearsal','extra','general','concert','recording','other'];
 function eventTypeLabel(type, language = portalLanguage) {
   const source = editorCopies[language] || editorCopies.es;
-  return source[type] || source.other;
+  const fixed = {
+    es:{ rehearsal:'Ensayo', extra:'Ensayo Extra', general:'Ensayo General', concert:'Concierto', recording:'Grabación', other:'Otro' },
+    ca:{ rehearsal:'Assaig', extra:'Assaig Extra', general:'Assaig General', concert:'Concert', recording:'Gravació', other:'Altres' },
+    en:{ rehearsal:'Rehearsal', extra:'Extra Rehearsal', general:'Dress Rehearsal', concert:'Show', recording:'Recording', other:'Other' },
+    fr:{ rehearsal:'Répétition', extra:'Répétition supplémentaire', general:'Répétition générale', concert:'Concert', recording:'Enregistrement', other:'Autre' },
+    it:{ rehearsal:'Prova', extra:'Prova extra', general:'Prova generale', concert:'Concerto', recording:'Registrazione', other:'Altro' }
+  };
+  return fixed[language]?.[type] || fixed.es[type] || source[type] || source.other;
 }
 function isCanonicalEventName(name) {
-  return eventTypeKeys.some((type) => Object.values(editorCopies).some((copy) => copy[type] === name));
+  return eventTypeKeys.some((type) => ['es','ca','en','fr','it'].some((language) => eventTypeLabel(type, language) === name));
 }
 
 function renderSetlist(songs, numbered = true) {
@@ -264,8 +326,15 @@ function renderHomeContent(home) {
       { label:member.socialLabel3, url:member.socialUrl3 }
     ].filter((social) => social.url)]));
     const liveTitle = document.querySelector('.tv-coming-soon h1');
-    const liveDescription = document.querySelector('.tv-coming-soon > p');
-    if (liveTitle) liveTitle.textContent = home.live.title;
+    const liveDescription = document.querySelector('.tv-coming-soon > p[data-i18n="tvSoonCopy"]');
+    if (liveTitle) {
+      const title = home.live.title.trim();
+      const description = home.live.description.trim();
+      if (title && title !== description) {
+        if (title === 'Estamos afinando la pantalla.') liveTitle.innerHTML = 'Estamos afinando<br><em>la pantalla.</em>';
+        else liveTitle.textContent = title;
+      }
+    }
     if (liveDescription) liveDescription.textContent = home.live.description;
   }
   const socials = document.querySelector('.socials');
@@ -326,6 +395,12 @@ function monthLabel(month, language = 'es') {
 
 function renderNavyContent(content) {
   navyContent = structuredClone(content);
+  navyContent.links = (navyContent.links || []).filter((link) => link.id !== 'drive');
+  if (navyContent.ensembles?.['cor-band']) navyContent.ensembles['cor-band'].links = (navyContent.ensembles['cor-band'].links || []).filter((link) => link.id !== 'cor-band-drive');
+  const vocals = navyContent.home?.members?.find((member) => member.id === 'vocals');
+  if (vocals) Object.assign(vocals, { title:'Aina, Candela y Mariona Escobedo', dialogTitle:'Aina, Candela y Mariona Escobedo' });
+  const bass = navyContent.home?.members?.find((member) => member.id === 'bass');
+  if (bass) Object.assign(bass, { title:'Emma', dialogTitle:'Emma' });
   const featuredConcert = navyContent.home?.concerts?.find((concert) => concert.id === 'sagrera-2026');
   if (featuredConcert) featuredConcert.time = '14:00';
   const calendarConcert = navyContent.events?.find((event) => event.id === 'concert-2026-11-21');
@@ -338,7 +413,6 @@ function renderNavyContent(content) {
   if (generalRehearsal) Object.assign(generalRehearsal, { time:'17:30–19:30', location:'BCN Fusió Sant Andreu' });
   renderHomeContent(navyContent.home);
   renderSelectedEnsemble();
-  renderLinks(navyContent.links);
 }
 
 function theNaviesUpcomingEvents() {
@@ -347,9 +421,14 @@ function theNaviesUpcomingEvents() {
 
 function renderSelectedEnsemble() {
   if (!navyContent) return;
-  const content = selectedEnsemble === 'the-navies' ? { songs:navyContent.songs, events:theNaviesUpcomingEvents(), numbered:true } : ensembleContent[selectedEnsemble];
+  const content = selectedEnsemble === 'the-navies' ? { songs:navyContent.songs, events:theNaviesUpcomingEvents(), numbered:true } : { ...ensembleContent[selectedEnsemble], events:navyContent.ensembles?.[selectedEnsemble]?.events || ensembleContent[selectedEnsemble].events };
   renderSetlist(content.songs, content.numbered);
   renderEvents(content.events);
+  const links = selectedEnsemble === 'the-navies' ? navyContent.links : (navyContent.ensembles?.[selectedEnsemble]?.links || ensembleContent[selectedEnsemble].links || []);
+  renderLinks(links);
+  const usefulLinks = document.querySelector('.calendar-useful-links');
+  if (usefulLinks) usefulLinks.hidden = links.length === 0;
+  if (repertoireTitle) repertoireTitle.textContent = `${editorEnsembleNames[selectedEnsemble]} — ${repertoireTitle.dataset.concertTitle}`;
   document.querySelectorAll('[data-ensemble]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.ensemble === selectedEnsemble)));
 }
 
@@ -367,20 +446,21 @@ async function loadNavyContent() {
 
 function decorateScoreSongs() {
   const materialCopies = {
-    es:{ lyrics:'Letra', chords:'Acordes', keyboard:'Teclado', bass:'Bajo', standard:'Estándar', violin:'Violín', viola:'Viola' },
-    ca:{ lyrics:'Lletra', chords:'Acords', keyboard:'Teclat', bass:'Baix', standard:'Estàndard', violin:'Violí', viola:'Viola' },
-    en:{ lyrics:'Lyrics', chords:'Chords', keyboard:'Keys', bass:'Bass', standard:'Standard', violin:'Violin', viola:'Viola' },
-    fr:{ lyrics:'Paroles', chords:'Accords', keyboard:'Clavier', bass:'Basse', standard:'Standard', violin:'Violon', viola:'Alto' },
-    it:{ lyrics:'Testo', chords:'Accordi', keyboard:'Tastiere', bass:'Basso', standard:'Standard', violin:'Violino', viola:'Viola' }
+    es:{ lyrics:'Letra', chords:'Acordes', chordsAm:'Acordes Am', chordsC:'Acordes C', keyboard:'Teclado', bass:'Bajo', standard:'Estándar', violin:'Violín', viola:'Viola', general:'General' },
+    ca:{ lyrics:'Lletra', chords:'Acords', chordsAm:'Acords Am', chordsC:'Acords C', keyboard:'Teclat', bass:'Baix', standard:'Estàndard', violin:'Violí', viola:'Viola', general:'General' },
+    en:{ lyrics:'Lyrics', chords:'Chords', chordsAm:'Chords Am', chordsC:'Chords C', keyboard:'Keys', bass:'Bass', standard:'Standard', violin:'Violin', viola:'Viola', general:'General' },
+    fr:{ lyrics:'Paroles', chords:'Accords', chordsAm:'Accords Am', chordsC:'Accords C', keyboard:'Clavier', bass:'Basse', standard:'Standard', violin:'Violon', viola:'Alto', general:'Général' },
+    it:{ lyrics:'Testo', chords:'Accordi', chordsAm:'Accordi Am', chordsC:'Accordi C', keyboard:'Tastiere', bass:'Basso', standard:'Standard', violin:'Violino', viola:'Viola', general:'Generale' }
   };
   const labels = materialCopies[portalLanguage] || materialCopies.es;
   document.querySelectorAll('[data-score-song]').forEach((container) => {
     container.replaceChildren();
     const song = container.dataset.scoreSong;
     const songTitle = container.closest('.song-row').querySelector('strong').textContent;
-    (scoreLibrary[song] || []).forEach(([labelKey, filename]) => {
+    [...(scoreLibrary[song] || [])].sort(([firstKey], [secondKey]) => Number(secondKey === 'general') - Number(firstKey === 'general')).forEach(([labelKey, filename]) => {
+      if (['general','chordsAm','chordsC'].includes(labelKey) && window.naviesCurrentMember?.() !== 'pauescobedo') return;
       const label = labels[labelKey] || labelKey;
-      const source = `${scoreRoot}/${song}/${filename}`;
+      const source = `${scoreRoot}/${auxiliarySongIds.has(song) ? song : `the-navies/${song}`}/${filename}`;
       const item = document.createElement('span');
       item.className = 'score-file';
       const link = document.createElement('a');
@@ -415,7 +495,7 @@ const ensembleSwitcher = document.createElement('div');
 ensembleSwitcher.className = 'ensemble-switcher';
 ensembleSwitcher.setAttribute('aria-label', ({ es:'Seleccionar formación', ca:'Seleccionar formació', en:'Select ensemble', fr:'Sélectionner la formation', it:'Seleziona formazione' })[portalLanguage] || 'Seleccionar formación');
 ensembleSwitcher.innerHTML = `<button type="button" data-ensemble="the-navies" aria-pressed="true">The Navies</button><button type="button" data-ensemble="cor-band" aria-pressed="false">Cor-Band</button><button type="button" data-ensemble="strings" aria-pressed="false">${ensembleCopy.strings}</button>`;
-dashboardBar?.insertAdjacentElement('afterend', ensembleSwitcher);
+dashboardBar?.append(ensembleSwitcher);
 ensembleSwitcher.addEventListener('click', (event) => {
   const button = event.target.closest('[data-ensemble]');
   if (!button || button.dataset.ensemble === selectedEnsemble) return;
@@ -443,6 +523,7 @@ function syncEnsembleAccess() {
     renderSelectedEnsemble();
   }
 }
+window.addEventListener('navies-auth-change', () => { if (selectedEnsemble === 'the-navies') renderSelectedEnsemble(); });
 
 const audioDialog = document.querySelector('#audio-dialog');
 const audioPlayer = document.querySelector('#audio-player');
@@ -483,7 +564,7 @@ audioDialog.addEventListener('click', (event) => { if (event.target === audioDia
 
 const editContentButton = document.createElement('a');
 editContentButton.className = 'content-editor-trigger';
-editContentButton.href = '#edicion-del-sitio';
+editContentButton.href = '#edicion';
 editContentButton.textContent = editorText.siteEditing;
 editContentButton.hidden = true;
 document.querySelector('#main-nav [data-route="espacio-navy"]')?.after(editContentButton);
@@ -494,12 +575,19 @@ contentEditor.hidden = true;
 contentEditor.innerHTML = `
   <div class="content-editor-shell">
     <header class="content-editor-header">
-      <div><p class="eyebrow"><span></span> THE NAVIES</p><h2>${editorText.title}</h2><p>${editorText.intro}</p></div>
+      <div><p class="eyebrow"><span></span> THE NAVIES</p><h2>${editorText.siteEditing}</h2></div>
       <div class="content-editor-controls">
-        <nav class="content-editor-tabs"><button type="button" data-editor-tab="home" aria-pressed="true">${editorText.home}</button><button type="button" data-editor-tab="space" aria-pressed="false">${editorText.space}</button><button type="button" data-editor-tab="general" aria-pressed="false">${editorText.general}</button><button type="button" data-editor-tab="users" aria-pressed="false">${editorText.users}</button></nav>
+        <nav class="content-editor-tabs"><button type="button" data-editor-tab="home" aria-pressed="true">${editorText.home}</button><button type="button" data-editor-tab="space" aria-pressed="false">${editorText.space}</button><button type="button" data-editor-tab="general" aria-pressed="false">${editorText.general}</button></nav>
       </div>
     </header>
     <form class="content-editor-form" id="content-editor-form">
+      <div class="editor-workspace">
+      <div class="editor-side-rail">
+        <aside class="editor-section-nav" role="navigation" aria-label="Secciones de edición"></aside>
+        <button class="editor-save" type="submit" aria-label="${editorText.save}" title="${editorText.save}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3.75h11.6L20.25 7.4v12.85H3.75V3.75H5Zm2.25 0v5.5h9.5v-5.5M7 20.25v-7.5h10v7.5M9.5 5.5h4.75"/></svg><span class="sr-only">${editorText.save}</span></button>
+        <p class="content-editor-status" aria-live="polite"></p>
+      </div>
+      <div class="editor-pages">
       <div class="editor-page" data-editor-page="home">
       <section class="editor-section">
         <div class="editor-section-head"><div><span>01</span><h3>${editorText.mainTexts}</h3><p>${editorText.mainTextsCopy}</p></div></div>
@@ -519,6 +607,13 @@ contentEditor.innerHTML = `
       </section>
       </div>
       <div class="editor-page" data-editor-page="space" hidden>
+      <section class="editor-section editor-ensemble-section">
+        <div class="editor-section-head"><div><span>00</span><h3>${editorText.ensembleEditing}</h3><p>${editorText.ensembleEditingCopy}</p></div></div>
+        <div class="editor-ensemble-picker">
+          <button class="editor-ensemble-toggle" type="button" aria-expanded="false"><i aria-hidden="true"></i><span data-editor-ensemble-current>The Navies</span></button>
+          <div class="editor-ensemble-menu" aria-hidden="true" inert><button type="button" data-editor-ensemble="the-navies">The Navies</button><button type="button" data-editor-ensemble="cor-band">Cor-Band</button><button type="button" data-editor-ensemble="strings">Conjunt de Cordes</button></div>
+        </div>
+      </section>
       <section class="editor-section">
         <div class="editor-section-head"><div><span>01</span><h3>${editorText.dates}</h3><p>${editorText.datesCopy}</p></div><button type="button" data-editor-add="event">${editorText.addDate}</button></div>
         <div class="editor-list" data-editor-list="events"></div>
@@ -533,12 +628,11 @@ contentEditor.innerHTML = `
       </section>
       </div>
       <div class="editor-page" data-editor-page="general" hidden>
-        <section class="editor-section"><div class="editor-section-head"><div><span>01</span><h3>${editorText.general}</h3><p>${editorText.generalCopy}</p></div></div><div class="editor-settings" data-editor-settings></div></section>
+        <section class="editor-section"><div class="editor-section-head"><div><span>01</span><h3>${editorText.siteProperties}</h3><p>${editorText.generalCopy}</p></div></div><div class="editor-settings" data-editor-settings></div></section>
+        <section class="editor-section"><div class="editor-section-head"><div><span>02</span><h3>${editorText.users}</h3><p>${editorText.usersCopy}</p></div><button type="button" data-editor-add="user">${editorText.addUser}</button></div><div class="editor-list" data-editor-list="users"></div></section>
       </div>
-      <div class="editor-page" data-editor-page="users" hidden>
-        <section class="editor-section"><div class="editor-section-head"><div><span>01</span><h3>${editorText.users}</h3><p>${editorText.usersCopy}</p></div><button type="button" data-editor-add="user">${editorText.addUser}</button></div><div class="editor-list" data-editor-list="users"></div></section>
       </div>
-      <div class="content-editor-bottom-actions"><div class="content-editor-actions"><button class="editor-save" type="submit">${editorText.save}</button><p class="content-editor-status" aria-live="polite"></p></div></div>
+      </div>
     </form>
   </div>
   <dialog class="editor-exit-dialog" aria-labelledby="editor-exit-title">
@@ -557,9 +651,152 @@ document.querySelector('.space-shell').append(contentEditor);
 
 const editorForm = contentEditor.querySelector('.content-editor-form');
 const editorStatus = contentEditor.querySelector('.content-editor-status');
+const editorSectionNav = contentEditor.querySelector('.editor-section-nav');
+const editorSideRail = contentEditor.querySelector('.editor-side-rail');
 const editorExitDialog = contentEditor.querySelector('.editor-exit-dialog');
 let editorStatusTimer;
 let editorDirty = false;
+let editorBaselineSnapshot = '';
+let editorSpaceEnsemble = 'the-navies';
+let editorEnsembleDrafts = { 'the-navies':[], 'cor-band':[], strings:[] };
+let editorEnsembleLinkDrafts = { 'the-navies':[], 'cor-band':[], strings:[] };
+let updateEditorSectionActive = () => {};
+let editorSectionScrollFrame = null;
+let editorSectionPendingIndex = null;
+let editorSectionPendingTimer = null;
+
+function syncEditorSectionNav(pageName) {
+  const page = contentEditor.querySelector(`[data-editor-page="${pageName}"]`);
+  if (!page) return;
+  window.clearTimeout(editorSectionPendingTimer);
+  editorSectionPendingIndex = null;
+  const sections = [...page.querySelectorAll(':scope > .editor-section')];
+  const buttons = sections.map((section, index) => {
+    const number = section.querySelector('.editor-section-head span')?.textContent || String(index + 1).padStart(2, '0');
+    const label = section.querySelector('h3')?.textContent || number;
+    section.id = `editor-${pageName}-${number}`;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = number;
+    button.setAttribute('aria-label', label);
+    button.dataset.label = label;
+    button.classList.toggle('is-active', index === 0);
+    button.addEventListener('click', () => {
+      editorSectionPendingIndex = index;
+      window.clearTimeout(editorSectionPendingTimer);
+      editorSectionPendingTimer = window.setTimeout(() => {
+        editorSectionPendingIndex = null;
+        updateEditorSectionActive();
+      }, 1400);
+      buttons.forEach((item, buttonIndex) => item.classList.toggle('is-active', buttonIndex === index));
+      if (index === 0) {
+        window.scrollTo({ top:0, behavior:'smooth' });
+      } else {
+        const targetTop = window.scrollY + section.getBoundingClientRect().top;
+        const movingUp = targetTop < window.scrollY;
+        const offset = movingUp ? 112 : 20;
+        window.scrollTo({ top:targetTop - offset, behavior:'smooth' });
+      }
+    });
+    return button;
+  });
+  editorSectionNav.replaceChildren(...buttons);
+  updateEditorSectionActive = () => {
+    if (!contentEditorOpen || page.hidden) return;
+    const railTop = editorSideRail?.getBoundingClientRect().top || 0;
+    const guide = Math.max(railTop + 12, 28);
+    if (editorSectionPendingIndex !== null) {
+      buttons.forEach((button, index) => button.classList.toggle('is-active', index === editorSectionPendingIndex));
+      return;
+    }
+    let activeIndex = 0;
+    sections.forEach((section, index) => {
+      if (section.getBoundingClientRect().top <= guide) activeIndex = index;
+    });
+    const pageBottom = window.scrollY + window.innerHeight;
+    const documentBottom = document.documentElement.scrollHeight;
+    const lastSectionBottom = sections.at(-1)?.getBoundingClientRect().bottom || 0;
+    if (pageBottom >= documentBottom - 4 || (window.scrollY > 8 && lastSectionBottom <= window.innerHeight - 12)) activeIndex = sections.length - 1;
+    buttons.forEach((button, index) => button.classList.toggle('is-active', index === activeIndex));
+  };
+  requestAnimationFrame(updateEditorSectionActive);
+}
+
+window.addEventListener('scroll', () => {
+  if (editorSectionScrollFrame !== null) return;
+  editorSectionScrollFrame = requestAnimationFrame(() => {
+    updateEditorSectionActive();
+    editorSectionScrollFrame = null;
+  });
+}, { passive:true });
+
+window.addEventListener('scrollend', () => {
+  if (editorSectionPendingIndex === null) return;
+  window.clearTimeout(editorSectionPendingTimer);
+  editorSectionPendingIndex = null;
+  updateEditorSectionActive();
+}, { passive:true });
+
+window.addEventListener('resize', () => requestAnimationFrame(updateEditorSectionActive), { passive:true });
+
+function syncEditorEnsemblePicker() {
+  const picker = contentEditor.querySelector('.editor-ensemble-picker');
+  if (!picker) return;
+  picker.querySelector('[data-editor-ensemble-current]').textContent = editorEnsembleNames[editorSpaceEnsemble];
+  picker.querySelectorAll('[data-editor-ensemble]').forEach((button) => {
+    button.hidden = button.dataset.editorEnsemble === editorSpaceEnsemble;
+    button.setAttribute('aria-pressed', String(button.dataset.editorEnsemble === editorSpaceEnsemble));
+  });
+}
+
+function closeEditorEnsemblePicker() {
+  const picker = contentEditor.querySelector('.editor-ensemble-picker');
+  if (!picker) return;
+  picker.classList.remove('is-open');
+  picker.querySelector('.editor-ensemble-toggle').setAttribute('aria-expanded', 'false');
+  const menu = picker.querySelector('.editor-ensemble-menu');
+  menu.setAttribute('aria-hidden', 'true');
+  menu.inert = true;
+}
+
+function editorFieldSnapshot(root) {
+  return [...root.querySelectorAll('input,select,textarea')].map((field) => [
+    field.name,
+    field.type,
+    field.type === 'checkbox' || field.type === 'radio' ? field.checked : field.value,
+    field.closest('.editor-row')?.dataset.id || ''
+  ]);
+}
+
+function captureEditorSnapshot() {
+  const currentEvents = [...contentEditor.querySelectorAll('.editor-event-row')].map((row) => ({
+    id:row.dataset.id || '',
+    type:row.querySelector('[name="type"]').value,
+    name:row.querySelector('[name="name"]').value.trim(),
+    date:row.querySelector('[name="date"]').value,
+    time:row.querySelector('[name="time"]').value,
+    location:row.querySelector('[name="location"]').value.trim()
+  }));
+  const currentLinks = [...contentEditor.querySelectorAll('.editor-link-row')].map((row) => ({
+    id:row.dataset.id || '',
+    label:row.querySelector('[name="label"]').value.trim(),
+    url:row.querySelector('[name="url"]').value.trim()
+  }));
+  const ensembles = {};
+  Object.keys(editorEnsembleDrafts).forEach((key) => {
+    ensembles[key] = key === editorSpaceEnsemble
+      ? { events:currentEvents, links:currentLinks }
+      : { events:editorEnsembleDrafts[key], links:editorEnsembleLinkDrafts[key] };
+  });
+  const fields = [...editorForm.querySelectorAll('input,select,textarea')]
+    .filter((field) => !field.closest('.editor-event-row,.editor-link-row'))
+    .map((field) => [field.name,field.type,field.type === 'checkbox' || field.type === 'radio' ? field.checked : field.value,field.closest('.editor-row')?.dataset.id || '']);
+  return JSON.stringify({ fields, ensembles });
+}
+
+function refreshEditorDirty() {
+  editorDirty = captureEditorSnapshot() !== editorBaselineSnapshot;
+}
 function setEditorStatus(message, temporary = false) {
   window.clearTimeout(editorStatusTimer);
   editorStatus.textContent = message;
@@ -671,7 +908,13 @@ function socialEditorRow(social = {}) {
 function userEditorRow(user = {}) {
   const row = document.createElement('div');
   row.className = 'editor-row editor-user-row';
-  row.append(field(editorText.username, 'username', user.username, 'text', { maxlength:'40', required:'', autocapitalize:'none' }), field(editorText.displayName, 'name', user.name, 'text', { maxlength:'80', required:'' }), field(editorText.newPassword, 'password', '', 'password', { maxlength:'100', placeholder:user.username ? '••••••••' : '' }));
+  const passwordField = field(editorText.newPassword, 'password', '', 'password', { maxlength:'100', placeholder:user.username ? '••••••••' : '' });
+  passwordField.classList.add('editor-password-field');
+  const reveal = document.createElement('button');
+  reveal.type = 'button'; reveal.className = 'editor-password-toggle'; reveal.dataset.passwordToggle = ''; reveal.setAttribute('aria-label', 'Mostrar u ocultar contraseña');
+  reveal.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Zm9.5 3.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z"/></svg>';
+  passwordField.append(reveal);
+  row.append(field(editorText.username, 'username', user.username, 'text', { maxlength:'40', required:'', autocapitalize:'none' }), field(editorText.displayName, 'name', user.name, 'text', { maxlength:'80', required:'' }), passwordField);
   const permissions = document.createElement('div');
   permissions.className = 'editor-user-access';
   [['the-navies',editorText.accessNavies],['cor-band',editorText.accessCorBand],['strings',editorText.accessStrings]].forEach(([value, label]) => {
@@ -692,17 +935,26 @@ async function loadEditorUsers() {
     const response = await fetch(`${portalApiUrl}/users`, { headers:{ Authorization:`Bearer ${session.token}` } });
     const result = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(result.error || 'users_failed');
-    editorUsers = result.users || [];
+    editorUsers = sortEditorUsers(result.users || []);
     return true;
   } catch (_) { setEditorStatus(editorText.loadError); return false; }
 }
 
+const preferredEditorUserOrder = ['pauescobedo','marionaescobedo','paufermosel','carlesgonzalez','ainasalmeron','candelagonzalez','emmatuabu','elsacuenca','juliabel','corband','conjuntcordes'];
+
+function sortEditorUsers(users) {
+  if (users.some((user) => user.sortOrder !== undefined && Number.isFinite(Number(user.sortOrder)))) return [...users].sort((a, b) => Number(a.sortOrder) - Number(b.sortOrder));
+  const position = new Map(preferredEditorUserOrder.map((username, index) => [username, index]));
+  return [...users].sort((a, b) => (position.get(a.username) ?? 999) - (position.get(b.username) ?? 999));
+}
+
 function usersFromEditor() {
-  return [...contentEditor.querySelectorAll('.editor-user-row')].map((row) => ({
+  return [...contentEditor.querySelectorAll('.editor-user-row')].map((row, index) => ({
     username:row.querySelector('[name="username"]').value.trim().toLowerCase(),
     name:row.querySelector('[name="name"]').value.trim(),
     password:row.querySelector('[name="password"]').value,
-    access:[...row.querySelectorAll('[name="access"]:checked')].map((input) => input.value)
+    access:[...row.querySelectorAll('[name="access"]:checked')].map((input) => input.value),
+    sortOrder:index
   }));
 }
 
@@ -731,7 +983,7 @@ function memberEditorRow(member = {}) {
   const row = document.createElement('div');
   row.className = 'editor-row editor-member-row';
   row.dataset.id = member.id || '';
-  row.append(field(editorText.instrument, 'instrument', member.instrument, 'text', { maxlength:'160', required:'' }), field(editorText.cardTitle, 'title', member.title, 'text', { maxlength:'160', required:'' }), field(editorText.dialogTitle, 'dialogTitle', member.dialogTitle, 'text', { maxlength:'160', required:'' }), textAreaField(editorText.short, 'summary', member.summary, 300), textAreaField(editorText.long, 'bio', member.bio, 800), field(member.id === 'vocals' ? `${editorText.singer} 1 · ${editorText.socialLabel}` : editorText.socialLabel, 'socialLabel', member.socialLabel, 'text', { maxlength:'160' }), field(member.id === 'vocals' ? `${editorText.singer} 1 · ${editorText.socialUrl}` : editorText.socialUrl, 'socialUrl', member.socialUrl, 'url', { maxlength:'500', placeholder:'https://…' }));
+  row.append(field(editorText.instrument, 'instrument', member.instrument, 'text', { maxlength:'160', required:'' }), field(editorText.cardTitle, 'title', member.title, 'text', { maxlength:'160', required:'' }), textAreaField(editorText.short, 'summary', member.summary, 300), textAreaField(editorText.long, 'bio', member.bio, 800), field(member.id === 'vocals' ? `${editorText.singer} 1 · ${editorText.socialLabel}` : editorText.socialLabel, 'socialLabel', member.socialLabel, 'text', { maxlength:'160' }), field(member.id === 'vocals' ? `${editorText.singer} 1 · ${editorText.socialUrl}` : editorText.socialUrl, 'socialUrl', member.socialUrl, 'url', { maxlength:'500', placeholder:'https://…' }));
   if (member.id === 'vocals') row.append(field(`${editorText.singer} 2 · ${editorText.socialLabel}`, 'socialLabel2', member.socialLabel2, 'text', { maxlength:'160' }), field(`${editorText.singer} 2 · ${editorText.socialUrl}`, 'socialUrl2', member.socialUrl2, 'url', { maxlength:'500', placeholder:'https://…' }), field(`${editorText.singer} 3 · ${editorText.socialLabel}`, 'socialLabel3', member.socialLabel3, 'text', { maxlength:'160' }), field(`${editorText.singer} 3 · ${editorText.socialUrl}`, 'socialUrl3', member.socialUrl3, 'url', { maxlength:'500', placeholder:'https://…' }));
   return row;
 }
@@ -845,10 +1097,23 @@ function populateEditor() {
   concertList.replaceChildren(...navyContent.home.concerts.map(concertEditorRow));
   memberList.replaceChildren(...navyContent.home.members.map(memberEditorRow));
   socialList.replaceChildren(...navyContent.home.socials.map(socialEditorRow));
-  eventList.replaceChildren(...navyContent.events.map(eventEditorRow));
+  editorEnsembleDrafts = {
+    'the-navies':orderedEditableEvents(structuredClone(navyContent.events || [])),
+    'cor-band':orderedEditableEvents(structuredClone(navyContent.ensembles?.['cor-band']?.events || ensembleContent['cor-band'].events)),
+    strings:orderedEditableEvents(structuredClone(navyContent.ensembles?.strings?.events || ensembleContent.strings.events))
+  };
+  editorEnsembleLinkDrafts = {
+    'the-navies':structuredClone(navyContent.links || []),
+    'cor-band':structuredClone(navyContent.ensembles?.['cor-band']?.links || []),
+    strings:structuredClone(navyContent.ensembles?.strings?.links || [])
+  };
+  editorSpaceEnsemble = 'the-navies';
+  syncEditorEnsemblePicker();
+  eventList.replaceChildren(...editorEnsembleDrafts[editorSpaceEnsemble].map(eventEditorRow));
   songList.replaceChildren(...navyContent.songs.map(songEditorRow));
-  linkList.replaceChildren(...navyContent.links.map(linkEditorRow));
+  linkList.replaceChildren(...editorEnsembleLinkDrafts[editorSpaceEnsemble].map(linkEditorRow));
   userList.replaceChildren(...editorUsers.map(userEditorRow));
+  editorBaselineSnapshot = captureEditorSnapshot();
   editorDirty = false;
   setEditorStatus('');
 }
@@ -876,7 +1141,7 @@ function editorContent() {
     id:row.dataset.id,
     instrument:row.querySelector('[name="instrument"]').value.trim(),
     title:row.querySelector('[name="title"]').value.trim(),
-    dialogTitle:row.querySelector('[name="dialogTitle"]').value.trim(),
+    dialogTitle:row.querySelector('[name="title"]').value.trim(),
     summary:row.querySelector('[name="summary"]').value.trim(),
     bio:row.querySelector('[name="bio"]').value.trim(),
     socialLabel:row.querySelector('[name="socialLabel"]').value.trim(),
@@ -894,14 +1159,9 @@ function editorContent() {
     usedSocialIds.add(id);
     return { id, label, url:row.querySelector('[name="url"]').value.trim() };
   });
-  const events = [...contentEditor.querySelectorAll('.editor-event-row')].map((row) => ({
-    id:row.dataset.id || `event-${Date.now()}`,
-    type:row.querySelector('[name="type"]').value,
-    name:row.querySelector('[name="name"]').value.trim(),
-    date:row.querySelector('[name="date"]').value,
-    time:row.querySelector('[name="time"]').value,
-    location:row.querySelector('[name="location"]').value.trim()
-  }));
+  const readEventRows = () => orderedEditableEvents([...contentEditor.querySelectorAll('.editor-event-row')].map(eventFromEditorRow));
+  editorEnsembleDrafts[editorSpaceEnsemble] = readEventRows();
+  const events = editorEnsembleDrafts['the-navies'];
   const usedSongIds = new Set();
   const songs = [...contentEditor.querySelectorAll('.editor-song-row')].map((row, index) => {
     const title = row.querySelector('[name="title"]').value.trim();
@@ -910,28 +1170,38 @@ function editorContent() {
     usedSongIds.add(id);
     return { id, title };
   });
-  const usedLinkIds = new Set();
-  const links = [...contentEditor.querySelectorAll('.editor-link-row')].map((row, index) => {
+  const readLinkRows = () => {
+    const usedLinkIds = new Set();
+    return [...contentEditor.querySelectorAll('.editor-link-row')].map((row, index) => {
     const label = row.querySelector('[name="label"]').value.trim();
     let id = row.dataset.id || slugify(label);
     while (usedLinkIds.has(id)) id = `${slugify(label)}-${index + 1}`;
     usedLinkIds.add(id);
-    return { id, label, url:row.querySelector('[name="url"]').value.trim() };
-  });
-  return { home:{ settings:{ defaultSeason, initialPlayback, initialSongId, countdownEnabled, initialVolume, fallbackLanguage, faviconMode }, live:navyContent.home.live, texts:{ heroIntro:homeTexts.querySelector('[name="heroIntro"]').value.trim(), soundBody:homeTexts.querySelector('[name="soundBody"]').value.trim(), bandBody:homeTexts.querySelector('[name="bandBody"]').value.trim() }, concerts, members, socials }, events, songs, links };
+      return { id, label, url:row.querySelector('[name="url"]').value.trim() };
+    });
+  };
+  editorEnsembleLinkDrafts[editorSpaceEnsemble] = readLinkRows();
+  const links = editorEnsembleLinkDrafts['the-navies'];
+  return { home:{ settings:{ defaultSeason, initialPlayback, initialSongId, countdownEnabled, initialVolume, fallbackLanguage, faviconMode }, live:navyContent.home.live, texts:{ heroIntro:homeTexts.querySelector('[name="heroIntro"]').value.trim(), soundBody:homeTexts.querySelector('[name="soundBody"]').value.trim(), bandBody:homeTexts.querySelector('[name="bandBody"]').value.trim() }, concerts, members, socials }, events, ensembles:{ 'cor-band':{ events:editorEnsembleDrafts['cor-band'], links:editorEnsembleLinkDrafts['cor-band'] }, strings:{ events:editorEnsembleDrafts.strings, links:editorEnsembleLinkDrafts.strings } }, songs, links };
 }
 
 function syncEditorAccess() {
   const isPau = localStorage.getItem('navies-member-session') === 'pauescobedo';
   const canEdit = Boolean(isPau && contentSession());
   editContentButton.hidden = !canEdit;
-  if (!isPau || !contentSession()) closeContentEditor(true);
+  if (!canEdit) {
+    document.documentElement.classList.remove('editor-route-pending');
+    closeContentEditor(true, true);
+    if (location.hash === '#edicion' || location.hash === '#edicion-del-sitio') history.replaceState({ route:'espacio-navy' }, '', '#navy');
+  }
 }
 
 function selectEditorPage(route) {
   const page = route === 'home' ? 'home' : route === 'espacio-navy' ? 'space' : 'general';
+  sessionStorage.setItem('navies-editor-page', page);
   contentEditor.querySelectorAll('[data-editor-tab]').forEach((item) => item.setAttribute('aria-pressed', String(item.dataset.editorTab === page)));
   contentEditor.querySelectorAll('[data-editor-page]').forEach((item) => { item.hidden = item.dataset.editorPage !== page; });
+  syncEditorSectionNav(page);
 }
 
 editContentButton.addEventListener('click', async (event) => {
@@ -939,9 +1209,14 @@ editContentButton.addEventListener('click', async (event) => {
   if (!contentSession()) return syncEditorAccess();
   const menuToggle = document.querySelector('.menu-toggle');
   if (menuToggle?.getAttribute('aria-expanded') === 'true') menuToggle.click();
-  editorOriginRoute = document.documentElement.dataset.route || 'home';
+  const reopeningEditor = location.hash === '#edicion' || location.hash === '#edicion-del-sitio';
+  const storedEditorPage = sessionStorage.getItem('navies-editor-page');
+  editorOriginRoute = reopeningEditor && storedEditorPage
+    ? (storedEditorPage === 'space' ? 'espacio-navy' : storedEditorPage === 'home' ? 'home' : 'general')
+    : (document.documentElement.dataset.route || 'home');
   if (!navyContent) await loadNavyContent();
   if (!navyContent) {
+    document.documentElement.classList.remove('editor-route-pending');
     setEditorStatus(editorText.loadError);
     return;
   }
@@ -949,8 +1224,11 @@ editContentButton.addEventListener('click', async (event) => {
   populateEditor();
   selectEditorPage(editorOriginRoute);
   dashboard.hidden = true;
-  if (editorOriginRoute !== 'espacio-navy') document.querySelector(`#main-nav [data-route="espacio-navy"]`)?.click();
+  document.querySelectorAll('#main-nav a').forEach((link) => link.classList.toggle('active', link === editContentButton));
+  if (editorOriginRoute !== 'espacio-navy') window.naviesShowEditorHost?.();
+  else if (location.hash !== '#edicion') window.naviesMarkEditorRoute?.();
   window.setTimeout(() => {
+    document.documentElement.classList.remove('editor-route-pending');
     contentEditorOpen = true;
     dashboard.hidden = true;
     contentEditor.hidden = false;
@@ -961,13 +1239,19 @@ editContentButton.addEventListener('click', async (event) => {
   }, editorOriginRoute === 'espacio-navy' ? 0 : 240);
 });
 
-function closeContentEditor(immediate = false) {
+function closeContentEditor(immediate = false, restoreOrigin = false) {
   if (!contentEditorOpen && contentEditor.hidden) return;
   contentEditorOpen = false;
   contentEditor.classList.remove('is-visible');
   const finish = () => {
     contentEditor.hidden = true;
     if (localStorage.getItem('navies-member-session')) dashboard.hidden = false;
+    if (restoreOrigin && editorOriginRoute !== (document.documentElement.dataset.route || 'home')) {
+      window.naviesRestoreEditorRoute?.(editorOriginRoute);
+      return;
+    }
+    const currentRoute = document.documentElement.dataset.route || editorOriginRoute || 'espacio-navy';
+    document.querySelectorAll('#main-nav a').forEach((link) => link.classList.toggle('active', link.dataset.route === currentRoute));
     window.scrollTo({ top:0, behavior:immediate ? 'instant' : 'smooth' });
   };
   if (immediate) finish();
@@ -976,8 +1260,17 @@ function closeContentEditor(immediate = false) {
 
 contentEditor.querySelectorAll('[data-editor-tab]').forEach((button) => {
   button.addEventListener('click', () => {
+    sessionStorage.setItem('navies-editor-page', button.dataset.editorTab);
     contentEditor.querySelectorAll('[data-editor-tab]').forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
     contentEditor.querySelectorAll('[data-editor-page]').forEach((page) => { page.hidden = page.dataset.editorPage !== button.dataset.editorTab; });
+    syncEditorSectionNav(button.dataset.editorTab);
+    editorSectionPendingIndex = 0;
+    window.clearTimeout(editorSectionPendingTimer);
+    editorSectionPendingTimer = window.setTimeout(() => {
+      editorSectionPendingIndex = null;
+      updateEditorSectionActive();
+    }, 1400);
+    window.scrollTo({ top:0, behavior:'smooth' });
   });
 });
 
@@ -991,32 +1284,78 @@ window.addEventListener('navies-route-change', (event) => {
 });
 
 contentEditor.addEventListener('click', (event) => {
+  const ensembleToggle = event.target.closest('.editor-ensemble-toggle');
+  if (ensembleToggle) {
+    const picker = ensembleToggle.closest('.editor-ensemble-picker');
+    const willOpen = !picker.classList.contains('is-open');
+    picker.classList.toggle('is-open', willOpen);
+    ensembleToggle.setAttribute('aria-expanded', String(willOpen));
+    const menu = picker.querySelector('.editor-ensemble-menu');
+    menu.setAttribute('aria-hidden', String(!willOpen));
+    menu.inert = !willOpen;
+    return;
+  }
+  if (!event.target.closest('.editor-ensemble-picker')) closeEditorEnsemblePicker();
+  const passwordToggle = event.target.closest('[data-password-toggle]');
+  if (passwordToggle) {
+    const input = passwordToggle.closest('.editor-password-field').querySelector('input');
+    input.type = input.type === 'password' ? 'text' : 'password';
+    passwordToggle.classList.toggle('is-visible', input.type === 'text');
+    return;
+  }
+  const ensembleButton = event.target.closest('[data-editor-ensemble]');
+  if (ensembleButton && ensembleButton.dataset.editorEnsemble !== editorSpaceEnsemble) {
+    editorEnsembleDrafts[editorSpaceEnsemble] = orderedEditableEvents([...contentEditor.querySelectorAll('.editor-event-row')].map(eventFromEditorRow));
+    editorEnsembleLinkDrafts[editorSpaceEnsemble] = [...contentEditor.querySelectorAll('.editor-link-row')].map((row, index) => ({ id:row.dataset.id || `link-${index + 1}`, label:row.querySelector('[name="label"]').value.trim(), url:row.querySelector('[name="url"]').value.trim() }));
+    editorSpaceEnsemble = ensembleButton.dataset.editorEnsemble;
+    contentEditor.querySelector('[data-editor-ensemble-current]').textContent = editorEnsembleNames[editorSpaceEnsemble];
+    closeEditorEnsemblePicker();
+    window.setTimeout(syncEditorEnsemblePicker, 400);
+    contentEditor.querySelector('[data-editor-list="events"]').replaceChildren(...editorEnsembleDrafts[editorSpaceEnsemble].map(eventEditorRow));
+    contentEditor.querySelector('[data-editor-list="links"]').replaceChildren(...editorEnsembleLinkDrafts[editorSpaceEnsemble].map(linkEditorRow));
+    refreshEditorDirty();
+    return;
+  }
   const add = event.target.closest('[data-editor-add]');
   if (add) {
     const kind = add.dataset.editorAdd;
     const list = contentEditor.querySelector(`[data-editor-list="${kind}s"]`);
     const row = kind === 'event' ? eventEditorRow({ type:'rehearsal', name:'', date:localToday(), time:'17:30', location:'' }) : kind === 'song' ? songEditorRow() : kind === 'concert' ? concertEditorRow({ name:editorText.newConcert, day:'', month:'12', year:String(new Date().getFullYear()), time:'', location:'' }) : kind === 'social' ? socialEditorRow() : kind === 'user' ? userEditorRow({ access:[] }) : linkEditorRow();
     list.append(row);
-    editorDirty = true;
-    list.lastElementChild.scrollIntoView({ behavior:'smooth', block:'center' });
+    if (kind === 'event') sortEventEditorRows(list);
+    refreshEditorDirty();
+    row.scrollIntoView({ behavior:'smooth', block:'center' });
     return;
   }
   const action = event.target.closest('[data-editor-action]');
   if (!action) return;
   const row = action.closest('.editor-row');
   if (action.dataset.editorAction === 'remove') {
-    if (window.confirm(editorText.confirmDelete)) { row.remove(); editorDirty = true; }
+    if (window.confirm(editorText.confirmDelete)) { row.remove(); refreshEditorDirty(); }
   } else if (action.dataset.editorAction === 'up' && row.previousElementSibling) {
     row.parentNode.insertBefore(row, row.previousElementSibling);
-    editorDirty = true;
+    refreshEditorDirty();
   } else if (action.dataset.editorAction === 'down' && row.nextElementSibling) {
     row.parentNode.insertBefore(row.nextElementSibling, row);
-    editorDirty = true;
+    refreshEditorDirty();
   }
 });
 
-editorForm.addEventListener('input', () => { editorDirty = true; });
-editorForm.addEventListener('change', () => { editorDirty = true; });
+document.addEventListener('click', (event) => {
+  if (!event.target.closest('.editor-ensemble-picker')) closeEditorEnsemblePicker();
+});
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeEditorEnsemblePicker();
+});
+
+editorForm.addEventListener('input', refreshEditorDirty);
+editorForm.addEventListener('change', (event) => {
+  if (event.target.matches('.editor-event-row [name="date"],.editor-event-row [name="time"]')) {
+    const list = event.target.closest('[data-editor-list="events"]');
+    if (list) sortEventEditorRows(list);
+  }
+  refreshEditorDirty();
+});
 
 async function saveEditorChanges() {
   const session = contentSession();
@@ -1043,8 +1382,9 @@ async function saveEditorChanges() {
     });
     const usersResult = await usersResponse.json().catch(() => ({}));
     if (!usersResponse.ok) throw new Error(usersResult.error || 'users_failed');
-    editorUsers = usersResult.users || [];
+    editorUsers = sortEditorUsers(usersResult.users || []);
     renderNavyContent(result.content);
+    editorBaselineSnapshot = captureEditorSnapshot();
     editorDirty = false;
     setEditorStatus(editorText.saved, true);
     return true;
@@ -1096,6 +1436,12 @@ window.naviesRequestEditorExit = () => {
   editorExitDialog.showModal();
   return new Promise((resolve) => { editorExitResolver = resolve; });
 };
+
+window.addEventListener('beforeunload', (event) => {
+  if (!contentEditorOpen || !editorDirty) return;
+  event.preventDefault();
+  event.returnValue = '';
+});
 
 window.addEventListener('navies-admin-change', syncEditorAccess);
 window.addEventListener('navies-auth-change', syncEditorAccess);
@@ -1161,3 +1507,7 @@ loginForm.addEventListener('submit', async (event) => {
 
 window.addEventListener('navies-auth-change', syncPortal);
 syncPortal();
+syncEditorAccess();
+if ((location.hash === '#edicion' || location.hash === '#edicion-del-sitio') && !editContentButton.hidden) {
+  requestAnimationFrame(() => editContentButton.click());
+}
