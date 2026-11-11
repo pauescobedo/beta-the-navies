@@ -148,8 +148,11 @@ body.route-media #main-nav > a.content-editor-trigger { color:var(--accent)!impo
 .musyc-playlist-row.is-fixed { grid-template-columns:1fr; }
 .musyc-playlist-row > button:first-child { min-height:42px; padding:0 8px; border:0; border-radius:10px; display:grid; grid-template-columns:22px 1fr auto; gap:8px; align-items:center; color:#b8cad5; text-align:left; background:transparent; cursor:pointer; }
 .musyc-playlist-row > button:first-child:hover,.musyc-playlist-row > button:first-child.is-active { color:white; background:rgba(198,154,130,.09); }
-.musyc-playlist-delete { width:28px; height:28px; padding:0; border:0; border-radius:50%; color:#819ba9; background:transparent; font-size:17px; cursor:pointer; }
-.musyc-playlist-delete:hover { color:white; background:rgba(198,154,130,.12); }
+.musyc-playlist-more { width:28px; height:28px; padding:0; border:0; border-radius:50%; display:flex; align-items:center; justify-content:center; gap:2px; color:#819ba9; background:transparent; cursor:pointer; }
+.musyc-playlist-more span { width:3px; height:3px; border-radius:50%; background:currentColor; }
+.musyc-playlist-more:hover { color:white; background:rgba(198,154,130,.12); }
+.musyc-personal.is-queue-view .musyc-personal-title,
+.musyc-personal.is-queue-view .musyc-playlist-list { display:none; }
 .musyc-playlist-list small { color:#819ba9; }
 .musyc-personal-tracks { max-height:380px; overflow:auto; scrollbar-width:thin; }
 .musyc-track.is-compact { min-height:58px; grid-template-columns:32px minmax(0,1fr) 30px; }

@@ -695,7 +695,7 @@ function animateSmoothWheel() {
 
 if (smoothWheelEnabled) {
   window.addEventListener('wheel', (event) => {
-    if (event.ctrlKey || event.metaKey || document.querySelector('dialog[open]')) return;
+    if (event.ctrlKey || event.metaKey || document.querySelector('dialog[open]') || event.target.closest('.musync-lyrics')) return;
     const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
     const rawDelta = event.deltaMode === 1 ? event.deltaY * 18 : event.deltaMode === 2 ? event.deltaY * window.innerHeight : event.deltaY;
     const delta = Math.max(-150, Math.min(150, rawDelta));
@@ -1663,10 +1663,18 @@ function showAuthToast(message, state = 'active', host = document.body) {
 function validNavyMember() {
   try {
     const auth = JSON.parse(localStorage.getItem('navies-member-auth'));
-    if (!auth?.member?.username || !auth.token || auth.expiresAt <= Date.now()) return null;
+    if (!auth?.member?.username || !auth.token || auth.expiresAt <= Date.now()) {
+      localStorage.removeItem('navies-member-auth');
+      localStorage.removeItem('navies-member-session');
+      return null;
+    }
     navyMemberNames[auth.member.username] = auth.member.name || auth.member.username;
     return auth.member.username;
-  } catch (_) { return null; }
+  } catch (_) {
+    localStorage.removeItem('navies-member-auth');
+    localStorage.removeItem('navies-member-session');
+    return null;
+  }
 }
 
 function memberAuth() { try { return JSON.parse(localStorage.getItem('navies-member-auth')) || null; } catch (_) { return null; } }

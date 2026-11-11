@@ -2,6 +2,12 @@ const loginPanel = document.querySelector('#login');
 const dashboard = document.querySelector('#member-dashboard');
 const spaceEntry = document.querySelector('.space-entry');
 const loginForm = document.querySelector('#login-form');
+if (new URLSearchParams(location.search).has('username') || new URLSearchParams(location.search).has('password')) {
+  const cleanUrl = new URL(location.href);
+  cleanUrl.searchParams.delete('username');
+  cleanUrl.searchParams.delete('password');
+  history.replaceState(history.state, '', `${cleanUrl.pathname}${cleanUrl.search}${cleanUrl.hash}`);
+}
 const loginError = document.querySelector('#login-error');
 const memberName = document.querySelector('#member-name');
 const dashboardBar = document.querySelector('.dashboard-bar');
@@ -571,6 +577,7 @@ function closeAudioDialog() {
 document.querySelector('.audio-dialog-close').addEventListener('click', closeAudioDialog);
 audioDialog.addEventListener('click', (event) => { if (event.target === audioDialog) closeAudioDialog(); });
 
+if (false) { // Musync original conservado como referencia; la interfaz activa vive en musync.js.
 const musycCopy = ({
   es:{ library:'Tu biblioteca', album:'Álbum de The Navies', back:'Volver a Espacio Navy', play:'Reproducir', pause:'Pausar', previous:'Anterior', next:'Siguiente', volume:'Volumen', search:'Buscar canciones y listas', favorites:'Favoritos', playlists:'Listas', queue:'Cola', create:'Nueva lista', renamePlaylist:'Renombrar lista', playlistName:'Nombre de la lista', save:'Guardar', cancel:'Cancelar', addFavorite:'Añadir a favoritos', removeFavorite:'Quitar de favoritos', addQueue:'Añadir a la cola', addPlaylist:'Añadir a una lista', removePlaylist:'Quitar de la lista', deletePlaylist:'Eliminar lista', empty:'Todavía no hay canciones aquí.' },
   ca:{ library:'La teva biblioteca', album:'Àlbum de The Navies', back:'Tornar a Espai Navy', play:'Reproduir', pause:'Pausa', previous:'Anterior', next:'Següent', volume:'Volum', search:'Cercar cançons i llistes', favorites:'Preferides', playlists:'Llistes', queue:'Cua', create:'Nova llista', renamePlaylist:'Canviar el nom', playlistName:'Nom de la llista', save:'Desar', cancel:'Cancel·lar', addFavorite:'Afegir a preferides', removeFavorite:'Treure de preferides', addQueue:'Afegir a la cua', addPlaylist:'Afegir a una llista', removePlaylist:'Treure de la llista', deletePlaylist:'Eliminar llista', empty:'Encara no hi ha cançons aquí.' },
@@ -596,7 +603,7 @@ musycPage.innerHTML = `
   <div class="musyc-shell">
     <div class="musyc-layout">
       <article class="musyc-now reveal">
-        <div class="musyc-cover"><img src="${window.__naviesForcedLanguage ? '../' : ''}The%20Navies%20Online.png?v=20261111-230" alt="The Navies"></div>
+        <div class="musyc-cover"><img src="${window.__naviesForcedLanguage ? '../' : ''}assets/images/musync-cover.png?v=20261111-235" alt="The Navies"></div>
         <div class="musyc-now-copy"><h2 data-musyc-title></h2><p data-musyc-artist></p></div>
         <div class="musyc-progress"><span data-musyc-current>0:00</span><input data-musyc-progress type="range" min="0" max="1000" value="0" aria-label="Progreso"><span data-musyc-duration>0:00</span></div>
         <div class="musyc-controls">
@@ -618,7 +625,7 @@ musycPage.innerHTML = `
         <div class="musyc-personal-tracks"></div>
       </aside>
     </div>
-    <dialog class="musyc-playlist-dialog"><form method="dialog"><h2>${musycCopy.create}</h2><input data-musyc-playlist-name placeholder="${musycCopy.playlistName}" maxlength="36" autocomplete="off"><div><button value="cancel">${musycCopy.cancel}</button><button value="default" data-musyc-playlist-save>${musycCopy.save}</button></div></form></dialog>
+    <dialog class="musyc-playlist-dialog"><form method="dialog"><h2 data-musyc-playlist-title>${musycCopy.create}</h2><input data-musyc-playlist-name placeholder="${musycCopy.playlistName}" maxlength="36" autocomplete="off"><div><button value="cancel">${musycCopy.cancel}</button><button value="default" data-musyc-playlist-save>${musycCopy.save}</button></div></form></dialog>
     <div class="musyc-track-menu" hidden></div>
   </div>`;
 document.querySelector('#page-espacio-navy')?.after(musycPage);
@@ -697,6 +704,7 @@ function loadMusycState() {
 let musycState = loadMusycState();
 let musycLibraryView = 'lists';
 let musycSelectedPlaylist = '__favorites__';
+let musycEditingPlaylist = '';
 function saveMusycState() {
   localStorage.setItem(`the-navies-musync-${musycMemberKey()}`, JSON.stringify(musycState));
 }
@@ -733,10 +741,11 @@ function currentMusycIndexes() {
 }
 function renderMusycPersonal() {
   musycPage.querySelectorAll('[data-musyc-view]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.musycView === musycLibraryView)));
+  musycPage.querySelector('.musyc-personal').classList.toggle('is-queue-view', musycLibraryView === 'queue');
   const query = musycSearch.value.trim().toLocaleLowerCase();
   const customLists = Object.keys(musycState.playlists).filter((name) => !query || name.toLocaleLowerCase().includes(query));
   const favoritesVisible = !query || musycCopy.favorites.toLocaleLowerCase().includes(query);
-  musycPlaylistList.innerHTML = `${favoritesVisible ? `<div class="musyc-playlist-row is-fixed"><button type="button" data-musyc-playlist="__favorites__" class="${musycLibraryView === 'lists' && musycSelectedPlaylist === '__favorites__' ? 'is-active' : ''}"><span>♥</span><strong>${musycCopy.favorites}</strong><small>${musycState.favorites.length}</small></button></div>` : ''}${customLists.map((name) => `<div class="musyc-playlist-row"><button type="button" data-musyc-playlist="${encodeURIComponent(name)}" class="${musycLibraryView === 'lists' && musycSelectedPlaylist === name ? 'is-active' : ''}"><span>♫</span><strong>${escapeMusycText(name)}</strong><small>${musycState.playlists[name].length}</small></button><button class="musyc-playlist-delete" type="button" data-musyc-delete-playlist="${encodeURIComponent(name)}" aria-label="${musycCopy.deletePlaylist}">×</button></div>`).join('')}`;
+  musycPlaylistList.innerHTML = `${favoritesVisible ? `<div class="musyc-playlist-row is-fixed"><button type="button" data-musyc-playlist="__favorites__" class="${musycLibraryView === 'lists' && musycSelectedPlaylist === '__favorites__' ? 'is-active' : ''}"><span>♥</span><strong>${musycCopy.favorites}</strong><small>${musycState.favorites.length}</small></button></div>` : ''}${customLists.map((name) => `<div class="musyc-playlist-row"><button type="button" data-musyc-playlist="${encodeURIComponent(name)}" class="${musycLibraryView === 'lists' && musycSelectedPlaylist === name ? 'is-active' : ''}"><span>♫</span><strong>${escapeMusycText(name)}</strong><small>${musycState.playlists[name].length}</small></button><button class="musyc-playlist-more" type="button" data-musyc-playlist-menu="${encodeURIComponent(name)}" aria-label="${musycCopy.renamePlaylist}"><span></span><span></span><span></span></button></div>`).join('')}`;
   const indexes = currentMusycIndexes();
   musycPersonalTracks.innerHTML = indexes.length ? indexes.map((index) => musycTrackMarkup(musycTracks[index],index,true)).join('') : `<p class="musyc-empty">${musycCopy.empty}</p>`;
   syncMusycMarquees();
@@ -746,15 +755,22 @@ renderMusycCollections();
 
 function syncMusycUI() {
   const track = musycTracks[musycIndex];
-  musycTitle.textContent = track.title;
-  musycArtist.textContent = track.artist;
+  musycTitle.textContent = track?.title || '';
+  musycArtist.textContent = track?.artist || '';
+  musycPage.querySelector('.musyc-now').classList.toggle('is-empty', !track);
+  if (!track) {
+    musycCurrent.textContent = '0:00';
+    musycDuration.textContent = '0:00';
+    musycProgress.value = '0';
+    paintMusycRange(musycProgress, 0);
+  }
   musycPage.querySelectorAll('[data-musyc-track]').forEach((button) => button.classList.toggle('is-active', Number(button.dataset.musycTrack) === musycIndex));
-  const playing = !musycAudio.paused;
+  const playing = Boolean(track) && !musycAudio.paused;
   musycToggle.classList.toggle('is-playing', playing);
   musycToggle.setAttribute('aria-label', playing ? musycCopy.pause : musycCopy.play);
 }
 
-async function playMusyc(index = musycIndex) {
+async function playMusyc(index = (musycIndex >= 0 ? musycIndex : 0)) {
   musycChangingTrack = true;
   const nextIndex = (index + musycTracks.length) % musycTracks.length;
   const outgoingAudio = musycAudio;
@@ -762,7 +778,7 @@ async function playMusyc(index = musycIndex) {
   if (Number(incomingAudio.dataset.trackIndex) !== nextIndex) {
     await prepareMusycDeck(incomingAudio, nextIndex);
   }
-  incomingAudio.volume = Number(musycVolume?.value || .55);
+  incomingAudio.volume = Number(musycVolume?.value || 1);
   incomingAudio.currentTime = 0;
   musycIndex = nextIndex;
   musycAudio = incomingAudio;
@@ -805,6 +821,16 @@ musycPage.addEventListener('click', (event) => {
     musycTrackMenu.style.top = `${Math.max(12, Math.min(bounds.bottom + 7, window.innerHeight - musycTrackMenu.scrollHeight - 20))}px`;
     return;
   }
+  const playlistMenuButton = event.target.closest('[data-musyc-playlist-menu]');
+  if (playlistMenuButton) {
+    const name = decodeURIComponent(playlistMenuButton.dataset.musycPlaylistMenu);
+    const bounds = playlistMenuButton.getBoundingClientRect();
+    musycTrackMenu.innerHTML = `<button type="button" data-musyc-menu-action="playlist-rename" data-playlist="${encodeURIComponent(name)}">${musycCopy.renamePlaylist}</button><button type="button" data-musyc-menu-action="playlist-delete" data-playlist="${encodeURIComponent(name)}">${musycCopy.deletePlaylist}</button>`;
+    musycTrackMenu.style.left = `${Math.min(bounds.left, window.innerWidth - 230)}px`;
+    musycTrackMenu.hidden = false;
+    musycTrackMenu.style.top = `${Math.max(12, Math.min(bounds.bottom + 7, window.innerHeight - musycTrackMenu.scrollHeight - 20))}px`;
+    return;
+  }
   const playlistButton = event.target.closest('[data-musyc-playlist]');
   if (playlistButton) {
     musycLibraryView = 'lists';
@@ -812,18 +838,28 @@ musycPage.addEventListener('click', (event) => {
     renderMusycPersonal();
     return;
   }
-  const deletePlaylistButton = event.target.closest('[data-musyc-delete-playlist]');
-  if (deletePlaylistButton) {
-    const name = decodeURIComponent(deletePlaylistButton.dataset.musycDeletePlaylist);
-    delete musycState.playlists[name];
-    if (musycSelectedPlaylist === name) musycSelectedPlaylist = '__favorites__';
-    saveMusycState(); renderMusycPersonal(); return;
-  }
   if (!event.target.closest('.musyc-track-menu')) musycTrackMenu.hidden = true;
 });
 musycTrackMenu.addEventListener('click', (event) => {
   const action = event.target.closest('[data-musyc-menu-action]');
   if (!action) return;
+  if (action.dataset.musycMenuAction === 'playlist-rename') {
+    musycEditingPlaylist = decodeURIComponent(action.dataset.playlist);
+    musycPlaylistDialog.querySelector('[data-musyc-playlist-title]').textContent = musycCopy.renamePlaylist;
+    const input = musycPlaylistDialog.querySelector('[data-musyc-playlist-name]');
+    input.value = musycEditingPlaylist;
+    musycTrackMenu.hidden = true;
+    musycPlaylistDialog.showModal();
+    requestAnimationFrame(() => { input.focus(); input.select(); });
+    return;
+  }
+  if (action.dataset.musycMenuAction === 'playlist-delete') {
+    const name = decodeURIComponent(action.dataset.playlist);
+    delete musycState.playlists[name];
+    if (musycSelectedPlaylist === name) musycSelectedPlaylist = '__favorites__';
+    saveMusycState(); musycTrackMenu.hidden = true; renderMusycPersonal();
+    return;
+  }
   const index = Number(action.dataset.index);
   if (action.dataset.musycMenuAction === 'favorite') musycState.favorites = musycState.favorites.includes(index) ? musycState.favorites.filter((item) => item !== index) : [...musycState.favorites,index];
   if (action.dataset.musycMenuAction === 'queue') musycState.queue.push(index);
@@ -837,22 +873,33 @@ musycTrackMenu.addEventListener('click', (event) => {
 });
 musycPage.querySelectorAll('[data-musyc-view]').forEach((button) => button.addEventListener('click', () => { musycLibraryView = button.dataset.musycView; if (musycLibraryView === 'lists' && !musycSelectedPlaylist) musycSelectedPlaylist = '__favorites__'; renderMusycPersonal(); }));
 musycSearch.addEventListener('input', renderMusycCollections);
-musycPage.querySelector('[data-musyc-create]').addEventListener('click', () => { musycPlaylistDialog.showModal(); requestAnimationFrame(() => musycPlaylistDialog.querySelector('input').focus()); });
+musycPage.querySelector('[data-musyc-create]').addEventListener('click', () => {
+  musycEditingPlaylist = '';
+  musycPlaylistDialog.querySelector('[data-musyc-playlist-title]').textContent = musycCopy.create;
+  musycPlaylistDialog.querySelector('[data-musyc-playlist-name]').value = '';
+  musycPlaylistDialog.showModal();
+  requestAnimationFrame(() => musycPlaylistDialog.querySelector('input').focus());
+});
 musycPlaylistDialog.querySelector('[data-musyc-playlist-save]').addEventListener('click', (event) => {
   const input = musycPlaylistDialog.querySelector('[data-musyc-playlist-name]');
   const name = input.value.trim();
   if (!name) { event.preventDefault(); return input.focus(); }
-  if (!musycState.playlists[name]) musycState.playlists[name] = [];
+  if (musycEditingPlaylist && name !== musycEditingPlaylist) {
+    if (musycState.playlists[name]) { event.preventDefault(); input.focus(); return; }
+    musycState.playlists[name] = musycState.playlists[musycEditingPlaylist] || [];
+    delete musycState.playlists[musycEditingPlaylist];
+  } else if (!musycState.playlists[name]) musycState.playlists[name] = [];
   saveMusycState(); input.value = ''; musycLibraryView = 'lists'; musycSelectedPlaylist = name; renderMusycPersonal();
+  musycEditingPlaylist = '';
 });
-musycPage.querySelector('[data-musyc-action="previous"]').addEventListener('click', () => playMusyc(musycIndex - 1));
+musycPage.querySelector('[data-musyc-action="previous"]').addEventListener('click', () => playMusyc(musycIndex > 0 ? musycIndex - 1 : 0));
 function nextMusycIndex() {
-  if (!musycState.queue.length) return musycIndex + 1;
+  if (!musycState.queue.length) return musycIndex >= 0 ? musycIndex + 1 : 0;
   const next = musycState.queue.shift(); saveMusycState(); renderMusycPersonal(); return next;
 }
 musycPage.querySelector('[data-musyc-action="next"]').addEventListener('click', () => playMusyc(nextMusycIndex()));
 musycToggle.addEventListener('click', () => {
-  if (!musycAudio.currentSrc && !musycAudio.src) return playMusyc();
+  if (musycIndex < 0 || (!musycAudio.currentSrc && !musycAudio.src)) return playMusyc(0);
   if (musycAudio.paused) musycAudio.play().catch(() => {});
   else musycAudio.pause();
 });
@@ -927,6 +974,7 @@ window.addEventListener('navies-route-change', (event) => {
   if (event.detail?.route !== 'musync' && !musycAudio.paused) musycAudio.pause();
 });
 syncMusyncAccess();
+}
 
 const editContentButton = document.createElement('a');
 editContentButton.className = 'content-editor-trigger';
@@ -1612,7 +1660,7 @@ function closeContentEditor(immediate = false, restoreOrigin = false) {
   contentEditor.classList.remove('is-visible');
   const finish = () => {
     contentEditor.hidden = true;
-    if (localStorage.getItem('navies-member-session')) dashboard.hidden = false;
+    if (window.naviesCurrentMember?.()) dashboard.hidden = false;
     if (restoreOrigin && editorOriginRoute !== (document.documentElement.dataset.route || 'home')) {
       window.naviesRestoreEditorRoute?.(editorOriginRoute);
       return;
