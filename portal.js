@@ -430,7 +430,7 @@ function renderSelectedEnsemble() {
   const content = selectedEnsemble === 'the-navies' ? { songs:navyContent.songs, events:theNaviesUpcomingEvents(), numbered:true } : { ...ensembleContent[selectedEnsemble], events:navyContent.ensembles?.[selectedEnsemble]?.events || ensembleContent[selectedEnsemble].events };
   renderSetlist(content.songs, content.numbered);
   renderEvents(content.events);
-  const links = selectedEnsemble === 'the-navies' ? navyContent.links : (navyContent.ensembles?.[selectedEnsemble]?.links || ensembleContent[selectedEnsemble].links || []);
+  const links = [];
   renderLinks(links);
   const usefulLinks = document.querySelector('.calendar-useful-links');
   if (usefulLinks) usefulLinks.hidden = links.length === 0;
@@ -479,8 +479,8 @@ function decorateScoreSongs() {
       item.append(link);
       container.append(item);
     });
-    if (auxiliarySongIds.has(song)) return;
-    const audioSource = `${audioRoot}/${song}.mp3`;
+    if (song.startsWith('conjunt-de-cordes/')) return;
+    const audioSource = `${audioRoot}/${song.includes('/') ? song : `the-navies/${song}`}.mp3`;
     const divider = document.createElement('span');
     divider.className = 'audio-divider';
     divider.setAttribute('aria-hidden', 'true');
@@ -655,7 +655,7 @@ const musycSearch = musycPage.querySelector('[data-musyc-search]');
 let musycIndex = -1;
 let musycChangingTrack = false;
 let musycYieldingToSiteMusic = false;
-const musycSource = (track) => `${window.__naviesForcedLanguage ? '../' : ''}audios/${track.file}.mp3?v=20261111-232`;
+const musycSource = (track) => `${window.__naviesForcedLanguage ? '../' : ''}audios/the-navies/${track.file}.mp3?v=20261111-267`;
 const musycBlobSources = new Map();
 const musycBlobRequests = new Map();
 async function resolvedMusycSource(track) {
@@ -1036,7 +1036,7 @@ contentEditor.innerHTML = `
         <div class="editor-section-head"><div><span>02</span><h3>${editorText.setlist}</h3><p>${editorText.setlistCopy}</p></div><button type="button" data-editor-add="song">${editorText.addSong}</button></div>
         <div class="editor-list" data-editor-list="songs"></div>
       </section>
-      <section class="editor-section">
+      <section class="editor-section" hidden>
         <div class="editor-section-head"><div><span>03</span><h3>${editorText.links}</h3><p>${editorText.linksCopy}</p></div><button type="button" data-editor-add="link">${editorText.addLink}</button></div>
         <div class="editor-list" data-editor-list="links"></div>
       </section>
@@ -1084,7 +1084,7 @@ function syncEditorSectionNav(pageName) {
   if (!page) return;
   window.clearTimeout(editorSectionPendingTimer);
   editorSectionPendingIndex = null;
-  const sections = [...page.querySelectorAll(':scope > .editor-section')];
+  const sections = [...page.querySelectorAll(':scope > .editor-section')].filter((section) => !section.hidden);
   const buttons = sections.map((section, index) => {
     const number = section.querySelector('.editor-section-head span')?.textContent || String(index + 1).padStart(2, '0');
     const label = section.querySelector('h3')?.textContent || number;

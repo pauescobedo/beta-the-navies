@@ -210,7 +210,7 @@ function updateCountdown() {
 
 function countdownAudioSource() {
   const prefix = window.__naviesForcedLanguage ? '../' : '';
-  return `${prefix}audios/${countdownTracks[countdownTrackIndex].file}.mp3`;
+  return `${prefix}audios/the-navies/${countdownTracks[countdownTrackIndex].file}.mp3`;
 }
 
 function stopCountdownFade() {
@@ -266,8 +266,23 @@ function prepareCountdownTrack() {
         reject(new Error('Stale audio preparation'));
         return;
       }
-      countdownAudio.currentTime = Math.min(preparedTrack.start, Math.max(0, countdownAudio.duration - .25));
-      resolve();
+      const target = Math.min(preparedTrack.start, Math.max(0, countdownAudio.duration - .25));
+      let settled = false;
+      const confirmStartPoint = () => {
+        if (settled) return;
+        settled = true;
+        countdownAudio.removeEventListener('seeked', confirmStartPoint);
+        if (preparationId !== countdownPreparationId || preparedTrackIndex !== countdownTrackIndex) {
+          reject(new Error('Stale audio preparation'));
+          return;
+        }
+        if (Math.abs(countdownAudio.currentTime - target) > .45) countdownAudio.currentTime = target;
+        resolve();
+      };
+      countdownAudio.addEventListener('seeked', confirmStartPoint, { once:true });
+      countdownAudio.currentTime = target;
+      if (!countdownAudio.seeking) confirmStartPoint();
+      else window.setTimeout(confirmStartPoint, 700);
     };
     const reportError = () => {
       cleanup();
@@ -1091,7 +1106,7 @@ window.naviesApplyGeneralSettings = (settings = {}) => {
 
 function siteMusicSource(index) {
   const prefix = window.__naviesForcedLanguage ? '../' : '';
-  return `${prefix}audios/${countdownTracks[index].file}.mp3`;
+  return `${prefix}audios/the-navies/${countdownTracks[index].file}.mp3`;
 }
 
 function updateSiteMusicUI() {
