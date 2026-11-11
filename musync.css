@@ -121,6 +121,7 @@
 .musync-lyrics-tools [data-ms-resync][hidden] { display:none; }
 .musync-chord-toggle { min-height:36px; padding:0 8px 0 12px; border:1px solid rgba(255,255,255,.12); border-radius:999px; display:flex; align-items:center; gap:10px; color:#b6c7ce!important; background:rgba(255,255,255,.05); cursor:pointer; }
 .musync-chord-toggle input { position:absolute; opacity:0; pointer-events:none; }
+.musync-chord-toggle[hidden] { display:none!important; }
 .musync-chord-toggle i { position:relative; width:34px; height:20px; border-radius:99px; background:rgba(255,255,255,.14); transition:background .22s; }
 .musync-chord-toggle i::after { content:""; position:absolute; left:3px; top:3px; width:14px; height:14px; border-radius:50%; background:#a8bac2; transition:transform .25s cubic-bezier(.2,.8,.2,1),background .22s; }
 .musync-chord-toggle input:checked + i { background:#d0a58e; }
@@ -300,7 +301,7 @@ body.route-musync #main-nav > a.content-editor-trigger,body.route-musync .mobile
 .musync-track-head button.is-active::after { content:" ↑"; font-size:9px; }
 .musync-track-head button.is-active[data-direction="desc"]::after { content:" ↓"; }
 .musync-full-title-row { min-width:0; margin:27px 0 5px; display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:14px; }
-.musync-full-title-row h2 { min-width:0; margin:0; overflow:hidden; white-space:nowrap; }
+.musync-full-title-row h2 { min-width:0; margin:0; overflow:hidden; white-space:nowrap; font-size:clamp(19px,2.2vw,30px); line-height:1.1; letter-spacing:-.04em; }
 .musync-full-title-row h2 > span { display:inline-block; min-width:100%; }
 .musync-full-title-row h2 > span.is-overflowing { animation:musyncTitleMarquee 8s ease-in-out 1s infinite; }
 .musync-full-title-row > div { display:flex; align-items:center; gap:8px; }

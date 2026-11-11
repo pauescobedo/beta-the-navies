@@ -16,19 +16,19 @@
   })[language] || {});
   const rootPath = window.__naviesForcedLanguage ? '../' : '';
   const tracks = [
-    { file:'the-navies/shake-it-off', artist:'Taylor Swift', title:'Shake It Off', album:'the-navies', duration:219.246, lyrics:'lyrics/shake-it-off.lrc' },
-    { file:'the-navies/baby-one-more-time', artist:'Britney Spears', title:'…Baby One More Time', album:'the-navies', duration:211.096 },
-    { file:'the-navies/sweet-caroline', artist:'Neil Diamond', title:'Sweet Caroline', album:'the-navies', duration:203.64 },
-    { file:'the-navies/dont-look-back-in-anger', artist:'Oasis', title:'Don’t Look Back in Anger', album:'the-navies', duration:289.62 },
-    { file:'the-navies/the-final-countdown', artist:'Europe', title:'The Final Countdown', album:'the-navies', duration:311.304 },
-    { file:'the-navies/have-you-ever-seen-the-rain', artist:'Creedence Clearwater Revival', title:'Have You Ever Seen the Rain?', album:'the-navies', duration:157.824 },
-    { file:'the-navies/the-final-countdown-reprise', artist:'Europe', title:'The Final Countdown (Reprise)', album:'the-navies', duration:94.368 },
-    { file:'cor-band/billie-jean', artist:'Michael Jackson', title:'Billie Jean', album:'cor-band', duration:294.269 },
-    { file:'cor-band/stayin-alive', artist:'Bee Gees', title:'Stayin’ Alive', album:'cor-band', duration:284.709 },
-    { file:'cor-band/mystical-magical', artist:'Benson Boone', title:'Mystical Magical', album:'cor-band', duration:165.773 },
-    { file:'cor-band/texas-hold-em', artist:'Beyoncé', title:'Texas Hold ’Em', album:'cor-band', duration:233.535 },
-    { file:'cor-band/training-season', artist:'Dua Lipa', title:'Training Season', album:'cor-band', duration:209.528 },
-    { file:'cor-band/livin-on-a-prayer', artist:'Bon Jovi', title:'Livin’ On A Prayer', album:'cor-band', duration:288.549 }
+    { file:'the-navies/shake-it-off', artist:'Taylor Swift', title:'Shake It Off', album:'the-navies', duration:219.246, lyrics:'lyrics/the-navies/shake-it-off.lrc', hasChords:true },
+    { file:'the-navies/baby-one-more-time', artist:'Britney Spears', title:'…Baby One More Time', album:'the-navies', duration:211.096, lyrics:'lyrics/the-navies/baby-one-more-time.lrc' },
+    { file:'the-navies/sweet-caroline', artist:'Neil Diamond', title:'Sweet Caroline', album:'the-navies', duration:203.64, lyrics:'lyrics/the-navies/sweet-caroline.lrc' },
+    { file:'the-navies/dont-look-back-in-anger', artist:'Oasis', title:'Don’t Look Back in Anger', album:'the-navies', duration:289.62, lyrics:'lyrics/the-navies/dont-look-back-in-anger.lrc' },
+    { file:'the-navies/the-final-countdown', artist:'Europe', title:'The Final Countdown', album:'the-navies', duration:311.304, lyrics:'lyrics/the-navies/the-final-countdown.lrc' },
+    { file:'the-navies/have-you-ever-seen-the-rain', artist:'Creedence Clearwater Revival', title:'Have You Ever Seen the Rain?', album:'the-navies', duration:157.824, lyrics:'lyrics/the-navies/have-you-ever-seen-the-rain.lrc' },
+    { file:'the-navies/the-final-countdown-reprise', artist:'Europe', title:'The Final Countdown (Reprise)', album:'the-navies', duration:94.368, lyrics:'lyrics/the-navies/the-final-countdown-reprise.lrc' },
+    { file:'cor-band/billie-jean', artist:'Michael Jackson', title:'Billie Jean', album:'cor-band', duration:294.269, lyrics:'lyrics/cor-band/billie-jean.lrc' },
+    { file:'cor-band/stayin-alive', artist:'Bee Gees', title:'Stayin’ Alive', album:'cor-band', duration:284.709, lyrics:'lyrics/cor-band/stayin-alive.lrc' },
+    { file:'cor-band/mystical-magical', artist:'Benson Boone', title:'Mystical Magical', album:'cor-band', duration:165.773, lyrics:'lyrics/cor-band/mystical-magical.lrc' },
+    { file:'cor-band/texas-hold-em', artist:'Beyoncé', title:'Texas Hold ’Em', album:'cor-band', duration:233.535, lyrics:'lyrics/cor-band/texas-hold-em.lrc' },
+    { file:'cor-band/training-season', artist:'Dua Lipa', title:'Training Season', album:'cor-band', duration:209.528, lyrics:'lyrics/cor-band/training-season.lrc' },
+    { file:'cor-band/livin-on-a-prayer', artist:'Bon Jovi', title:'Livin’ On A Prayer', album:'cor-band', duration:288.549, lyrics:'lyrics/cor-band/livin-on-a-prayer.lrc' }
   ];
   const albums = [
     { id:'the-navies', title:'The Navies', artist:'The Navies', cover:'assets/images/musync-cover.png' },
@@ -42,7 +42,7 @@
     prev:'<svg viewBox="0 0 24 24"><path d="m11 6-7 6 7 6V6Zm9 0-7 6 7 6V6Z"/></svg>',
     next:'<svg viewBox="0 0 24 24"><path d="m4 6 7 6-7 6V6Zm9 0 7 6-7 6V6Z"/></svg>',
     volume:'<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4Zm12.2 1.1a3 3 0 0 1 0 3.8m2.6-6.4a6.5 6.5 0 0 1 0 9"/></svg>',
-    expand:'<svg viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5m13 5h5v-5"/></svg>',
+    expand:'<svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4M9 21h6"/></svg>',
     search:'<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/></svg>',
     albums:'<svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg>',
     songs:'<svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="6" cy="18" r="3"/><circle cx="16" cy="16" r="3"/></svg>',
@@ -60,7 +60,7 @@
     <div class="musync-login-gate" hidden><form data-ms-login><span>MUSYNC</span><h1>${copy.memberAccess}</h1><p>${copy.loginCopy}</p><label><span>${copy.username}</span><input name="username" autocomplete="username" autocapitalize="none" required></label><label><span>${copy.password}</span><input name="password" type="password" autocomplete="current-password" required></label><p class="musync-login-error" data-ms-login-error aria-live="polite"></p><button type="submit">${copy.enter}</button></form></div>
     <div class="musync-app" data-ms-app>
       <aside class="musync-player-panel">
-        <div class="musync-cover"><img src="${rootPath}assets/images/musync-cover.png?v=20261111-267" alt="The Navies"></div>
+        <div class="musync-cover"><img src="${rootPath}assets/images/musync-cover.png?v=20261112-282" alt="The Navies"></div>
         <div class="musync-current-copy"><h1><span data-ms-title>The Navies</span></h1><p data-ms-artist>Musync</p></div>
         <div class="musync-timeline"><input data-ms-progress type="range" min="0" max="1000" value="0" aria-label="Progreso"><div><span data-ms-current>0:00</span><span data-ms-duration>0:00</span></div></div>
         <div class="musync-controls">
@@ -108,7 +108,7 @@
       <button class="musync-expanded-back" type="button" aria-label="${copy.back}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v6H3M15 3v6h6M9 21v-6H3m12 6v-6h6"/></svg></button>
       <div class="musync-expanded-grid">
         <div class="musync-expanded-player">
-          <img src="${rootPath}assets/images/musync-cover.png?v=20261111-267" alt="The Navies"><div class="musync-full-title-row"><h2><span data-ms-full-title>The Navies</span></h2><div><button data-ms-full-favorite type="button" aria-label="${copy.addFavorite}">♡</button><button data-ms-full-list type="button" aria-label="${copy.addList}">＋</button></div></div><p data-ms-full-artist>Musync</p>
+          <img src="${rootPath}assets/images/musync-cover.png?v=20261112-282" alt="The Navies"><div class="musync-full-title-row"><h2><span data-ms-full-title>The Navies</span></h2><div><button data-ms-full-favorite type="button" aria-label="${copy.addFavorite}">♡</button><button data-ms-full-list type="button" aria-label="${copy.addList}">＋</button></div></div><p data-ms-full-artist>Musync</p>
           <div class="musync-full-timeline"><input data-ms-full-progress type="range" min="0" max="1000" value="0" aria-label="Progreso"><div><span data-ms-full-current>0:00</span><span data-ms-full-duration>0:00</span></div></div>
           <div class="musync-full-controls">
             <button data-ms-full-shuffle type="button" aria-label="${copy.shuffle}">⇄</button>
@@ -164,9 +164,10 @@
   let lyricsDetached = false;
   let lyricsAutoScrolling = false;
   let lyricsAutoScrollTimer;
+  let seekLyricsFrame;
   let renderedView = '';
   let renderedPlaylist = '';
-  const source = (track) => `${rootPath}audios/${track.file}.mp3?v=20261111-267`;
+  const source = (track) => `${rootPath}audios/${track.file}.mp3?v=20261112-282`;
   const saveUi = () => localStorage.setItem(`the-navies-musync-ui-${memberKey()}`, JSON.stringify({ view, selectedAlbum, selectedPlaylist }));
   function restoreUi() {
     uiState=loadUi();
@@ -235,7 +236,7 @@
     const queueControls = view === 'queue' ? `<div class="musync-queue-actions"><button data-ms-move="up" data-position="${position}" aria-label="Subir">↑</button><button data-ms-move="down" data-position="${position}" aria-label="Bajar">↓</button></div>` : '';
     if (songsTable) return `<article class="musync-track is-song-table${index === current ? ' is-active' : ''}" data-ms-track="${index}">
       <button class="musync-track-play" data-ms-play="${index}" type="button"><span>${String(position+1).padStart(2,'0')}</span>${svg.play}</button>
-      <img class="musync-track-art" src="${rootPath}${coverFor(track)}?v=20261111-267" alt="">
+      <img class="musync-track-art" src="${rootPath}${coverFor(track)}?v=20261112-282" alt="">
       <button class="musync-table-cell musync-table-title" data-ms-play="${index}" type="button">${escape(track.title)}</button>
       <button class="musync-table-cell" data-ms-play="${index}" type="button">${escape(track.artist)}</button>
       <button class="musync-table-cell" data-ms-play="${index}" type="button">${escape(albumFor(track).title)}</button>
@@ -243,7 +244,7 @@
     </article>`;
     return `<article class="musync-track${index === current ? ' is-active' : ''}${albumDetail?' is-album-track':''}${songsTable?' is-song-table':''}" data-ms-track="${index}">
       <button class="musync-track-play" data-ms-play="${index}" type="button"><span>${String(position+1).padStart(2,'0')}</span>${svg.play}</button>
-      ${albumDetail?'':`<img class="musync-track-art" src="${rootPath}${coverFor(track)}?v=20261111-267" alt="">`}
+      ${albumDetail?'':`<img class="musync-track-art" src="${rootPath}${coverFor(track)}?v=20261112-282" alt="">`}
       <button class="musync-track-copy" data-ms-play="${index}" type="button"><strong>${escape(track.title)}</strong>${songsTable?`<small class="musync-table-artist">${escape(track.artist)}</small><small class="musync-table-album">${escape(albumFor(track).title)}</small>`:`<small>${escape(track.artist)}</small>`}</button>
       ${queueControls}<button class="musync-track-more" data-ms-track-menu="${index}" type="button" aria-label="Más opciones"><i></i><i></i><i></i></button>
     </article>`;
@@ -266,7 +267,7 @@
     $('[data-ms-queue-count]').textContent = state.queue.length;
     $('.musync-content').classList.toggle('is-playlists', view === 'playlists');
     albumsHost.hidden = !['album','album-detail'].includes(view);
-    albumsHost.innerHTML = view === 'album' ? albums.map(album=>{const count=tracks.filter(track=>track.album===album.id).length;const isCurrent=current>=0&&tracks[current].album===album.id;return album.comingSoon?`<article class="musync-album-card is-coming"><span class="musync-album-placeholder"><b>CC</b></span><span><small>${copy.comingSoon}</small><strong>${escape(album.title)}</strong><em>${copy.comingSoon}</em></span></article>`:`<button class="musync-album-card" data-ms-open-album="${album.id}" type="button"><img src="${rootPath}${album.cover}?v=20261111-267" alt="${escape(album.title)}"><span><small data-ms-album-playing="${album.id}" ${isCurrent?'':'hidden'}>${copy.currentAlbum}</small><strong>${escape(album.title)}</strong><em>${count} ${copy.songs.toLocaleLowerCase()}</em></span></button>`;}).join('') : view === 'album-detail' ? `<section class="musync-album-detail"><button class="musync-album-back" data-ms-back-albums type="button" aria-label="${copy.backAlbums}">← <span>${copy.backAlbums}</span></button><img src="${rootPath}${selectedAlbumData.cover}?v=20261111-267" alt="${escape(selectedAlbumData.title)}"><div><small>${copy.album}</small><h4>${escape(selectedAlbumData.title)}</h4><p>${escape(selectedAlbumData.artist)} · ${tracks.filter(track=>track.album===selectedAlbum).length} ${copy.songs.toLocaleLowerCase()}</p></div></section>` : '';
+    albumsHost.innerHTML = view === 'album' ? albums.map(album=>{const count=tracks.filter(track=>track.album===album.id).length;const isCurrent=current>=0&&tracks[current].album===album.id;return album.comingSoon?`<article class="musync-album-card is-coming"><span class="musync-album-placeholder"><b>CC</b></span><span><small>${copy.comingSoon}</small><strong>${escape(album.title)}</strong><em>${copy.comingSoon}</em></span></article>`:`<button class="musync-album-card" data-ms-open-album="${album.id}" type="button"><img src="${rootPath}${album.cover}?v=20261112-282" alt="${escape(album.title)}"><span><small data-ms-album-playing="${album.id}" ${isCurrent?'':'hidden'}>${copy.currentAlbum}</small><strong>${escape(album.title)}</strong><em>${count} ${copy.songs.toLocaleLowerCase()}</em></span></button>`;}).join('') : view === 'album-detail' ? `<section class="musync-album-detail"><button class="musync-album-back" data-ms-back-albums type="button" aria-label="${copy.backAlbums}">← <span>${copy.backAlbums}</span></button><img src="${rootPath}${selectedAlbumData.cover}?v=20261112-282" alt="${escape(selectedAlbumData.title)}"><div><small>${copy.album}</small><h4>${escape(selectedAlbumData.title)}</h4><p>${escape(selectedAlbumData.artist)} · ${tracks.filter(track=>track.album===selectedAlbum).length} ${copy.songs.toLocaleLowerCase()}</p></div></section>` : '';
     playlistsHost.hidden = view !== 'playlists';
     if (view === 'playlists') {
       const names = Object.keys(state.playlists);
@@ -310,7 +311,7 @@
     $('[data-ms-full-duration]').textContent = track ? time(Number.isFinite(audio.duration) ? audio.duration : track.duration) : '0:00';
     const playing = current >= 0 && !audio.paused;
     page.querySelectorAll('[data-ms-album-playing]').forEach(label=>{label.hidden=current<0||label.dataset.msAlbumPlaying!==track?.album;});
-    const cover = track ? `${rootPath}${coverFor(track)}?v=20261111-267` : `${rootPath}assets/images/musync-cover.png?v=20261111-267`;
+    const cover = track ? `${rootPath}${coverFor(track)}?v=20261112-282` : `${rootPath}assets/images/musync-cover.png?v=20261112-282`;
     const sideCover = $('.musync-cover img'); if(sideCover)sideCover.src=cover;
     const fullCover = $('.musync-expanded-player > img'); if(fullCover)fullCover.src=cover;
     $('[data-ms-toggle]').innerHTML = playing ? svg.pause : svg.play;
@@ -400,13 +401,14 @@
   }
   async function loadLyrics() {
     const track = tracks[current];
+    $('.musync-chord-toggle').hidden = !track?.hasChords;
     lyricLines = [];
     lyricsDetached = false;
     lyricsHost.classList.remove('is-manual');
     $('[data-ms-resync]').hidden = true;
     if (!track?.lyrics) { lyricsHost.innerHTML = `<p class="musync-no-lyrics">${copy.noLyrics}</p>`; return; }
     try {
-      const text = await fetch(`${rootPath}${track.lyrics}?v=20261111-267`, {cache:'force-cache'}).then(response => response.text());
+      const text = await fetch(`${rootPath}${track.lyrics}?v=20261112-282`, {cache:'force-cache'}).then(response => response.text());
       lyricLines = text.split(/\r?\n/).map(line => {
         const match = line.match(/^\[(?:(\d+):)?(\d+):(\d+(?:\.\d+)?)\]\s*(.*)$/);
         return match ? { time:Number(match[1]||0)*3600+Number(match[2])*60+Number(match[3]), text:match[4] } : null;
@@ -425,7 +427,7 @@
       lyricsAutoScrolling = true;
       clearTimeout(lyricsAutoScrollTimer);
       lyricsHost.scrollTo({ top:0, behavior:'smooth' });
-      lyricsAutoScrollTimer = setTimeout(()=>{ lyricsAutoScrolling=false; },520);
+      lyricsAutoScrollTimer = setTimeout(()=>{ lyricsAutoScrolling=false; },900);
       return;
     }
     if (target && (force || (!lyricsDetached && expanded.dataset.lyricActive !== String(active)))) {
@@ -434,7 +436,7 @@
       lyricsAutoScrolling = true;
       clearTimeout(lyricsAutoScrollTimer);
       lyricsHost.scrollTo({ top:Math.max(0,targetTop), behavior:'smooth' });
-      lyricsAutoScrollTimer = setTimeout(()=>{ lyricsAutoScrolling=false; },520);
+      lyricsAutoScrollTimer = setTimeout(()=>{ lyricsAutoScrolling=false; },900);
     }
   }
   function resetLyricsToPlayback() {
@@ -502,10 +504,30 @@
     if (currentListButton) { openCurrentPlaylistMenu(currentListButton); return; }
     const fullListButton = event.target.closest('[data-ms-full-list]');
     if (fullListButton) { openCurrentPlaylistMenu(fullListButton); return; }
-    if (event.target.closest('.musync-expand')) { lyricsDetached=false;lyricsHost.classList.remove('is-manual');$('[data-ms-resync]').hidden=true;expanded.hidden=false; document.body.classList.add('musync-expanded-open'); loadLyrics(); return; }
+    if (event.target.closest('.musync-expand')) {
+      lyricsDetached=false;
+      lyricsHost.classList.remove('is-manual');
+      $('[data-ms-resync]').hidden=true;
+      expanded.hidden=false;
+      document.body.classList.add('musync-expanded-open');
+      loadLyrics().then(()=>resetLyricsToPlayback());
+      requestAnimationFrame(syncPlayer);
+      return;
+    }
     if (event.target.closest('.musync-expanded-back')) { expanded.classList.add('is-closing'); setTimeout(()=>{expanded.hidden=true;expanded.classList.remove('is-closing');document.body.classList.remove('musync-expanded-open');},260); return; }
     const lyric = event.target.closest('[data-ms-lyric]');
-    if (lyric) { lyricsDetached=false;lyricsHost.classList.remove('is-manual');$('[data-ms-resync]').hidden=true;audio.currentTime=lyricLines[Number(lyric.dataset.msLyric)]?.time||0; if(audio.paused) audio.play().catch(()=>{});syncLyrics(true);return; }
+    if (lyric) {
+      const targetTime=lyricLines[Number(lyric.dataset.msLyric)]?.time;
+      if(!Number.isFinite(targetTime))return;
+      lyricsDetached=false;
+      lyricsHost.classList.remove('is-manual');
+      $('[data-ms-resync]').hidden=true;
+      expanded.dataset.lyricActive='';
+      audio.addEventListener('seeked',()=>{syncLyrics(true);persistPlaybackPosition();},{once:true});
+      audio.currentTime=Math.max(0,Math.min(targetTime,Number.isFinite(audio.duration)?audio.duration:targetTime));
+      if(audio.paused)audio.play().catch(()=>{});
+      return;
+    }
     if (!event.target.closest('[data-ms-menu]')) menu.hidden=true;
   });
   menu.addEventListener('click', event => {
@@ -567,6 +589,15 @@
     else play(visible[0]);
   }
   $('[data-ms-toggle]').addEventListener('click',togglePlaybackForView);
+  window.addEventListener('keydown',event=>{
+    if(event.key==='Escape'&&!expanded.hidden&&!listDialog.open&&!confirmDialog.open){event.preventDefault();$('.musync-expanded-back').click();return;}
+    if(event.code!=='Space'||event.repeat||page.hidden||$('[data-ms-app]').hidden)return;
+    if(event.target instanceof Element&&event.target.closest('input,textarea,select,button,[contenteditable="true"]'))return;
+    if(listDialog.open||confirmDialog.open)return;
+    event.preventDefault();
+    if(current>=0){audio.paused?audio.play().catch(()=>{}):audio.pause();return;}
+    togglePlaybackForView();
+  },{capture:true});
   $('[data-ms-prev]').addEventListener('click',previous);
   $('[data-ms-next]').addEventListener('click',next);
   $('[data-ms-shuffle]').addEventListener('click',()=>{state.shuffle=!state.shuffle;shufflePool=[];save();syncPlayer();});
@@ -576,7 +607,7 @@
   function setVolume(value){audio.volume=Number(value);state.volume=audio.volume;volume.value=String(value);$('[data-ms-full-volume]').value=String(value);paintRange(volume,audio.volume);paintRange($('[data-ms-full-volume]'),audio.volume);save();}
   volume.addEventListener('input',()=>setVolume(volume.value));
   $('[data-ms-full-volume]').addEventListener('input',()=>setVolume($('[data-ms-full-volume]').value));
-  progress.addEventListener('input',()=>{if(current<0)return;const duration=Number.isFinite(audio.duration)?audio.duration:tracks[current].duration;audio.currentTime=Number(progress.value)/1000*duration;});
+  progress.addEventListener('input',()=>seekFrom(progress));
   $('[data-ms-chords]').checked=state.showChords;
   $('[data-ms-chords]').addEventListener('change',event=>{
     state.showChords=event.target.checked;
@@ -591,7 +622,20 @@
   lyricsHost.addEventListener('wheel',detachLyrics,{passive:true});
   lyricsHost.addEventListener('scroll',()=>{if(!lyricsAutoScrolling)detachLyrics();},{passive:true});
   $('[data-ms-resync]').addEventListener('click',()=>{lyricsDetached=false;lyricsHost.classList.remove('is-manual');$('[data-ms-resync]').hidden=true;syncLyrics(true);});
-  function seekFrom(input){if(current<0)return;const duration=Number.isFinite(audio.duration)?audio.duration:tracks[current].duration;audio.currentTime=Number(input.value)/1000*duration;}
+  function seekFrom(input){
+    if(current<0)return;
+    const duration=Number.isFinite(audio.duration)?audio.duration:tracks[current].duration;
+    if(!Number.isFinite(duration)||duration<=0)return;
+    lyricsDetached=false;
+    lyricsAutoScrolling=true;
+    lyricsHost.classList.remove('is-manual');
+    $('[data-ms-resync]').hidden=true;
+    expanded.dataset.lyricActive='';
+    audio.currentTime=Number(input.value)/1000*duration;
+    cancelAnimationFrame(seekLyricsFrame);
+    seekLyricsFrame=requestAnimationFrame(()=>syncLyrics(true));
+    persistPlaybackPosition();
+  }
   $('[data-ms-full-progress]').addEventListener('input',()=>seekFrom($('[data-ms-full-progress]')));
   let lastPositionSave=0;
   audio.addEventListener('timeupdate',()=>{const duration=Number.isFinite(audio.duration)?audio.duration:tracks[current]?.duration||0;const value=duration?String(Math.round(audio.currentTime/duration*1000)):'0';const ratio=duration?audio.currentTime/duration:0;$('[data-ms-current]').textContent=time(audio.currentTime);$('[data-ms-full-current]').textContent=time(audio.currentTime);progress.value=value;$('[data-ms-full-progress]').value=value;paintRange(progress,ratio);paintRange($('[data-ms-full-progress]'),ratio);syncLyrics();if(current>=0&&Date.now()-lastPositionSave>3000){persistPlaybackPosition();lastPositionSave=Date.now();}});
