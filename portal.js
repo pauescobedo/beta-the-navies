@@ -99,10 +99,10 @@ const scoreLibrary = {
 
 const auxiliarySongIds = new Set(Object.keys(scoreLibrary).filter((id) => id.includes('/')));
 const ensembleCopies = {
-  es:{ strings:'Conjunt de Cordes' }, ca:{ strings:'Conjunt de Cordes' }, en:{ strings:'Conjunt de Cordes' }, fr:{ strings:'Conjunt de Cordes' }, it:{ strings:'Conjunt de Cordes' }
+  es:{ strings:'Conjunto de Cuerdas' }, ca:{ strings:'Conjunt de Cordes' }, en:{ strings:'String Ensemble' }, fr:{ strings:'Ensemble à cordes' }, it:{ strings:'Ensemble d’archi' }
 };
 const ensembleCopy = ensembleCopies[portalLanguage] || ensembleCopies.es;
-const editorEnsembleNames = { 'the-navies':'The Navies', 'cor-band':'Cor-Band', strings:'Conjunt de Cordes' };
+const editorEnsembleNames = { 'the-navies':'The Navies', 'cor-band':'Cor-Band', strings:ensembleCopy.strings };
 const repertoireTitle = document.querySelector('.repertoire-card .card-heading h3');
 if (repertoireTitle) repertoireTitle.dataset.concertTitle = repertoireTitle.textContent.trim();
 const ensembleContent = {
@@ -611,7 +611,7 @@ contentEditor.innerHTML = `
         <div class="editor-section-head"><div><span>00</span><h3>${editorText.ensembleEditing}</h3><p>${editorText.ensembleEditingCopy}</p></div></div>
         <div class="editor-ensemble-picker">
           <button class="editor-ensemble-toggle" type="button" aria-expanded="false"><i aria-hidden="true"></i><span data-editor-ensemble-current>The Navies</span></button>
-          <div class="editor-ensemble-menu" aria-hidden="true" inert><button type="button" data-editor-ensemble="the-navies">The Navies</button><button type="button" data-editor-ensemble="cor-band">Cor-Band</button><button type="button" data-editor-ensemble="strings">Conjunt de Cordes</button></div>
+          <div class="editor-ensemble-menu" aria-hidden="true" inert><button type="button" data-editor-ensemble="the-navies">The Navies</button><button type="button" data-editor-ensemble="cor-band">Cor-Band</button><button type="button" data-editor-ensemble="strings">${ensembleCopy.strings}</button></div>
         </div>
       </section>
       <section class="editor-section">
@@ -917,11 +917,12 @@ function userEditorRow(user = {}) {
   row.append(field(editorText.username, 'username', user.username, 'text', { maxlength:'40', required:'', autocapitalize:'none' }), field(editorText.displayName, 'name', user.name, 'text', { maxlength:'80', required:'' }), passwordField);
   const permissions = document.createElement('div');
   permissions.className = 'editor-user-access';
+  const compactAccessLabels = { 'the-navies':'Navies', 'cor-band':'Cor-Band', strings:portalLanguage === 'ca' ? 'Cordes' : portalLanguage === 'en' ? 'Strings' : portalLanguage === 'fr' ? 'Cordes' : portalLanguage === 'it' ? 'Archi' : 'Cuerdas' };
   [['the-navies',editorText.accessNavies],['cor-band',editorText.accessCorBand],['strings',editorText.accessStrings]].forEach(([value, label]) => {
     const option = document.createElement('label');
     const input = document.createElement('input');
     input.type = 'checkbox'; input.name = 'access'; input.value = value; input.checked = user.access?.includes(value);
-    const text = document.createElement('span'); text.textContent = label;
+    const text = document.createElement('span'); text.textContent = compactAccessLabels[value]; text.title = label;
     option.append(input, text); permissions.append(option);
   });
   row.append(permissions, rowActions('user'));

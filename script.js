@@ -293,25 +293,31 @@ async function playPreparedCountdownTrack() {
   resumeNaviesAudio();
   setAudioLevel(countdownAudio, 0);
   const intendedStart = countdownTracks[countdownTrackIndex].start;
-  const isFirstPlay = !countdownHasPlayed;
   const trackIndexAtPlay = countdownTrackIndex;
   const enforceStartPoint = () => {
-    if (!isFirstPlay || countdownLeaving || countdownTrackIndex !== trackIndexAtPlay) return;
+    if (countdownLeaving || countdownTrackIndex !== trackIndexAtPlay) return;
     try {
-      if (countdownAudio.currentTime < intendedStart - 1) countdownAudio.currentTime = intendedStart;
-      else if (!countdownStartConfirmed) {
-        countdownStartConfirmed = true;
-      }
+      if (Math.abs(countdownAudio.currentTime - intendedStart) > .65) countdownAudio.currentTime = intendedStart;
     } catch (error) {}
   };
   enforceStartPoint();
   try {
     await countdownAudio.play();
     enforceStartPoint();
-    window.setTimeout(enforceStartPoint, 80);
-    window.setTimeout(enforceStartPoint, 260);
-    window.setTimeout(enforceStartPoint, 700);
-    window.setTimeout(enforceStartPoint, 1500);
+    await new Promise((resolve) => {
+      let settled = false;
+      const finish = () => {
+        if (settled) return;
+        settled = true;
+        countdownAudio.removeEventListener('seeked', finish);
+        enforceStartPoint();
+        resolve();
+      };
+      countdownAudio.addEventListener('seeked', finish, { once:true });
+      enforceStartPoint();
+      window.setTimeout(finish, 420);
+    });
+    if (countdownLeaving || countdownTrackIndex !== trackIndexAtPlay) return false;
     countdownHasPlayed = true;
     countdownStartConfirmed = true;
     if (!countdownFadeInStarted) {
@@ -1797,4 +1803,9 @@ accountDialog.querySelector('.account-login-form').addEventListener('submit', as
 });
 accountDialog.querySelector('.account-logout').addEventListener('click', window.naviesLogout);
 updateAccountUI();
-window.naviesMemberName = (member) => navyMemberNames[member] || member;
+window.naviesMemberName = (member) => {
+  if (member === 'conjuntcordes') {
+    return ({ es:'Conjunto de Cuerdas', ca:'Conjunt de Cordes', en:'String Ensemble', fr:'Ensemble à cordes', it:'Ensemble d’archi' })[currentLanguage] || 'Conjunto de Cuerdas';
+  }
+  return navyMemberNames[member] || member;
+};
