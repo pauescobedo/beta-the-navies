@@ -48,7 +48,8 @@ let localizedSpaceTitle = 'Espacio Navy';
 const routeDetails = {
   home: { hash:'#inicio', title:'The Navies' },
   'navies-live': { hash:'#navies-live', title:'Navies Live' },
-  'espacio-navy': { hash:'#navy', title:'Espacio Navy' }
+  'espacio-navy': { hash:'#navy', title:'Espacio Navy' },
+  musync: { hash:'#musync', title:'Musync' }
 };
 
 const countdownLanding = document.querySelector('#countdown-landing');
@@ -525,6 +526,7 @@ if (countdownLanding) {
 
 function routeFromHash() {
   if (location.hash === '#navies-live') return 'navies-live';
+  if (location.hash === '#musync') return 'musync';
   if (location.hash === '#navy' || location.hash === '#espacio-navy' || location.hash === '#edicion' || location.hash === '#edicion-del-sitio') return 'espacio-navy';
   return 'home';
 }
@@ -562,6 +564,12 @@ function showPage(route, updateHistory = true, editorLinkActive = false) {
   navigation.querySelector('.content-editor-trigger')?.classList.toggle('active', editorLinkActive);
   document.body.classList.toggle('route-media', selectedRoute === 'navies-live');
   document.body.classList.toggle('route-space', selectedRoute === 'espacio-navy');
+  document.body.classList.toggle('route-musync', selectedRoute === 'musync');
+  const headerBrand = document.querySelector('.site-header .brand');
+  if (headerBrand) {
+    headerBrand.innerHTML = selectedRoute === 'musync' ? 'MUSYNC<span aria-hidden="true">.</span>' : 'THE NAVIES<span aria-hidden="true">.</span>';
+    headerBrand.setAttribute('aria-label', selectedRoute === 'musync' ? 'Musync' : 'The Navies, inicio');
+  }
   document.title = selectedRoute === 'espacio-navy' ? localizedSpaceTitle : routeDetails[selectedRoute].title;
   if (updateHistory) history.pushState({ route:selectedRoute }, '', routeDetails[selectedRoute].hash);
   window.scrollTo({ top:0, left:0, behavior:'instant' });
@@ -586,6 +594,10 @@ window.naviesShowEditorHost = () => {
   showPage('espacio-navy', false, true);
   setEditorAddress(false);
 };
+window.naviesRegisterPageView = (view) => {
+  if (view && !pageViews.includes(view)) pageViews.push(view);
+};
+window.naviesOpenRoute = (route, updateHistory = true) => showPage(routeDetails[route] ? route : 'home', updateHistory, false);
 window.naviesMarkEditorRoute = () => setEditorAddress(false);
 window.naviesRestoreEditorRoute = (route) => showPage(routeDetails[route] ? route : 'home', true, false);
 

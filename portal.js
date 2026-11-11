@@ -495,7 +495,16 @@ const ensembleSwitcher = document.createElement('div');
 ensembleSwitcher.className = 'ensemble-switcher';
 ensembleSwitcher.setAttribute('aria-label', ({ es:'Seleccionar formación', ca:'Seleccionar formació', en:'Select ensemble', fr:'Sélectionner la formation', it:'Seleziona formazione' })[portalLanguage] || 'Seleccionar formación');
 ensembleSwitcher.innerHTML = `<button type="button" data-ensemble="the-navies" aria-pressed="true">The Navies</button><button type="button" data-ensemble="cor-band" aria-pressed="false">Cor-Band</button><button type="button" data-ensemble="strings" aria-pressed="false">${ensembleCopy.strings}</button>`;
-dashboardBar?.append(ensembleSwitcher);
+const dashboardTools = document.createElement('div');
+dashboardTools.className = 'dashboard-tools';
+const musycLaunch = document.createElement('button');
+musycLaunch.className = 'musyc-launch';
+musycLaunch.type = 'button';
+musycLaunch.setAttribute('aria-label', 'Musync');
+musycLaunch.title = 'Musync';
+musycLaunch.innerHTML = '<svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11"/><circle cx="16" cy="16" r="3"/><path d="M16 5a11 11 0 0 1 11 11M16 27A11 11 0 0 1 5 16"/></svg>';
+dashboardTools.append(musycLaunch, ensembleSwitcher);
+dashboardBar?.append(dashboardTools);
 ensembleSwitcher.addEventListener('click', (event) => {
   const button = event.target.closest('[data-ensemble]');
   if (!button || button.dataset.ensemble === selectedEnsemble) return;
@@ -561,6 +570,363 @@ function closeAudioDialog() {
 }
 document.querySelector('.audio-dialog-close').addEventListener('click', closeAudioDialog);
 audioDialog.addEventListener('click', (event) => { if (event.target === audioDialog) closeAudioDialog(); });
+
+const musycCopy = ({
+  es:{ library:'Tu biblioteca', album:'Álbum de The Navies', back:'Volver a Espacio Navy', play:'Reproducir', pause:'Pausar', previous:'Anterior', next:'Siguiente', volume:'Volumen', search:'Buscar canciones y listas', favorites:'Favoritos', playlists:'Listas', queue:'Cola', create:'Nueva lista', renamePlaylist:'Renombrar lista', playlistName:'Nombre de la lista', save:'Guardar', cancel:'Cancelar', addFavorite:'Añadir a favoritos', removeFavorite:'Quitar de favoritos', addQueue:'Añadir a la cola', addPlaylist:'Añadir a una lista', removePlaylist:'Quitar de la lista', deletePlaylist:'Eliminar lista', empty:'Todavía no hay canciones aquí.' },
+  ca:{ library:'La teva biblioteca', album:'Àlbum de The Navies', back:'Tornar a Espai Navy', play:'Reproduir', pause:'Pausa', previous:'Anterior', next:'Següent', volume:'Volum', search:'Cercar cançons i llistes', favorites:'Preferides', playlists:'Llistes', queue:'Cua', create:'Nova llista', renamePlaylist:'Canviar el nom', playlistName:'Nom de la llista', save:'Desar', cancel:'Cancel·lar', addFavorite:'Afegir a preferides', removeFavorite:'Treure de preferides', addQueue:'Afegir a la cua', addPlaylist:'Afegir a una llista', removePlaylist:'Treure de la llista', deletePlaylist:'Eliminar llista', empty:'Encara no hi ha cançons aquí.' },
+  en:{ library:'Your library', album:'The Navies album', back:'Back to Navy Space', play:'Play', pause:'Pause', previous:'Previous', next:'Next', volume:'Volume', search:'Search songs and playlists', favorites:'Favorites', playlists:'Playlists', queue:'Queue', create:'New playlist', renamePlaylist:'Rename playlist', playlistName:'Playlist name', save:'Save', cancel:'Cancel', addFavorite:'Add to favorites', removeFavorite:'Remove from favorites', addQueue:'Add to queue', addPlaylist:'Add to playlist', removePlaylist:'Remove from playlist', deletePlaylist:'Delete playlist', empty:'There are no songs here yet.' },
+  fr:{ library:'Votre bibliothèque', album:'Album de The Navies', back:'Retour à l’Espace Navy', play:'Lecture', pause:'Pause', previous:'Précédent', next:'Suivant', volume:'Volume', search:'Rechercher chansons et playlists', favorites:'Favoris', playlists:'Playlists', queue:'File', create:'Nouvelle playlist', renamePlaylist:'Renommer la playlist', playlistName:'Nom de la playlist', save:'Enregistrer', cancel:'Annuler', addFavorite:'Ajouter aux favoris', removeFavorite:'Retirer des favoris', addQueue:'Ajouter à la file', addPlaylist:'Ajouter à une playlist', removePlaylist:'Retirer de la playlist', deletePlaylist:'Supprimer la playlist', empty:'Il n’y a pas encore de chansons ici.' },
+  it:{ library:'La tua libreria', album:'Album dei The Navies', back:'Torna a Spazio Navy', play:'Riproduci', pause:'Pausa', previous:'Precedente', next:'Successivo', volume:'Volume', search:'Cerca brani e playlist', favorites:'Preferiti', playlists:'Playlist', queue:'Coda', create:'Nuova playlist', renamePlaylist:'Rinomina playlist', playlistName:'Nome della playlist', save:'Salva', cancel:'Annulla', addFavorite:'Aggiungi ai preferiti', removeFavorite:'Rimuovi dai preferiti', addQueue:'Aggiungi alla coda', addPlaylist:'Aggiungi a una playlist', removePlaylist:'Rimuovi dalla playlist', deletePlaylist:'Elimina playlist', empty:'Non ci sono ancora brani qui.' }
+})[portalLanguage] || null;
+const musycTracks = [
+  { file:'shake-it-off', artist:'Taylor Swift', title:'Shake It Off', duration:219.246, buffered:true },
+  { file:'baby-one-more-time', artist:'Britney Spears', title:'…Baby One More Time', duration:211.096, buffered:true },
+  { file:'sweet-caroline', artist:'Neil Diamond', title:'Sweet Caroline', duration:203.64, buffered:true },
+  { file:'dont-look-back-in-anger', artist:'Oasis', title:"Don’t Look Back in Anger", duration:289.62, buffered:true },
+  { file:'the-final-countdown', artist:'Europe', title:'The Final Countdown', duration:311.304, buffered:true },
+  { file:'have-you-ever-seen-the-rain', artist:'Creedence Clearwater Revival', title:'Have You Ever Seen the Rain?', duration:157.824, buffered:true },
+  { file:'the-final-countdown-reprise', artist:'Europe', title:'The Final Countdown (Reprise)', duration:94.368, buffered:true }
+];
+const musycPage = document.createElement('section');
+musycPage.className = 'page-view subpage musyc-page';
+musycPage.id = 'page-musync';
+musycPage.dataset.pageView = 'musync';
+musycPage.hidden = true;
+musycPage.innerHTML = `
+  <div class="musyc-shell">
+    <div class="musyc-layout">
+      <article class="musyc-now reveal">
+        <div class="musyc-cover"><img src="${window.__naviesForcedLanguage ? '../' : ''}The%20Navies%20Online.png?v=20261111-230" alt="The Navies"></div>
+        <div class="musyc-now-copy"><h2 data-musyc-title></h2><p data-musyc-artist></p></div>
+        <div class="musyc-progress"><span data-musyc-current>0:00</span><input data-musyc-progress type="range" min="0" max="1000" value="0" aria-label="Progreso"><span data-musyc-duration>0:00</span></div>
+        <div class="musyc-controls">
+          <button type="button" data-musyc-action="previous" aria-label="${musycCopy.previous}"><svg viewBox="0 0 24 24"><path d="m11 6-7 6 7 6V6Zm9 0-7 6 7 6V6Z"/></svg></button>
+          <button class="musyc-main-control" type="button" data-musyc-action="toggle" aria-label="${musycCopy.play}"><svg class="musyc-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5Z"/></svg><svg class="musyc-pause" viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+          <button type="button" data-musyc-action="next" aria-label="${musycCopy.next}"><svg viewBox="0 0 24 24"><path d="m4 6 7 6-7 6V6Zm9 0 7 6-7 6V6Z"/></svg></button>
+        </div>
+        <label class="musyc-volume"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Zm12.2 1.1a3 3 0 0 1 0 3.8m2.6-6.4a6.5 6.5 0 0 1 0 9"/></svg><span class="sr-only">${musycCopy.volume}</span><input data-musyc-volume type="range" min="0" max="1" step="0.01" value="1"></label>
+        <audio class="musyc-audio" data-musyc-deck="a" preload="auto" playsinline></audio>
+        <audio class="musyc-audio" data-musyc-deck="b" preload="auto" playsinline></audio>
+      </article>
+      <section class="musyc-library musyc-album reveal"><div class="musyc-library-head"><p class="eyebrow light"><span></span>THE NAVIES</p><h2>${musycCopy.album}</h2></div><div class="musyc-track-list"></div></section>
+      <aside class="musyc-personal reveal">
+        <div class="musyc-personal-head"><p class="eyebrow light"><span></span>MUSYNC</p><h2>${musycCopy.library}</h2></div>
+        <label class="musyc-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/></svg><input type="search" data-musyc-search placeholder="${musycCopy.search}" autocomplete="off"></label>
+        <div class="musyc-library-tabs"><button type="button" data-musyc-view="lists" aria-pressed="true">♫ ${musycCopy.playlists}</button><button type="button" data-musyc-view="queue" aria-pressed="false">≡ ${musycCopy.queue}</button></div>
+        <div class="musyc-personal-title"><strong>${musycCopy.playlists}</strong><button type="button" data-musyc-create aria-label="${musycCopy.create}">＋</button></div>
+        <div class="musyc-playlist-list"></div>
+        <div class="musyc-personal-tracks"></div>
+      </aside>
+    </div>
+    <dialog class="musyc-playlist-dialog"><form method="dialog"><h2>${musycCopy.create}</h2><input data-musyc-playlist-name placeholder="${musycCopy.playlistName}" maxlength="36" autocomplete="off"><div><button value="cancel">${musycCopy.cancel}</button><button value="default" data-musyc-playlist-save>${musycCopy.save}</button></div></form></dialog>
+    <div class="musyc-track-menu" hidden></div>
+  </div>`;
+document.querySelector('#page-espacio-navy')?.after(musycPage);
+window.naviesRegisterPageView?.(musycPage);
+const musycFooterBack = document.createElement('button');
+musycFooterBack.type = 'button';
+musycFooterBack.className = 'musyc-footer-back';
+musycFooterBack.innerHTML = `<span>←</span>${musycCopy.back}`;
+document.querySelector('footer .season-control')?.prepend(musycFooterBack);
+musycFooterBack.addEventListener('click', () => window.naviesOpenRoute?.('espacio-navy'));
+
+const musycDecks = [...musycPage.querySelectorAll('.musyc-audio')];
+let musycAudio = musycDecks[0];
+let musycStandbyAudio = musycDecks[1];
+const musycTitle = musycPage.querySelector('[data-musyc-title]');
+const musycArtist = musycPage.querySelector('[data-musyc-artist]');
+const musycProgress = musycPage.querySelector('[data-musyc-progress]');
+const musycCurrent = musycPage.querySelector('[data-musyc-current]');
+const musycDuration = musycPage.querySelector('[data-musyc-duration]');
+const musycToggle = musycPage.querySelector('[data-musyc-action="toggle"]');
+const musycList = musycPage.querySelector('.musyc-track-list');
+const musycPersonalTracks = musycPage.querySelector('.musyc-personal-tracks');
+const musycPlaylistList = musycPage.querySelector('.musyc-playlist-list');
+const musycTrackMenu = musycPage.querySelector('.musyc-track-menu');
+const musycPlaylistDialog = musycPage.querySelector('.musyc-playlist-dialog');
+const musycSearch = musycPage.querySelector('[data-musyc-search]');
+let musycIndex = -1;
+let musycChangingTrack = false;
+let musycYieldingToSiteMusic = false;
+const musycSource = (track) => `${window.__naviesForcedLanguage ? '../' : ''}audios/${track.file}.mp3?v=20261111-232`;
+const musycBlobSources = new Map();
+const musycBlobRequests = new Map();
+async function resolvedMusycSource(track) {
+  if (!track.buffered) return musycSource(track);
+  if (musycBlobSources.has(track.file)) return musycBlobSources.get(track.file);
+  if (!musycBlobRequests.has(track.file)) {
+    musycBlobRequests.set(track.file, fetch(musycSource(track), { cache:'force-cache' })
+      .then((response) => {
+        if (!response.ok) throw new Error(`Audio ${response.status}`);
+        return response.blob();
+      })
+      .then((blob) => {
+        const url = URL.createObjectURL(blob);
+        musycBlobSources.set(track.file, url);
+        return url;
+      }));
+  }
+  return musycBlobRequests.get(track.file);
+}
+async function prepareMusycDeck(deck, index) {
+  const track = musycTracks[index];
+  const source = await resolvedMusycSource(track);
+  deck.src = source;
+  deck.dataset.trackIndex = String(index);
+  deck.load();
+}
+const musycTime = (seconds) => Number.isFinite(seconds) ? `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2,'0')}` : '0:00';
+const musycSeekDuration = () => {
+  if (Number.isFinite(musycAudio.duration) && musycAudio.duration > 0) return musycAudio.duration;
+  if (musycAudio.seekable?.length) return musycAudio.seekable.end(musycAudio.seekable.length - 1);
+  return musycTracks[musycIndex]?.duration || 0;
+};
+
+function paintMusycRange(input, ratio) {
+  input.style.setProperty('--range-progress', `${Math.max(0, Math.min(1, ratio)) * 100}%`);
+}
+
+const musycMemberKey = () => window.naviesCurrentMember?.() || 'member';
+const emptyMusycState = () => ({ favorites:[], queue:[], playlists:{}, volume:1 });
+function loadMusycState() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(`the-navies-musync-${musycMemberKey()}`));
+    return { ...emptyMusycState(), ...(parsed || {}), playlists:{ ...(parsed?.playlists || {}) } };
+  } catch (_) { return emptyMusycState(); }
+}
+let musycState = loadMusycState();
+let musycLibraryView = 'lists';
+let musycSelectedPlaylist = '__favorites__';
+function saveMusycState() {
+  localStorage.setItem(`the-navies-musync-${musycMemberKey()}`, JSON.stringify(musycState));
+}
+const escapeMusycText = (value) => String(value).replace(/[&<>"']/g, (character) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[character]);
+function musycTrackMarkup(track, index, compact = false) {
+  return `<div class="musyc-track${compact ? ' is-compact' : ''}" data-musyc-track="${index}">
+    <button class="musyc-track-number" type="button" data-musyc-play="${index}" aria-label="${musycCopy.play} ${track.title}"><span>${String(index + 1).padStart(2,'0')}</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z"/></svg></button>
+    <button class="musyc-track-copy" type="button" data-musyc-play="${index}"><strong>${track.title}</strong><small>${track.artist}</small></button>
+    <button class="musyc-track-more" type="button" data-musyc-menu="${index}" aria-label="Más opciones"><span></span><span></span><span></span></button>
+  </div>`;
+}
+function renderMusycAlbum() {
+  const query = musycSearch.value.trim().toLocaleLowerCase();
+  musycList.innerHTML = musycTracks.map((track,index) => ({track,index})).filter(({track}) => !query || `${track.title} ${track.artist}`.toLocaleLowerCase().includes(query)).map(({track,index}) => musycTrackMarkup(track,index)).join('');
+}
+function syncMusycMarquees() {
+  requestAnimationFrame(() => musycPage.querySelectorAll('.musyc-track-copy strong').forEach((label) => {
+    label.classList.remove('is-scrolling');
+    label.style.removeProperty('--musyc-track-shift');
+    const host = label.parentElement;
+    const overflow = Math.ceil(label.scrollWidth - host.clientWidth);
+    if (overflow > 4) {
+      label.style.setProperty('--musyc-track-shift', `${overflow}px`);
+      label.classList.add('is-scrolling');
+    }
+  }));
+}
+function currentMusycIndexes() {
+  const query = musycSearch.value.trim().toLocaleLowerCase();
+  if (query) return musycTracks.map((track,index) => ({track,index})).filter(({track}) => `${track.title} ${track.artist}`.toLocaleLowerCase().includes(query)).map(({index}) => index);
+  if (musycLibraryView === 'queue') return musycState.queue;
+  if (musycSelectedPlaylist === '__favorites__') return musycState.favorites;
+  return musycState.playlists[musycSelectedPlaylist] || [];
+}
+function renderMusycPersonal() {
+  musycPage.querySelectorAll('[data-musyc-view]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.musycView === musycLibraryView)));
+  const query = musycSearch.value.trim().toLocaleLowerCase();
+  const customLists = Object.keys(musycState.playlists).filter((name) => !query || name.toLocaleLowerCase().includes(query));
+  const favoritesVisible = !query || musycCopy.favorites.toLocaleLowerCase().includes(query);
+  musycPlaylistList.innerHTML = `${favoritesVisible ? `<div class="musyc-playlist-row is-fixed"><button type="button" data-musyc-playlist="__favorites__" class="${musycLibraryView === 'lists' && musycSelectedPlaylist === '__favorites__' ? 'is-active' : ''}"><span>♥</span><strong>${musycCopy.favorites}</strong><small>${musycState.favorites.length}</small></button></div>` : ''}${customLists.map((name) => `<div class="musyc-playlist-row"><button type="button" data-musyc-playlist="${encodeURIComponent(name)}" class="${musycLibraryView === 'lists' && musycSelectedPlaylist === name ? 'is-active' : ''}"><span>♫</span><strong>${escapeMusycText(name)}</strong><small>${musycState.playlists[name].length}</small></button><button class="musyc-playlist-delete" type="button" data-musyc-delete-playlist="${encodeURIComponent(name)}" aria-label="${musycCopy.deletePlaylist}">×</button></div>`).join('')}`;
+  const indexes = currentMusycIndexes();
+  musycPersonalTracks.innerHTML = indexes.length ? indexes.map((index) => musycTrackMarkup(musycTracks[index],index,true)).join('') : `<p class="musyc-empty">${musycCopy.empty}</p>`;
+  syncMusycMarquees();
+}
+function renderMusycCollections() { renderMusycAlbum(); renderMusycPersonal(); syncMusycUI(); syncMusycMarquees(); }
+renderMusycCollections();
+
+function syncMusycUI() {
+  const track = musycTracks[musycIndex];
+  musycTitle.textContent = track.title;
+  musycArtist.textContent = track.artist;
+  musycPage.querySelectorAll('[data-musyc-track]').forEach((button) => button.classList.toggle('is-active', Number(button.dataset.musycTrack) === musycIndex));
+  const playing = !musycAudio.paused;
+  musycToggle.classList.toggle('is-playing', playing);
+  musycToggle.setAttribute('aria-label', playing ? musycCopy.pause : musycCopy.play);
+}
+
+async function playMusyc(index = musycIndex) {
+  musycChangingTrack = true;
+  const nextIndex = (index + musycTracks.length) % musycTracks.length;
+  const outgoingAudio = musycAudio;
+  const incomingAudio = musycStandbyAudio;
+  if (Number(incomingAudio.dataset.trackIndex) !== nextIndex) {
+    await prepareMusycDeck(incomingAudio, nextIndex);
+  }
+  incomingAudio.volume = Number(musycVolume?.value || .55);
+  incomingAudio.currentTime = 0;
+  musycIndex = nextIndex;
+  musycAudio = incomingAudio;
+  musycStandbyAudio = outgoingAudio;
+  musycDuration.textContent = musycTime(musycTracks[musycIndex].duration);
+  syncMusycUI();
+  try {
+    await incomingAudio.play();
+    outgoingAudio.pause();
+    outgoingAudio.currentTime = 0;
+    const preloadIndex = (musycIndex + 1) % musycTracks.length;
+    prepareMusycDeck(musycStandbyAudio, preloadIndex).catch(() => {});
+  } catch (_) {
+    musycAudio = outgoingAudio;
+    musycStandbyAudio = incomingAudio;
+  }
+  musycChangingTrack = false;
+  syncMusycUI();
+}
+
+musycPage.addEventListener('click', (event) => {
+  const playButton = event.target.closest('[data-musyc-play]');
+  if (playButton) {
+    const index = Number(playButton.dataset.musycPlay);
+    if (musycLibraryView === 'queue' && playButton.closest('.musyc-personal')) {
+      const position = musycState.queue.indexOf(index);
+      if (position >= 0) musycState.queue.splice(position,1);
+      saveMusycState(); renderMusycPersonal();
+    }
+    return playMusyc(index);
+  }
+  const menuButton = event.target.closest('[data-musyc-menu]');
+  if (menuButton) {
+    const index = Number(menuButton.dataset.musycMenu);
+    const favorite = musycState.favorites.includes(index);
+    const bounds = menuButton.getBoundingClientRect();
+    musycTrackMenu.innerHTML = `<button type="button" data-musyc-menu-action="favorite" data-index="${index}">${favorite ? musycCopy.removeFavorite : musycCopy.addFavorite}</button><button type="button" data-musyc-menu-action="queue" data-index="${index}">${musycCopy.addQueue}</button>${Object.keys(musycState.playlists).length ? `<span>${musycCopy.addPlaylist}</span>${Object.keys(musycState.playlists).map((name) => { const included = musycState.playlists[name].includes(index); return `<button type="button" data-musyc-menu-action="playlist" data-index="${index}" data-playlist="${encodeURIComponent(name)}">${included ? '−' : '+'} ${escapeMusycText(name)}</button>`; }).join('')}` : ''}`;
+    musycTrackMenu.style.left = `${Math.min(bounds.left, window.innerWidth - 230)}px`;
+    musycTrackMenu.hidden = false;
+    musycTrackMenu.style.top = `${Math.max(12, Math.min(bounds.bottom + 7, window.innerHeight - musycTrackMenu.scrollHeight - 20))}px`;
+    return;
+  }
+  const playlistButton = event.target.closest('[data-musyc-playlist]');
+  if (playlistButton) {
+    musycLibraryView = 'lists';
+    musycSelectedPlaylist = playlistButton.dataset.musycPlaylist === '__favorites__' ? '__favorites__' : decodeURIComponent(playlistButton.dataset.musycPlaylist);
+    renderMusycPersonal();
+    return;
+  }
+  const deletePlaylistButton = event.target.closest('[data-musyc-delete-playlist]');
+  if (deletePlaylistButton) {
+    const name = decodeURIComponent(deletePlaylistButton.dataset.musycDeletePlaylist);
+    delete musycState.playlists[name];
+    if (musycSelectedPlaylist === name) musycSelectedPlaylist = '__favorites__';
+    saveMusycState(); renderMusycPersonal(); return;
+  }
+  if (!event.target.closest('.musyc-track-menu')) musycTrackMenu.hidden = true;
+});
+musycTrackMenu.addEventListener('click', (event) => {
+  const action = event.target.closest('[data-musyc-menu-action]');
+  if (!action) return;
+  const index = Number(action.dataset.index);
+  if (action.dataset.musycMenuAction === 'favorite') musycState.favorites = musycState.favorites.includes(index) ? musycState.favorites.filter((item) => item !== index) : [...musycState.favorites,index];
+  if (action.dataset.musycMenuAction === 'queue') musycState.queue.push(index);
+  if (action.dataset.musycMenuAction === 'playlist') {
+    const name = decodeURIComponent(action.dataset.playlist);
+    musycState.playlists[name] = musycState.playlists[name].includes(index) ? musycState.playlists[name].filter((item) => item !== index) : [...musycState.playlists[name],index];
+  }
+  saveMusycState();
+  musycTrackMenu.hidden = true;
+  renderMusycCollections();
+});
+musycPage.querySelectorAll('[data-musyc-view]').forEach((button) => button.addEventListener('click', () => { musycLibraryView = button.dataset.musycView; if (musycLibraryView === 'lists' && !musycSelectedPlaylist) musycSelectedPlaylist = '__favorites__'; renderMusycPersonal(); }));
+musycSearch.addEventListener('input', renderMusycCollections);
+musycPage.querySelector('[data-musyc-create]').addEventListener('click', () => { musycPlaylistDialog.showModal(); requestAnimationFrame(() => musycPlaylistDialog.querySelector('input').focus()); });
+musycPlaylistDialog.querySelector('[data-musyc-playlist-save]').addEventListener('click', (event) => {
+  const input = musycPlaylistDialog.querySelector('[data-musyc-playlist-name]');
+  const name = input.value.trim();
+  if (!name) { event.preventDefault(); return input.focus(); }
+  if (!musycState.playlists[name]) musycState.playlists[name] = [];
+  saveMusycState(); input.value = ''; musycLibraryView = 'lists'; musycSelectedPlaylist = name; renderMusycPersonal();
+});
+musycPage.querySelector('[data-musyc-action="previous"]').addEventListener('click', () => playMusyc(musycIndex - 1));
+function nextMusycIndex() {
+  if (!musycState.queue.length) return musycIndex + 1;
+  const next = musycState.queue.shift(); saveMusycState(); renderMusycPersonal(); return next;
+}
+musycPage.querySelector('[data-musyc-action="next"]').addEventListener('click', () => playMusyc(nextMusycIndex()));
+musycToggle.addEventListener('click', () => {
+  if (!musycAudio.currentSrc && !musycAudio.src) return playMusyc();
+  if (musycAudio.paused) musycAudio.play().catch(() => {});
+  else musycAudio.pause();
+});
+const musycVolume = musycPage.querySelector('[data-musyc-volume]');
+musycVolume.value = String(Number.isFinite(Number(musycState.volume)) ? musycState.volume : 1);
+musycDecks.forEach((deck) => { deck.volume = Number(musycVolume.value); });
+musycVolume.addEventListener('input', (event) => {
+  musycAudio.volume = Number(event.target.value);
+  musycState.volume = Number(event.target.value);
+  saveMusycState();
+  paintMusycRange(event.target, musycAudio.volume);
+});
+const seekMusyc = () => {
+  const duration = musycSeekDuration();
+  if (!duration) return;
+  const target = (Number(musycProgress.value) / 1000) * duration;
+  musycAudio.currentTime = target;
+  musycCurrent.textContent = musycTime(target);
+  paintMusycRange(musycProgress, Number(musycProgress.value) / 1000);
+};
+musycProgress.addEventListener('input', seekMusyc);
+musycProgress.addEventListener('change', seekMusyc);
+musycDecks.forEach((deck) => {
+  deck.addEventListener('loadedmetadata', () => { if (deck === musycAudio) musycDuration.textContent = musycTime(musycSeekDuration()); });
+  deck.addEventListener('durationchange', () => { if (deck === musycAudio) musycDuration.textContent = musycTime(musycSeekDuration()); });
+  deck.addEventListener('timeupdate', () => {
+    if (deck !== musycAudio) return;
+    musycCurrent.textContent = musycTime(musycAudio.currentTime);
+    const duration = musycSeekDuration();
+    if (duration > 0) {
+      const ratio = musycAudio.currentTime / duration;
+      musycProgress.value = String(Math.round(ratio * 1000));
+      paintMusycRange(musycProgress, ratio);
+    }
+  });
+  deck.addEventListener('play', () => { if (deck === musycAudio) window.naviesPauseSiteMusicForNavyAudio?.(); syncMusycUI(); });
+  deck.addEventListener('pause', () => { if (deck === musycAudio && !musycChangingTrack && !musycYieldingToSiteMusic) window.naviesResumeSiteMusicAfterNavyAudio?.(); syncMusycUI(); });
+  deck.addEventListener('ended', () => { if (deck === musycAudio) playMusyc(nextMusycIndex()); });
+});
+syncMusycUI();
+paintMusycRange(musycProgress, 0);
+paintMusycRange(musycVolume, Number(musycVolume.value));
+
+const stopOriginalNavyAudioForSiteMusic = window.naviesStopNavyAudioForSiteMusic;
+window.naviesStopNavyAudioForSiteMusic = () => {
+  const stoppedOriginal = stopOriginalNavyAudioForSiteMusic?.() === true;
+  if (musycAudio.paused) return stoppedOriginal;
+  musycYieldingToSiteMusic = true;
+  musycAudio.pause();
+  window.setTimeout(() => { musycYieldingToSiteMusic = false; }, 0);
+  return true;
+};
+
+musycLaunch.addEventListener('click', () => {
+  musycTracks.filter((track) => track.buffered).forEach((track) => resolvedMusycSource(track).catch(() => {}));
+  window.naviesOpenRoute?.('musync');
+});
+
+function syncMusyncAccess() {
+  const isLoggedIn = Boolean(window.naviesCurrentMember?.());
+  musycState = loadMusycState();
+  musycVolume.value = String(Number.isFinite(Number(musycState.volume)) ? musycState.volume : 1);
+  musycDecks.forEach((deck) => { deck.volume = Number(musycVolume.value); });
+  paintMusycRange(musycVolume, Number(musycVolume.value));
+  renderMusycCollections();
+  musycLaunch.hidden = !isLoggedIn;
+  if (location.hash !== '#musync') return;
+  requestAnimationFrame(() => window.naviesOpenRoute?.(isLoggedIn ? 'musync' : 'espacio-navy', false));
+}
+window.addEventListener('navies-auth-change', syncMusyncAccess);
+window.addEventListener('navies-route-change', (event) => {
+  if (event.detail?.route !== 'musync' && !musycAudio.paused) musycAudio.pause();
+});
+syncMusyncAccess();
 
 const editContentButton = document.createElement('a');
 editContentButton.className = 'content-editor-trigger';
