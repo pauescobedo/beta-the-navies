@@ -15,15 +15,19 @@
     it:{ songs:'Brani', sort:'Ordina per', sortTitle:'Titolo', sortArtist:'Artista', sortAlbum:'Album', currentAlbum:'Album attuale', comingSoon:'Prossimamente', addCurrentQueue:'Aggiungi alla coda', openQueue:'Apri coda', nothingPlaying:'Nessun brano in riproduzione', memberAccess:'Account Navy', loginCopy:'Accedi con il tuo Account Navy per aprire Musync.', username:'Utente', password:'Password', enter:'Accedi', loginError:'Utente o password errati.', backAlbums:'Indietro', deleteQuestion:'Vuoi eliminare questa playlist?', deleteConfirm:'Elimina playlist', favoriteAlbums:'Album preferiti', favoriteSongs:'Brani preferiti', addAlbumFavorite:'Aggiungi album ai preferiti', removeAlbumFavorite:'Rimuovi album dai preferiti', moveUp:'Sposta su', moveDown:'Sposta giù', noPlaylists:'Non hai ancora nessuna playlist.' }
   })[language] || {});
   copy.removeFromList = ({ es:'Quitar de esta playlist', ca:'Treure d’aquesta llista', en:'Remove from this playlist', fr:'Retirer de cette playlist', it:'Rimuovi da questa playlist' })[language] || 'Quitar de esta playlist';
+  copy.sagreraAlbums = ({ es:'Concierto Fiestas de La Sagrera', ca:'Concert Festes de La Sagrera', en:'La Sagrera Neighbourhood Festival Concert', fr:'Concert des fêtes de La Sagrera', it:'Concerto della festa di La Sagrera' })[language] || 'Concierto Fiestas de La Sagrera';
+  copy.summerAlbums = 'Summer Sound';
+  copy.originalVersion = ({es:'Original',ca:'Original',en:'Original',fr:'Originale',it:'Originale'})[language] || 'Original';
+  copy.naviesVersion = 'The Navies';
   const rootPath = window.__naviesForcedLanguage ? '../' : '';
   const tracks = [
     { file:'the-navies/shake-it-off', artist:'Taylor Swift', title:'Shake It Off', album:'the-navies', duration:219.246, lyrics:'lyrics/the-navies/shake-it-off.lrc', hasChords:true },
     { file:'the-navies/baby-one-more-time', artist:'Britney Spears', title:'…Baby One More Time', album:'the-navies', duration:211.096, lyrics:'lyrics/the-navies/baby-one-more-time.lrc' },
-    { file:'the-navies/sweet-caroline', artist:'Neil Diamond', title:'Sweet Caroline', album:'the-navies', duration:203.64, lyrics:'lyrics/the-navies/sweet-caroline.lrc' },
+    { file:'the-navies/sweet-caroline', artist:'Neil Diamond', title:'Sweet Caroline', album:'the-navies', duration:203.64, lyrics:'lyrics/the-navies/sweet-caroline.lrc', naviesFile:'the-navies/sweet-caroline-navies', naviesLyrics:'lyrics/the-navies/sweet-caroline-navies.lrc' },
     { file:'the-navies/dont-look-back-in-anger', artist:'Oasis', title:'Don’t Look Back in Anger', album:'the-navies', duration:289.62, lyrics:'lyrics/the-navies/dont-look-back-in-anger.lrc' },
-    { file:'the-navies/the-final-countdown', artist:'Europe', title:'The Final Countdown', album:'the-navies', duration:311.304, lyrics:'lyrics/the-navies/the-final-countdown.lrc' },
+    { file:'the-navies/the-final-countdown', artist:'Europe', title:'The Final Countdown', album:'the-navies', duration:311.304, lyrics:'lyrics/the-navies/the-final-countdown.lrc', naviesFile:'the-navies/the-final-countdown-navies', naviesLyrics:'lyrics/the-navies/the-final-countdown-navies.lrc' },
     { file:'the-navies/have-you-ever-seen-the-rain', artist:'Creedence Clearwater Revival', title:'Have You Ever Seen the Rain?', album:'the-navies', duration:157.824, lyrics:'lyrics/the-navies/have-you-ever-seen-the-rain.lrc' },
-    { file:'the-navies/the-final-countdown-reprise', artist:'Europe', title:'The Final Countdown (Reprise)', album:'the-navies', duration:94.368, lyrics:'lyrics/the-navies/the-final-countdown-reprise.lrc' },
+    { file:'the-navies/the-final-countdown-reprise', artist:'Europe', title:'The Final Countdown (Reprise)', album:'the-navies', duration:94.368, lyrics:'lyrics/the-navies/the-final-countdown-reprise.lrc', naviesFile:'the-navies/the-final-countdown-reprise-navies', naviesLyrics:'lyrics/the-navies/the-final-countdown-reprise-navies.lrc' },
     { file:'cor-band/billie-jean', artist:'Michael Jackson', title:'Billie Jean', album:'cor-band', duration:294.269, lyrics:'lyrics/cor-band/billie-jean.lrc' },
     { file:'cor-band/stayin-alive', artist:'Bee Gees', title:'Stayin’ Alive', album:'cor-band', duration:284.709, lyrics:'lyrics/cor-band/stayin-alive.lrc' },
     { file:'cor-band/mystical-magical', artist:'Benson Boone', title:'Mystical Magical', album:'cor-band', duration:165.773, lyrics:'lyrics/cor-band/mystical-magical.lrc' },
@@ -41,7 +45,7 @@
     { file:"summer-sound-2/1-02 We Are The Champions", ext:'mp3', artist:'Queen', title:'We Are the Champions', album:'summer-sound-2', duration:153.339, disc:1, trackNo:2 },
     { file:"summer-sound-2/2-03 Hotel California", ext:'mp3', artist:'Eagles', title:'Hotel California', album:'summer-sound-2', duration:202.58, disc:2, trackNo:3 },
     { file:"summer-sound-2/2-04 Billionaire", ext:'mp3', artist:'Travie McCoy feat. Bruno Mars', title:'Billionaire', album:'summer-sound-2', duration:172.513, disc:2, trackNo:4 },
-    { file:"summer-sound-2/2-05 I'm A Beliver", ext:'mp3', artist:'The Monkees', title:'I’m a Believer', album:'summer-sound-2', duration:160, disc:2, trackNo:5 },
+    { file:"summer-sound-2/2-05 I'm A Beliver", ext:'mp3', artist:'Smash Mouth', title:'I’m a Believer', album:'summer-sound-2', duration:160, disc:2, trackNo:5 },
     { file:"summer-sound-2/3-06 Billie Jean", ext:'mp3', artist:'Michael Jackson', title:'Billie Jean', album:'summer-sound-2', duration:185.809, disc:3, trackNo:6 },
     { file:"summer-sound-2/3-07 He's A Pirate", ext:'mp3', artist:'Klaus Badelt', title:'He’s a Pirate', album:'summer-sound-2', duration:52.767, disc:3, trackNo:7 },
     { file:"summer-sound-2/3-08 Wake Me Up", ext:'mp3', artist:'Avicii', title:'Wake Me Up', album:'summer-sound-2', duration:206.942, disc:3, trackNo:8 },
@@ -62,34 +66,34 @@
     { file:"summer-sound-4/1-04 Have You Ever Seen The Rain_", ext:'m4a', artist:'Creedence Clearwater Revival', title:'Have You Ever Seen the Rain?', album:'summer-sound-4', duration:150.847, disc:1, trackNo:4 },
     { file:"summer-sound-4/4-22 Bohemian Rhapsody", ext:'mp3', artist:'Queen', title:'Bohemian Rhapsody', album:'summer-sound-4', duration:261.024, disc:4, trackNo:22 },
     { file:"summer-sound-4/5-31 Hoguera - Have You Ever Seen The Rain_", ext:'m4a', artist:'Creedence Clearwater Revival', title:'Hoguera — Have You Ever Seen the Rain?', album:'summer-sound-4', duration:139.945, disc:5, trackNo:31 },
-    { file:"summer-sound-4/All My Loving", ext:'m4a', artist:'The Beatles', title:'All My Loving', album:'summer-sound-4', duration:9.234 },
-    { file:"summer-sound-4/Basket Case", ext:'m4a', artist:'Green Day', title:'Basket Case', album:'summer-sound-4', duration:29.244 },
-    { file:"summer-sound-4/Billie Jean", ext:'m4a', artist:'Michael Jackson', title:'Billie Jean', album:'summer-sound-4', duration:40.082 },
-    { file:"summer-sound-4/C-Jam Blues", ext:'m4a', artist:'Duke Ellington', title:'C-Jam Blues', album:'summer-sound-4', duration:132.82 },
-    { file:"summer-sound-4/Caminem Lluny", ext:'m4a', artist:'Doctor Prats', title:'Caminem Lluny', album:'summer-sound-4', duration:73.618 },
-    { file:"summer-sound-4/De Ellos Aprendí", ext:'m4a', artist:'David Rees', title:'De Ellos Aprendí', album:'summer-sound-4', duration:66.62 },
-    { file:"summer-sound-4/Die With A Smile", ext:'m4a', artist:'Lady Gaga & Bruno Mars', title:'Die With a Smile', album:'summer-sound-4', duration:23.335 },
-    { file:"summer-sound-4/Don't Look Back In Anger", ext:'m4a', artist:'Oasis', title:'Don’t Look Back in Anger', album:'summer-sound-4', duration:245.631 },
-    { file:"summer-sound-4/Espresso", ext:'m4a', artist:'Sabrina Carpenter', title:'Espresso', album:'summer-sound-4', duration:4.69 },
-    { file:"summer-sound-4/Every Breath You Take", ext:'m4a', artist:'The Police', title:'Every Breath You Take', album:'summer-sound-4', duration:33.98 },
-    { file:"summer-sound-4/Golden", ext:'m4a', artist:'HUNTR/X', title:'Golden', album:'summer-sound-4', duration:25.746 },
-    { file:"summer-sound-4/I Knew It, I Knew You", ext:'m4a', artist:'Gracie Abrams', title:'I Knew It, I Know You', album:'summer-sound-4', duration:3.09 },
-    { file:"summer-sound-4/I Want It That Way", ext:'m4a', artist:'Backstreet Boys', title:'I Want It That Way', album:'summer-sound-4', duration:126.207 },
-    { file:"summer-sound-4/I'm A Believer", ext:'m4a', artist:'The Monkees', title:'I’m a Believer', album:'summer-sound-4', duration:15.826 },
-    { file:"summer-sound-4/La Cucaracha", ext:'m4a', artist:'Tradicional mexicana', title:'La Cucaracha', album:'summer-sound-4', duration:92.223 },
-    { file:"summer-sound-4/Livin' On A Prayer", ext:'m4a', artist:'Bon Jovi', title:'Livin’ on a Prayer', album:'summer-sound-4', duration:254.975 },
-    { file:"summer-sound-4/Rivers of Babylon", ext:'m4a', artist:'Boney M.', title:'Rivers of Babylon', album:'summer-sound-4', duration:124.009 },
-    { file:"summer-sound-4/Roar", ext:'m4a', artist:'Katy Perry', title:'Roar', album:'summer-sound-4', duration:59.388 },
-    { file:"summer-sound-4/Rock You Like A Hurricane", ext:'m4a', artist:'Scorpions', title:'Rock You Like a Hurricane', album:'summer-sound-4', duration:243.561 },
-    { file:"summer-sound-4/Runaway", ext:'m4a', artist:'AURORA', title:'Runaway', album:'summer-sound-4', duration:54.61 },
-    { file:"summer-sound-4/Shake It Off", ext:'m4a', artist:'Taylor Swift', title:'Shake It Off', album:'summer-sound-4', duration:2.919 },
-    { file:"summer-sound-4/Sweet Caroline", ext:'m4a', artist:'Neil Diamond', title:'Sweet Caroline', album:'summer-sound-4', duration:59.559 },
-    { file:"summer-sound-4/The Final Countdown", ext:'m4a', artist:'Europe', title:'The Final Countdown', album:'summer-sound-4', duration:293.588 },
-    { file:"summer-sound-4/The Lion Sleeps Tonight", ext:'m4a', artist:'The Tokens', title:'The Lion Sleeps Tonight', album:'summer-sound-4', duration:101.972 },
-    { file:"summer-sound-4/Under Pressure", ext:'m4a', artist:'Queen & David Bowie', title:'Under Pressure', album:'summer-sound-4', duration:62.951 },
-    { file:"summer-sound-4/Waka Waka", ext:'m4a', artist:'Shakira', title:'Waka Waka', album:'summer-sound-4', duration:8.892 },
-    { file:"summer-sound-4/We Will Rock You", ext:'m4a', artist:'Queen', title:'We Will Rock You', album:'summer-sound-4', duration:78.121 },
-    { file:"summer-sound-4/When The Saints Go Marching In", ext:'m4a', artist:'Tradicional', title:'When the Saints Go Marching In', album:'summer-sound-4', duration:86.484 }
+    { file:"summer-sound-4/All My Loving", ext:'m4a', artist:'The Beatles', title:'All My Loving', album:'summer-sound-4', duration:9.234, disc:5, trackNo:28 },
+    { file:"summer-sound-4/Basket Case", ext:'m4a', artist:'Green Day', title:'Basket Case', album:'summer-sound-4', duration:29.244, disc:5, trackNo:29 },
+    { file:"summer-sound-4/Billie Jean", ext:'m4a', artist:'Michael Jackson', title:'Billie Jean', album:'summer-sound-4', duration:40.082, disc:2, trackNo:7 },
+    { file:"summer-sound-4/C-Jam Blues", ext:'m4a', artist:'Duke Ellington', title:'C-Jam Blues', album:'summer-sound-4', duration:132.82, disc:3, trackNo:12 },
+    { file:"summer-sound-4/Caminem Lluny", ext:'m4a', artist:'Doctor Prats', title:'Caminem Lluny', album:'summer-sound-4', duration:73.618, disc:5, trackNo:25 },
+    { file:"summer-sound-4/De Ellos Aprendí", ext:'m4a', artist:'David Rees', title:'De Ellos Aprendí', album:'summer-sound-4', duration:66.62, disc:5, trackNo:26 },
+    { file:"summer-sound-4/Die With A Smile", ext:'m4a', artist:'Lady Gaga & Bruno Mars', title:'Die With a Smile', album:'summer-sound-4', duration:23.335, disc:3, trackNo:14 },
+    { file:"summer-sound-4/Don't Look Back In Anger", ext:'m4a', artist:'Oasis', title:'Don’t Look Back in Anger', album:'summer-sound-4', duration:245.631, disc:2, trackNo:9 },
+    { file:"summer-sound-4/Espresso", ext:'m4a', artist:'Sabrina Carpenter', title:'Espresso', album:'summer-sound-4', duration:4.69, disc:1, trackNo:3 },
+    { file:"summer-sound-4/Every Breath You Take", ext:'m4a', artist:'The Police', title:'Every Breath You Take', album:'summer-sound-4', duration:33.98, disc:2, trackNo:8 },
+    { file:"summer-sound-4/Golden", ext:'m4a', artist:'HUNTR/X', title:'Golden', album:'summer-sound-4', duration:25.746, disc:2, trackNo:6 },
+    { file:"summer-sound-4/I Knew It, I Knew You", ext:'m4a', artist:'Taylor Swift', title:'I Knew It, I Know You', album:'summer-sound-4', duration:3.09, disc:5, trackNo:30 },
+    { file:"summer-sound-4/I Want It That Way", ext:'m4a', artist:'Backstreet Boys', title:'I Want It That Way', album:'summer-sound-4', duration:126.207, disc:5, trackNo:27 },
+    { file:"summer-sound-4/I'm A Believer", ext:'m4a', artist:'Smash Mouth', title:'I’m a Believer', album:'summer-sound-4', duration:15.826, disc:3, trackNo:17 },
+    { file:"summer-sound-4/La Cucaracha", ext:'m4a', artist:'Tradicional mexicana', title:'La Cucaracha', album:'summer-sound-4', duration:92.223, disc:5, trackNo:24 },
+    { file:"summer-sound-4/Livin' On A Prayer", ext:'m4a', artist:'Bon Jovi', title:'Livin’ on a Prayer', album:'summer-sound-4', duration:254.975, disc:1, trackNo:5 },
+    { file:"summer-sound-4/Rivers of Babylon", ext:'m4a', artist:'Boney M.', title:'Rivers of Babylon', album:'summer-sound-4', duration:124.009, disc:1, trackNo:1 },
+    { file:"summer-sound-4/Roar", ext:'m4a', artist:'Katy Perry', title:'Roar', album:'summer-sound-4', duration:59.388, disc:3, trackNo:13 },
+    { file:"summer-sound-4/Rock You Like A Hurricane", ext:'m4a', artist:'Scorpions', title:'Rock You Like a Hurricane', album:'summer-sound-4', duration:243.561, disc:4, trackNo:20 },
+    { file:"summer-sound-4/Runaway", ext:'m4a', artist:'AURORA', title:'Runaway', album:'summer-sound-4', duration:54.61, disc:3, trackNo:15 },
+    { file:"summer-sound-4/Shake It Off", ext:'m4a', artist:'Taylor Swift', title:'Shake It Off', album:'summer-sound-4', duration:2.919, disc:4, trackNo:19 },
+    { file:"summer-sound-4/Sweet Caroline", ext:'m4a', artist:'Neil Diamond', title:'Sweet Caroline', album:'summer-sound-4', duration:59.559, disc:3, trackNo:16 },
+    { file:"summer-sound-4/The Final Countdown", ext:'m4a', artist:'Europe', title:'The Final Countdown', album:'summer-sound-4', duration:293.588, disc:2, trackNo:10 },
+    { file:"summer-sound-4/The Lion Sleeps Tonight", ext:'m4a', artist:'The Tokens', title:'The Lion Sleeps Tonight', album:'summer-sound-4', duration:101.972, disc:1, trackNo:2 },
+    { file:"summer-sound-4/Under Pressure", ext:'m4a', artist:'Queen & David Bowie', title:'Under Pressure', album:'summer-sound-4', duration:62.951, disc:4, trackNo:21 },
+    { file:"summer-sound-4/Waka Waka", ext:'m4a', artist:'Shakira', title:'Waka Waka', album:'summer-sound-4', duration:8.892, disc:4, trackNo:23 },
+    { file:"summer-sound-4/We Will Rock You", ext:'m4a', artist:'Queen', title:'We Will Rock You', album:'summer-sound-4', duration:78.121, disc:2, trackNo:11 },
+    { file:"summer-sound-4/When The Saints Go Marching In", ext:'m4a', artist:'Tradicional', title:'When the Saints Go Marching In', album:'summer-sound-4', duration:86.484, disc:4, trackNo:18 }
   ];
   const albums = [
     { id:'the-navies', title:'The Navies', artist:'The Navies', category:'sagrera', cover:'assets/images/musync-cover.png' },
@@ -116,6 +120,7 @@
     list:'<svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6h1M4 12h1M4 18h1"/></svg>',
     queue:'<svg viewBox="0 0 24 24"><path d="M4 6h12M4 11h12M4 16h8"/><path d="m17 15 4 3-4 3Z"/></svg>'
   };
+  svg.fullscreen='<svg viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5m13 5h5v-5"/></svg>';
   const page = document.createElement('section');
   page.className = 'page-view subpage musync-v2';
   page.id = 'page-musync';
@@ -148,6 +153,9 @@
         <header class="musync-library-head">
           <div><p>MUSYNC</p><h2>${copy.library}</h2></div>
         </header>
+        <button class="musync-mobile-view-toggle" data-ms-mobile-view-toggle type="button" aria-expanded="false">
+          <span data-ms-mobile-view-label>${copy.albums}</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 6 4.5 4 4.5-4"/></svg>
+        </button>
         <nav class="musync-tabs" aria-label="${copy.library}">
           <button data-ms-view="album" aria-pressed="true">${svg.albums}<span>${copy.albums}</span></button>
           <button data-ms-view="songs" aria-pressed="false">${svg.songs}<span>${copy.songs}</span></button>
@@ -185,7 +193,7 @@
           </div>
           <label class="musync-full-volume">${svg.volume}<input data-ms-full-volume type="range" min="0" max="1" step="0.01" value="1"><span class="sr-only">${copy.volume}</span></label>
         </div>
-        <div class="musync-lyrics-panel"><header><div class="musync-lyrics-tools"><label class="musync-chord-toggle"><span>${copy.chords}</span><input data-ms-chords type="checkbox" checked><i aria-hidden="true"></i></label><button data-ms-resync type="button" hidden>↻ <span>${copy.resync}</span></button></div></header><div class="musync-lyrics" data-ms-lyrics><p class="musync-no-lyrics">${copy.noLyrics}</p></div></div>
+        <div class="musync-lyrics-panel"><header><div class="musync-lyrics-tools"><label class="musync-chord-toggle"><span>${copy.chords}</span><input data-ms-chords type="checkbox" checked><i aria-hidden="true"></i></label><button data-ms-resync type="button" hidden>↻ <span>${copy.resync}</span></button><div class="musync-version-switch" data-ms-version-switch hidden><button type="button" data-ms-version="original" aria-pressed="true">${copy.originalVersion}</button><button type="button" data-ms-version="navies" aria-pressed="false">${copy.naviesVersion}</button></div></div></header><div class="musync-lyrics" data-ms-lyrics><p class="musync-no-lyrics">${copy.noLyrics}</p></div></div>
       </div>
     </section>`;
   document.querySelector('#page-espacio-navy')?.after(page);
@@ -226,6 +234,7 @@
   let pendingPlaylistTrack = -1;
   let pendingDeletePlaylist = '';
   let shufflePool = [];
+  let playbackSequence = [];
   let queueReturnIndex = -1;
   let lyricLines = [];
   let lyricsDetached = false;
@@ -234,7 +243,10 @@
   let seekLyricsFrame;
   let renderedView = '';
   let renderedPlaylist = '';
-  const source = (track) => `${rootPath}audios/${track.file}.${track.ext || 'mp3'}?v=20261112-293`;
+  let trackVersion = 'original';
+  const effectiveFile = track => trackVersion === 'navies' && track?.naviesFile ? track.naviesFile : track?.file;
+  const effectiveLyrics = track => trackVersion === 'navies' && track?.naviesLyrics ? track.naviesLyrics : track?.lyrics;
+  const source = (track) => `${rootPath}audios/${effectiveFile(track)}.${track.ext || 'mp3'}?v=20261112-295`;
   const saveUi = () => localStorage.setItem(`the-navies-musync-ui-${memberKey()}`, JSON.stringify({ view, selectedAlbum, selectedPlaylist, albumReturnView }));
   function restoreUi() {
     uiState=loadUi();
@@ -294,7 +306,7 @@
     if (view === 'queue') return state.queue;
     if (view === 'playlists') return selectedPlaylist === '__favorites__' ? state.favorites : (selectedPlaylist ? (state.playlists[selectedPlaylist] || []) : []);
     if (view === 'album') return [];
-    if (view === 'album-detail') return tracks.map((_,index)=>index).filter(index=>tracks[index].album===selectedAlbum).sort((a,b)=>(tracks[a].disc||0)-(tracks[b].disc||0)||(tracks[a].trackNo||a)-(tracks[b].trackNo||b));
+    if (view === 'album-detail') return tracks.map((_,index)=>index).filter(index=>tracks[index].album===selectedAlbum).sort((a,b)=>(tracks[a].trackNo??a)-(tracks[b].trackNo??b));
     return tracks.map((_,index) => index);
   }
   function trackRow(index, position) {
@@ -313,7 +325,7 @@
       ${favoriteButton}<button class="musync-track-more" data-ms-track-menu="${index}" type="button" aria-label="Más opciones"><i></i><i></i><i></i></button>
     </article>`;
     return `<article class="musync-track${index === current ? ' is-active' : ''}${albumDetail?' is-album-track':''}${songsTable?' is-song-table':''}${ordered?' is-orderable':''}" data-ms-track="${index}" data-ms-position="${position}" ${ordered?'draggable="true"':''}>
-      <button class="musync-track-play" data-ms-play="${index}" type="button"><span>${albumDetail&&track.disc&&track.trackNo?`${track.disc}-${String(track.trackNo).padStart(2,'0')}`:String(position+1).padStart(2,'0')}</span>${svg.play}</button>
+      <button class="musync-track-play" data-ms-play="${index}" type="button"><span>${albumDetail&&track.trackNo?String(track.trackNo).padStart(2,'0'):String(position+1).padStart(2,'0')}</span>${svg.play}</button>
       ${albumDetail?'':`<img class="musync-track-art" src="${rootPath}${coverFor(track)}?v=20261112-291" alt="">`}
       <button class="musync-track-copy" data-ms-play="${index}" type="button"><strong>${escape(track.title)}</strong>${songsTable?`<small class="musync-table-artist">${escape(track.artist)}</small><small class="musync-table-album">${escape(albumFor(track).title)}</small>`:`<small>${escape(track.artist)}</small>`}</button>
       ${orderControls}${favoriteButton}<button class="musync-track-more" data-ms-track-menu="${index}" type="button" aria-label="Más opciones"><i></i><i></i><i></i></button>
@@ -329,6 +341,10 @@
       <button class="musync-album-favorite${favorite?' is-active':''}" data-ms-favorite-album="${album.id}" type="button" aria-label="${favorite?copy.removeAlbumFavorite:copy.addAlbumFavorite}">${favorite?'♥':'♡'}</button>
     </article>`;
   }
+  function albumCategory(id,label) {
+    const items=albums.filter(album=>album.category===id);
+    return `<section class="musync-album-category"><h4>${escape(label)}</h4><div>${items.map(albumCard).join('')}</div></section>`;
+  }
   function render() {
     if(view==='playlists'&&selectedPlaylist&&selectedPlaylist!=='__favorites__'&&!state.playlists[selectedPlaylist])selectedPlaylist='';
     saveUi();
@@ -336,6 +352,7 @@
     const selectedAlbumData = albums.find(album=>album.id===selectedAlbum) || albums[0];
     const headings = { album:copy.albums, 'album-detail':selectedAlbumData.title, songs:copy.songs, favorites:copy.favorites, recent:copy.recent, playlists:copy.playlists, queue:copy.queue };
     $('[data-ms-heading]').textContent = headings[view];
+    $('[data-ms-mobile-view-label]').textContent = view === 'album-detail' ? copy.albums : headings[view];
     $('.musync-section-head').hidden = view === 'album-detail';
     $('[data-ms-create]').hidden = view !== 'playlists';
     $('.musync-song-search').hidden = view !== 'songs';
@@ -347,10 +364,11 @@
     $('[data-ms-queue-count]').textContent = state.queue.length;
     $('.musync-content').classList.toggle('is-playlists', view === 'playlists');
     albumsHost.hidden = !['album','album-detail','favorites'].includes(view);
-    if(view==='album') albumsHost.innerHTML=albums.map(albumCard).join('');
+    if(view==='album') albumsHost.innerHTML=albumCategory('sagrera',copy.sagreraAlbums)+albumCategory('summer',copy.summerAlbums);
     else if(view==='album-detail') {
       const favorite=state.favoriteAlbums.includes(selectedAlbumData.id);
-      albumsHost.innerHTML=`<section class="musync-album-detail"><button class="musync-album-back" data-ms-back-albums type="button" aria-label="${copy.backAlbums}">← <span>${copy.backAlbums}</span></button><img src="${rootPath}${selectedAlbumData.cover}?v=20261112-291" alt="${escape(selectedAlbumData.title)}"><div><small>${copy.album}</small><div class="musync-album-title-row"><h4>${escape(selectedAlbumData.title)}</h4><button class="musync-album-favorite${favorite?' is-active':''}" data-ms-favorite-album="${selectedAlbumData.id}" type="button" aria-label="${favorite?copy.removeAlbumFavorite:copy.addAlbumFavorite}">${favorite?'♥':'♡'}</button></div><p>${escape(selectedAlbumData.artist)} · ${tracks.filter(track=>track.album===selectedAlbum).length} ${copy.songs.toLocaleLowerCase()}</p></div></section>`;
+      const categoryLabel=selectedAlbumData.category==='summer'?copy.summerAlbums:copy.sagreraAlbums;
+      albumsHost.innerHTML=`<section class="musync-album-detail"><button class="musync-album-back" data-ms-back-albums type="button" aria-label="${copy.backAlbums}">← <span>${copy.backAlbums}</span></button><img src="${rootPath}${selectedAlbumData.cover}?v=20261112-291" alt="${escape(selectedAlbumData.title)}"><div><div class="musync-album-title-row"><h4>${escape(selectedAlbumData.title)}</h4><button class="musync-album-favorite${favorite?' is-active':''}" data-ms-favorite-album="${selectedAlbumData.id}" type="button" aria-label="${favorite?copy.removeAlbumFavorite:copy.addAlbumFavorite}">${favorite?'♥':'♡'}</button></div><p>${escape(categoryLabel)} · ${tracks.filter(track=>track.album===selectedAlbum).length} ${copy.songs.toLocaleLowerCase()}</p></div></section>`;
     } else {
       const favoriteAlbums=state.favoriteAlbums.map(id=>albums.find(album=>album.id===id)).filter(Boolean);
       albumsHost.innerHTML=`<section class="musync-favorite-albums"><h4>${copy.favoriteAlbums}</h4><div>${favoriteAlbums.length?favoriteAlbums.map(albumCard).join(''):`<p class="musync-empty">${copy.empty}</p>`}</div></section>`;
@@ -389,6 +407,7 @@
   }
   function syncPlayer() {
     const track = tracks[current];
+    $('.musync-expand').innerHTML = track?.lyrics ? svg.expand : svg.fullscreen;
     $('[data-ms-title]').textContent = track?.title || copy.nothingPlaying;
     $('[data-ms-artist]').textContent = track?.artist || 'Musync';
     $('[data-ms-full-title]').textContent = track?.title || copy.nothingPlaying;
@@ -432,9 +451,10 @@
     page.querySelectorAll('[data-ms-track]').forEach(row=>{if(Number(row.dataset.msTrack)!==current)return;const button=row.querySelector('.musync-track-play');if(button)button.innerHTML=audio.paused?svg.play:svg.pause;});
   }
   function addRecent(index) { state.recent = [index,...state.recent.filter(item => item !== index)].slice(0,10); save(); }
-  async function play(index, restart = true) {
+  async function play(index, restart = true, sequence = null) {
     if (!tracks[index]) return;
-    if (current !== index) { current = index; state.currentTrack=index; state.currentTime=0; audio.src = source(tracks[index]); restart = true; await loadLyrics(); }
+    if(Array.isArray(sequence)&&sequence.length)playbackSequence=[...sequence];
+    if (current !== index) { current = index; trackVersion='original'; state.currentTrack=index; state.currentTime=0; audio.src = source(tracks[index]); restart = true; await loadLyrics(); }
     if (restart) {
       audio.currentTime = 0;
       state.currentTime=0;
@@ -444,64 +464,108 @@
     try { await audio.play(); window.naviesPauseSiteMusicForNavyAudio?.(); } catch (_) {}
     render();
   }
+  const sequenceForPlayback = () => playbackSequence.length ? playbackSequence : tracks.map((_,index)=>index);
+  function followingInSequence(index=current,wrap=false){
+    const sequence=sequenceForPlayback();
+    const position=sequence.indexOf(index);
+    if(position<0)return -1;
+    if(position<sequence.length-1)return sequence[position+1];
+    return wrap&&sequence.length?sequence[0]:-1;
+  }
   function shuffledNext() {
-    if (!shufflePool.length) shufflePool = tracks.map((_,i)=>i).filter(i=>i!==current).sort(()=>Math.random()-.5);
+    if (!shufflePool.length) shufflePool = sequenceForPlayback().filter(i=>i!==current).sort(()=>Math.random()-.5);
     return shufflePool.shift();
   }
   function nextIndex() {
     if (state.repeat === 'one' && current >= 0) return current;
     if (state.queue.length) {
-      if (queueReturnIndex < 0) queueReturnIndex = current >= 0 ? (current + 1) % tracks.length : 0;
+      if (queueReturnIndex < 0) queueReturnIndex = followingInSequence(current,false);
       const value = state.queue.shift(); save(); return value;
     }
     if (queueReturnIndex >= 0) { const value = queueReturnIndex; queueReturnIndex = -1; return value; }
     if (state.shuffle) return shuffledNext();
-    if (current < tracks.length-1) return current+1;
-    return state.repeat === 'list' ? 0 : -1;
+    return followingInSequence(current,state.repeat==='list');
   }
-  function next() { const index = nextIndex(); if (index >= 0) play(index); else { audio.pause(); syncPlayer(); } }
-  function previous() { if (audio.currentTime > 5 || current <= 0) { audio.currentTime = 0; resetLyricsToPlayback(); return; } play(current-1); }
+  function clearPlayback(){
+    audio.pause();audio.removeAttribute('src');audio.load();current=-1;state.currentTrack=-1;state.currentTime=0;trackVersion='original';lyricLines=[];save();render();
+  }
+  function next() { const index = nextIndex(); if (index >= 0) play(index,false); else clearPlayback(); }
+  function previous() {
+    if(audio.currentTime>5){audio.currentTime=0;resetLyricsToPlayback();return;}
+    const sequence=sequenceForPlayback(),position=sequence.indexOf(current);
+    if(position>0)play(sequence[position-1]);else{audio.currentTime=0;resetLyricsToPlayback();}
+  }
   function rememberQueueReturn() {
-    if (!state.queue.length && queueReturnIndex < 0) queueReturnIndex = current >= 0 ? (current + 1) % tracks.length : 0;
+    if (!state.queue.length && queueReturnIndex < 0) queueReturnIndex = followingInSequence(current,false);
   }
 
   const chordPattern = /^[A-G](?:#|b)?(?:m|maj|min|dim|aug|sus|add)?\d?(?:\/[A-G](?:#|b)?)?$/;
+  const chordRepeatPattern = /^x\d+$/i;
+  const chordRunMarkup = (chords, repeat = '') => `<span class="musync-chord-run">${[...chords,...(repeat?[repeat]:[])].map(chord=>`<span class="musync-run-chord">${escape(chordRepeatPattern.test(chord)?`(${chord})`:chord)}</span>`).join('')}</span>`;
   function lyricMarkup(text) {
     const parts = text.split(/(\([^)]*\))/g).filter(Boolean);
-    let pendingChord = '';
+    let pendingChords = [];
     let html = '';
     parts.forEach(part => {
       if (part.startsWith('(') && part.endsWith(')')) {
         const inside = part.slice(1,-1);
-        if (chordPattern.test(inside)) { pendingChord = inside; return; }
+        if (chordPattern.test(inside) || chordRepeatPattern.test(inside)) { pendingChords.push(inside); return; }
       }
-      if (pendingChord) {
+      if (pendingChords.length) {
+        if (!part.trim()) return;
+        const repeatMatch = part.match(/^\s*(x\d+)\b([\s\S]*)$/i);
+        if (pendingChords.length > 1 || repeatMatch) {
+          html += chordRunMarkup(pendingChords, repeatMatch?.[1] || '');
+          pendingChords = [];
+          const remainder = repeatMatch?.[2] || part;
+          if (remainder) html += `<span class="musync-lyric-text">${escape(remainder)}</span>`;
+          return;
+        }
         const match = part.match(/^(\s*)(\S+)([\s\S]*)$/);
         if (match) {
-          html += `${escape(match[1])}<span class="musync-chord-word"><span class="musync-chord">${escape(pendingChord)}</span><span>${escape(match[2])}</span></span>${escape(match[3])}`;
-          pendingChord = '';
+          html += `${escape(match[1])}<span class="musync-chord-word"><span class="musync-chord">${escape(pendingChords[0])}</span><span>${escape(match[2])}</span></span>${escape(match[3])}`;
+          pendingChords = [];
           return;
         }
       }
       html += `<span class="musync-lyric-text">${escape(part)}</span>`;
     });
-    return pendingChord ? `${html}<span class="musync-chord-word"><span class="musync-chord">${escape(pendingChord)}</span></span>` : html;
+    return pendingChords.length ? `${html}${chordRunMarkup(pendingChords)}` : html;
+  }
+  function instrumentalMarkup(activeIndex){
+    const line=lyricLines[activeIndex];
+    if(!line)return '';
+    const group=lyricLines.map((item,index)=>({item,index})).filter(entry=>entry.item.displayIndex===line.displayIndex);
+    const chords=line.text.replace(/^\s*♪\s*/,'').split('\n').map(lyricMarkup).join('<br>');
+    return `<span class="musync-instrumental"><span class="musync-instrumental-chords">${chords}</span><span class="musync-cue-dots">${group.map(entry=>`<span class="musync-cue-dot" data-ms-cue-target="${entry.index}" aria-label="${entry.index-line.displayIndex+1}"><i></i></span>`).join('')}</span></span>`;
   }
   async function loadLyrics() {
     const track = tracks[current];
-    $('.musync-chord-toggle').hidden = !track?.hasChords;
+    const lyricsSource=effectiveLyrics(track);
+    expanded.classList.toggle('is-player-only', !lyricsSource);
+    $('[data-ms-version-switch]').hidden=!track?.naviesFile;
+    page.querySelectorAll('[data-ms-version]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.msVersion===trackVersion)));
+    $('.musync-chord-toggle').hidden = true;
     lyricLines = [];
     lyricsDetached = false;
     lyricsHost.classList.remove('is-manual');
     $('[data-ms-resync]').hidden = true;
-    if (!track?.lyrics) { lyricsHost.innerHTML = `<p class="musync-no-lyrics">${copy.noLyrics}</p>`; return; }
+    if (!lyricsSource) { lyricsHost.innerHTML = `<p class="musync-no-lyrics">${copy.noLyrics}</p>`; return; }
     try {
-      const text = await fetch(`${rootPath}${track.lyrics}?v=20261112-291`, {cache:'force-cache'}).then(response => response.text());
-      lyricLines = text.split(/\r?\n/).map(line => {
+      const text = await fetch(`${rootPath}${lyricsSource}?v=20261112-300`, {cache:'no-cache'}).then(response => response.text());
+      $('.musync-chord-toggle').hidden = !text.split(/\r?\n/).some(line=>line.split(']').slice(1).join(']').split(/(\([^)]*\))/g).some(part=>part.startsWith('(')&&chordPattern.test(part.slice(1,-1))));
+      lyricLines = text.split(/\r?\n/).reduce((lines,line) => {
         const match = line.match(/^\[(?:(\d+):)?(\d+):(\d+(?:\.\d+)?)\]\s*(.*)$/);
-        return match ? { time:Number(match[1]||0)*3600+Number(match[2])*60+Number(match[3]), text:match[4] } : null;
-      }).filter(Boolean);
-      lyricsHost.innerHTML = lyricLines.map((line,index) => `<button type="button" data-ms-lyric="${index}">${lyricMarkup(line.text)}</button>`).join('');
+        if(match) lines.push({ time:Number(match[1]||0)*3600+Number(match[2])*60+Number(match[3]), text:match[4] });
+        else if(line.trim()&&lines.length) lines[lines.length-1].text+=`\n${line.trim()}`;
+        return lines;
+      },[]);
+      lyricLines.forEach((line,index)=>{
+        const instrumental=line.text.trimStart().startsWith('♪');
+        const previous=lyricLines[index-1];
+        line.displayIndex=instrumental&&previous?.text.trimStart().startsWith('♪') ? previous.displayIndex : index;
+      });
+      lyricsHost.innerHTML = lyricLines.map((line,index) => line.displayIndex===index ? `<button type="button" data-ms-display="${index}" data-ms-lyric="${index}">${line.text.trimStart().startsWith('♪')?instrumentalMarkup(index):line.text.split('\n').map(lyricMarkup).join('<br>')}</button>` : '').join('');
       lyricsHost.classList.toggle('hide-chords', !$('[data-ms-chords]').checked);
     } catch (_) { lyricsHost.innerHTML = `<p class="musync-no-lyrics">${copy.noLyrics}</p>`; }
   }
@@ -509,8 +573,40 @@
     if (!lyricLines.length) return;
     let active = -1;
     for (let i=0;i<lyricLines.length;i++) if (audio.currentTime >= lyricLines[i].time) active=i; else break;
-    page.querySelectorAll('[data-ms-lyric]').forEach((line,index) => line.classList.toggle('is-active', index===active));
-    const target = page.querySelector(`[data-ms-lyric="${active}"]`);
+    const activeLine=lyricLines[active];
+    const displayIndex=activeLine?.displayIndex ?? active;
+    page.querySelectorAll('[data-ms-display]').forEach(line => line.classList.toggle('is-active', Number(line.dataset.msDisplay)===displayIndex));
+    const target = page.querySelector(`[data-ms-display="${displayIndex}"]`);
+    page.querySelectorAll('.musync-cue-dot').forEach(dot=>{
+      if(target?.contains(dot))return;
+      if((dot.classList.contains('is-complete')||dot.classList.contains('is-current'))&&!dot.classList.contains('is-leaving')){
+        const leaveProgress=dot.classList.contains('is-complete')?'1':(dot.style.getPropertyValue('--cue-progress')||'0');
+        dot.style.setProperty('--cue-leave-progress',leaveProgress);
+        dot.classList.add('is-leaving');
+        dot.classList.remove('is-complete','is-current');
+        setTimeout(()=>{
+          dot.classList.remove('is-leaving');
+          dot.style.setProperty('--cue-progress','0');
+          dot.style.setProperty('--cue-leave-progress','0');
+        },320);
+      }
+    });
+    if(target&&activeLine&&Number(target.dataset.msLyric)!==active){
+      target.dataset.msLyric=String(active);
+      target.innerHTML=activeLine.text.trimStart().startsWith('♪')?instrumentalMarkup(active):activeLine.text.split('\n').map(lyricMarkup).join('<br>');
+      lyricsHost.classList.toggle('hide-chords', !$('[data-ms-chords]').checked);
+    }
+    if(target&&activeLine?.text.trimStart().startsWith('♪')){
+      const group=lyricLines.map((item,index)=>({item,index})).filter(entry=>entry.item.displayIndex===displayIndex);
+      const activePosition=group.findIndex(entry=>entry.index===active);
+      const nextTime=lyricLines[active+1]?.time ?? audio.duration;
+      const progress=Math.max(0,Math.min(1,(audio.currentTime-activeLine.time)/Math.max(.01,nextTime-activeLine.time)));
+      target.querySelectorAll('[data-ms-cue-target]').forEach((dot,index)=>{
+        dot.classList.toggle('is-complete',index<activePosition);
+        dot.classList.toggle('is-current',index===activePosition);
+        dot.style.setProperty('--cue-progress',index===activePosition?String(progress):'0');
+      });
+    }
     if (!target && force) {
       lyricsAutoScrolling = true;
       clearTimeout(lyricsAutoScrollTimer);
@@ -580,15 +676,40 @@
   }
 
   page.addEventListener('click', event => {
+    if (!event.target.closest('[data-ms-mobile-view-toggle],.musync-tabs')) {
+      $('.musync-tabs').classList.remove('is-mobile-open');
+      $('[data-ms-mobile-view-toggle]').setAttribute('aria-expanded','false');
+    }
+    const mobileViewToggle = event.target.closest('[data-ms-mobile-view-toggle]');
+    if (mobileViewToggle) {
+      const tabs = $('.musync-tabs');
+      const open = !tabs.classList.contains('is-mobile-open');
+      tabs.classList.toggle('is-mobile-open', open);
+      mobileViewToggle.setAttribute('aria-expanded', String(open));
+      return;
+    }
     const viewButton = event.target.closest('[data-ms-view]');
-    if (viewButton) { view=viewButton.dataset.msView; if(view!=='playlists') selectedPlaylist=''; render(); return; }
+    if (viewButton) {
+      view=viewButton.dataset.msView;
+      if(view!=='playlists') selectedPlaylist='';
+      $('.musync-tabs').classList.remove('is-mobile-open');
+      $('[data-ms-mobile-view-toggle]').setAttribute('aria-expanded','false');
+      render();
+      return;
+    }
     const albumButton = event.target.closest('[data-ms-open-album]');
     if (albumButton) { selectedAlbum=albumButton.dataset.msOpenAlbum; albumReturnView=view==='favorites'?'favorites':'album'; view='album-detail'; render(); return; }
     const albumFavorite = event.target.closest('[data-ms-favorite-album]');
     if(albumFavorite){const id=albumFavorite.dataset.msFavoriteAlbum;state.favoriteAlbums=state.favoriteAlbums.includes(id)?state.favoriteAlbums.filter(item=>item!==id):[...state.favoriteAlbums,id];save();render();return;}
     if (event.target.closest('[data-ms-back-albums]')) { view=albumReturnView; render(); return; }
     const playButton = event.target.closest('[data-ms-play]');
-    if (playButton) { const index=Number(playButton.dataset.msPlay); if(index===current){audio.paused?audio.play().catch(()=>{}):audio.pause();}else play(index); return; }
+    if (playButton) {
+      const index=Number(playButton.dataset.msPlay);
+      const visible=[...tracksHost.querySelectorAll('[data-ms-track]')].map(row=>Number(row.dataset.msTrack));
+      if(visible.includes(index)){playbackSequence=visible;shufflePool=[];queueReturnIndex=-1;}
+      if(index===current){audio.paused?audio.play().catch(()=>{}):audio.pause();}else play(index);
+      return;
+    }
     const trackMenu = event.target.closest('[data-ms-track-menu]');
     if (trackMenu) return openMenu(trackMenu,Number(trackMenu.dataset.msTrackMenu));
     const trackFavorite=event.target.closest('[data-ms-favorite-track]');
@@ -616,6 +737,20 @@
     if (currentListButton) { openCurrentPlaylistMenu(currentListButton); return; }
     const fullListButton = event.target.closest('[data-ms-full-list]');
     if (fullListButton) { openCurrentPlaylistMenu(fullListButton); return; }
+    const versionButton=event.target.closest('[data-ms-version]');
+    if(versionButton&&current>=0&&versionButton.dataset.msVersion!==trackVersion){
+      const wasPlaying=!audio.paused;
+      const position=audio.currentTime;
+      trackVersion=versionButton.dataset.msVersion;
+      audio.src=source(tracks[current]);
+      audio.addEventListener('loadedmetadata',async()=>{
+        audio.currentTime=Math.min(position,Number.isFinite(audio.duration)?audio.duration:position);
+        if(wasPlaying)try{await audio.play();}catch(_){}
+        resetLyricsToPlayback(true);
+      },{once:true});
+      loadLyrics().then(syncPlayer);
+      return;
+    }
     if (event.target.closest('.musync-expand')) {
       lyricsDetached=false;
       lyricsHost.classList.remove('is-manual');
@@ -627,6 +762,12 @@
       return;
     }
     if (event.target.closest('.musync-expanded-back')) { expanded.classList.add('is-closing'); setTimeout(()=>{expanded.hidden=true;expanded.classList.remove('is-closing');document.body.classList.remove('musync-expanded-open');},260); return; }
+    const cue=event.target.closest('[data-ms-cue-target]');
+    if(cue){
+      const cueTime=lyricLines[Number(cue.dataset.msCueTarget)]?.time;
+      if(Number.isFinite(cueTime)){audio.currentTime=cueTime;resetLyricsToPlayback(true);}
+      return;
+    }
     const lyric = event.target.closest('[data-ms-lyric]');
     if (lyric) {
       const targetTime=lyricLines[Number(lyric.dataset.msLyric)]?.time;
@@ -732,18 +873,26 @@
     if(view==='album'||view==='queue'||(view==='playlists'&&!selectedPlaylist))return;
     const visible=[...tracksHost.querySelectorAll('[data-ms-track]')].map(row=>Number(row.dataset.msTrack));
     if(!visible.length)return;
+    playbackSequence=visible;shufflePool=[];queueReturnIndex=-1;
     if(current>=0&&visible.includes(current))audio.play().catch(()=>{});
-    else play(visible[0]);
+    else play(visible[0],true,visible);
   }
   $('[data-ms-toggle]').addEventListener('click',togglePlaybackForView);
   window.addEventListener('keydown',event=>{
     if(event.key==='Escape'&&!expanded.hidden&&!listDialog.open&&!confirmDialog.open){event.preventDefault();$('.musync-expanded-back').click();return;}
     if(event.code!=='Space'||event.repeat||page.hidden||$('[data-ms-app]').hidden)return;
-    if(event.target instanceof Element&&event.target.closest('input,textarea,select,button,[contenteditable="true"]'))return;
+    if(event.target instanceof Element&&event.target.closest('input,textarea,select,[contenteditable="true"]'))return;
     if(listDialog.open||confirmDialog.open)return;
     event.preventDefault();
+    if(event.target instanceof HTMLElement&&event.target.matches('button,[role="button"]'))event.target.blur();
     if(current>=0){audio.paused?audio.play().catch(()=>{}):audio.pause();return;}
     togglePlaybackForView();
+  },{capture:true});
+  window.addEventListener('keyup',event=>{
+    if(event.code!=='Space'||page.hidden||$('[data-ms-app]').hidden)return;
+    if(event.target instanceof Element&&event.target.closest('input,textarea,select,[contenteditable="true"]'))return;
+    if(listDialog.open||confirmDialog.open)return;
+    event.preventDefault();
   },{capture:true});
   $('[data-ms-prev]').addEventListener('click',previous);
   $('[data-ms-next]').addEventListener('click',next);

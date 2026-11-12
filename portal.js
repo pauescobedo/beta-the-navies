@@ -480,7 +480,13 @@ function decorateScoreSongs() {
       container.append(item);
     });
     if (song.startsWith('conjunt-de-cordes/')) return;
-    const audioSource = `${audioRoot}/${song.includes('/') ? song : `the-navies/${song}`}.mp3`;
+    const naviesLiveAudio = {
+      'sweet-caroline':'the-navies/sweet-caroline-navies',
+      'the-final-countdown':'the-navies/the-final-countdown-navies',
+      'the-final-countdown-reprise':'the-navies/the-final-countdown-reprise-navies'
+    };
+    const audioId = naviesLiveAudio[song] || (song.includes('/') ? song : `the-navies/${song}`);
+    const audioSource = `${audioRoot}/${audioId}.mp3`;
     const divider = document.createElement('span');
     divider.className = 'audio-divider';
     divider.setAttribute('aria-hidden', 'true');
@@ -991,6 +997,7 @@ contentEditor.innerHTML = `
     <header class="content-editor-header">
       <div><p class="eyebrow"><span></span> THE NAVIES</p><h2>${editorText.siteEditing}</h2></div>
       <div class="content-editor-controls">
+        <button class="content-editor-mobile-toggle" type="button" aria-expanded="false"><span>${editorText.home}</span><i aria-hidden="true"></i></button>
         <nav class="content-editor-tabs"><button type="button" data-editor-tab="home" aria-pressed="true">${editorText.home}</button><button type="button" data-editor-tab="space" aria-pressed="false">${editorText.space}</button><button type="button" data-editor-tab="general" aria-pressed="false">${editorText.general}</button></nav>
       </div>
     </header>
@@ -1067,6 +1074,8 @@ const editorForm = contentEditor.querySelector('.content-editor-form');
 const editorStatus = contentEditor.querySelector('.content-editor-status');
 const editorSectionNav = contentEditor.querySelector('.editor-section-nav');
 const editorSideRail = contentEditor.querySelector('.editor-side-rail');
+const editorMobileToggle = contentEditor.querySelector('.content-editor-mobile-toggle');
+const editorTabs = contentEditor.querySelector('.content-editor-tabs');
 const editorExitDialog = contentEditor.querySelector('.editor-exit-dialog');
 let editorStatusTimer;
 let editorDirty = false;
@@ -1616,6 +1625,8 @@ function selectEditorPage(route) {
   sessionStorage.setItem('navies-editor-page', page);
   contentEditor.querySelectorAll('[data-editor-tab]').forEach((item) => item.setAttribute('aria-pressed', String(item.dataset.editorTab === page)));
   contentEditor.querySelectorAll('[data-editor-page]').forEach((item) => { item.hidden = item.dataset.editorPage !== page; });
+  const activeTab = contentEditor.querySelector(`[data-editor-tab="${page}"]`);
+  editorMobileToggle.querySelector('span').textContent = activeTab?.textContent || editorText.home;
   syncEditorSectionNav(page);
 }
 
@@ -1678,6 +1689,9 @@ contentEditor.querySelectorAll('[data-editor-tab]').forEach((button) => {
     sessionStorage.setItem('navies-editor-page', button.dataset.editorTab);
     contentEditor.querySelectorAll('[data-editor-tab]').forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
     contentEditor.querySelectorAll('[data-editor-page]').forEach((page) => { page.hidden = page.dataset.editorPage !== button.dataset.editorTab; });
+    editorMobileToggle.querySelector('span').textContent = button.textContent;
+    editorTabs.classList.remove('is-mobile-open');
+    editorMobileToggle.setAttribute('aria-expanded','false');
     syncEditorSectionNav(button.dataset.editorTab);
     editorSectionPendingIndex = 0;
     window.clearTimeout(editorSectionPendingTimer);
@@ -1687,6 +1701,12 @@ contentEditor.querySelectorAll('[data-editor-tab]').forEach((button) => {
     }, 1400);
     window.scrollTo({ top:0, behavior:'smooth' });
   });
+});
+
+editorMobileToggle.addEventListener('click', () => {
+  const open = !editorTabs.classList.contains('is-mobile-open');
+  editorTabs.classList.toggle('is-mobile-open', open);
+  editorMobileToggle.setAttribute('aria-expanded', String(open));
 });
 
 window.addEventListener('navies-route-change', (event) => {
@@ -1758,6 +1778,10 @@ contentEditor.addEventListener('click', (event) => {
 
 document.addEventListener('click', (event) => {
   if (!event.target.closest('.editor-ensemble-picker')) closeEditorEnsemblePicker();
+  if (!event.target.closest('.content-editor-mobile-toggle,.content-editor-tabs')) {
+    editorTabs.classList.remove('is-mobile-open');
+    editorMobileToggle.setAttribute('aria-expanded','false');
+  }
 });
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') closeEditorEnsemblePicker();
