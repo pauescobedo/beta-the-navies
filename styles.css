@@ -13,6 +13,7 @@
   --line: rgba(23, 60, 91, .16);
   --accent: #C77B52;
   --accent-disc: #A55332;
+  --accent-text: #8E4328;
   --accent-contrast: #fff;
   --player-accent:#8E4328;
   --player-contrast:#fff;
@@ -20,10 +21,10 @@
   --white: #fff;
   --radius: 28px;
 }
-:root[data-season="spring"] { --accent-contrast:#0d2a43; --accent-disc:#F4A7C1; --player-accent:#F4A7C1; --player-contrast:#0d2a43; }
-:root[data-season="summer"] { --accent-contrast:#0d2a43; --accent-disc:#FFD76A; --player-accent:#FFD76A; --player-contrast:#0d2a43; }
-:root[data-season="autumn"] { --accent-contrast:#fff; --accent-disc:#8E4328; --player-accent:#8E4328; --player-contrast:#fff; }
-:root[data-season="winter"] { --accent-contrast:#0d2a43; --accent-disc:#A8DADC; --player-accent:#A8DADC; --player-contrast:#0d2a43; }
+:root[data-season="spring"] { --accent-contrast:#0d2a43; --accent-disc:#F4A7C1; --accent-text:#9B3F61; --player-accent:#F4A7C1; --player-contrast:#0d2a43; }
+:root[data-season="summer"] { --accent-contrast:#0d2a43; --accent-disc:#FFD76A; --accent-text:#7A5900; --player-accent:#FFD76A; --player-contrast:#0d2a43; }
+:root[data-season="autumn"] { --accent-contrast:#fff; --accent-disc:#8E4328; --accent-text:#8E4328; --player-accent:#8E4328; --player-contrast:#fff; }
+:root[data-season="winter"] { --accent-contrast:#0d2a43; --accent-disc:#A8DADC; --accent-text:#28677D; --player-accent:#A8DADC; --player-contrast:#0d2a43; }
 :root.theme-ready { transition: --accent .45s ease; }
 
 * { box-sizing: border-box; }
@@ -482,7 +483,7 @@ body.route-musync .account-member-icon { color:var(--ink-deep); background:var(-
 .account-logout:hover { transform:translateY(-2px); background:var(--ink-deep); }
 .account-admin-panel { margin-top:14px; padding:20px; border:1px solid color-mix(in srgb,var(--accent) 34%,var(--line)); border-radius:18px; text-align:left; background:color-mix(in srgb,var(--accent) 7%,white); animation:accountAdminPanelIn .42s cubic-bezier(.16,1,.3,1) both; }
 .account-admin-panel[hidden], .account-admin-panel [hidden] { display:none; }
-.account-admin-kicker { margin:0 0 7px!important; color:var(--accent-disc)!important; font-size:9px!important; font-weight:800; letter-spacing:.16em; }
+.account-admin-kicker { margin:0 0 7px!important; color:var(--accent-text)!important; font-size:9px!important; font-weight:800; letter-spacing:.16em; }
 .account-admin-panel h3 { margin:0 0 7px; font:700 20px/1.15 "Manrope",sans-serif; }
 .account-admin-panel p { margin:0; font-size:12px; line-height:1.55; }
 .account-admin-form { margin-top:15px; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:9px; }

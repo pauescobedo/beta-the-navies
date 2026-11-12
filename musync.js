@@ -14,6 +14,7 @@
     fr:{ songs:'Titres', sort:'Trier par', sortTitle:'Titre', sortArtist:'Artiste', sortAlbum:'Album', currentAlbum:'Album actuel', comingSoon:'Bientôt', addCurrentQueue:'Ajouter à la file', openQueue:'Ouvrir la file', nothingPlaying:'Aucune lecture', memberAccess:'Compte Navy', loginCopy:'Connectez-vous avec votre Compte Navy pour ouvrir Musync.', username:'Utilisateur', password:'Mot de passe', enter:'Connexion', loginError:'Utilisateur ou mot de passe incorrect.', backAlbums:'Retour', deleteQuestion:'Voulez-vous supprimer cette playlist ?', deleteConfirm:'Supprimer la playlist', favoriteAlbums:'Albums favoris', favoriteSongs:'Titres favoris', addAlbumFavorite:'Ajouter l’album aux favoris', removeAlbumFavorite:'Retirer l’album des favoris', moveUp:'Monter', moveDown:'Descendre', noPlaylists:'Vous n’avez encore aucune playlist.' },
     it:{ songs:'Brani', sort:'Ordina per', sortTitle:'Titolo', sortArtist:'Artista', sortAlbum:'Album', currentAlbum:'Album attuale', comingSoon:'Prossimamente', addCurrentQueue:'Aggiungi alla coda', openQueue:'Apri coda', nothingPlaying:'Nessun brano in riproduzione', memberAccess:'Account Navy', loginCopy:'Accedi con il tuo Account Navy per aprire Musync.', username:'Utente', password:'Password', enter:'Accedi', loginError:'Utente o password errati.', backAlbums:'Indietro', deleteQuestion:'Vuoi eliminare questa playlist?', deleteConfirm:'Elimina playlist', favoriteAlbums:'Album preferiti', favoriteSongs:'Brani preferiti', addAlbumFavorite:'Aggiungi album ai preferiti', removeAlbumFavorite:'Rimuovi album dai preferiti', moveUp:'Sposta su', moveDown:'Sposta giù', noPlaylists:'Non hai ancora nessuna playlist.' }
   })[language] || {});
+  copy.removeFromList = ({ es:'Quitar de esta playlist', ca:'Treure d’aquesta llista', en:'Remove from this playlist', fr:'Retirer de cette playlist', it:'Rimuovi da questa playlist' })[language] || 'Quitar de esta playlist';
   const rootPath = window.__naviesForcedLanguage ? '../' : '';
   const tracks = [
     { file:'the-navies/shake-it-off', artist:'Taylor Swift', title:'Shake It Off', album:'the-navies', duration:219.246, lyrics:'lyrics/the-navies/shake-it-off.lrc', hasChords:true },
@@ -60,7 +61,7 @@
     <div class="musync-login-gate" hidden><form data-ms-login><span>MUSYNC</span><h1>${copy.memberAccess}</h1><p>${copy.loginCopy}</p><label><span>${copy.username}</span><input name="username" autocomplete="username" autocapitalize="none" required></label><label><span>${copy.password}</span><input name="password" type="password" autocomplete="current-password" required></label><p class="musync-login-error" data-ms-login-error aria-live="polite"></p><button type="submit">${copy.enter}</button></form></div>
     <div class="musync-app" data-ms-app>
       <aside class="musync-player-panel">
-        <div class="musync-cover"><img src="${rootPath}assets/images/musync-cover.png?v=20261112-290" alt="The Navies"></div>
+        <div class="musync-cover"><img src="${rootPath}assets/images/musync-cover.png?v=20261112-291" alt="The Navies"></div>
         <div class="musync-current-copy"><h1><span data-ms-title>The Navies</span></h1><p data-ms-artist>Musync</p></div>
         <div class="musync-timeline"><input data-ms-progress type="range" min="0" max="1000" value="0" aria-label="Progreso"><div><span data-ms-current>0:00</span><span data-ms-duration>0:00</span></div></div>
         <div class="musync-controls">
@@ -109,7 +110,7 @@
       <button class="musync-expanded-back" type="button" aria-label="${copy.back}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v6H3M15 3v6h6M9 21v-6H3m12 6v-6h6"/></svg></button>
       <div class="musync-expanded-grid">
         <div class="musync-expanded-player">
-          <img src="${rootPath}assets/images/musync-cover.png?v=20261112-290" alt="The Navies"><div class="musync-full-title-row"><h2><span data-ms-full-title>The Navies</span></h2><div><button data-ms-full-favorite type="button" aria-label="${copy.addFavorite}">♡</button><button data-ms-full-list type="button" aria-label="${copy.addList}">＋</button></div></div><p data-ms-full-artist>Musync</p>
+          <img src="${rootPath}assets/images/musync-cover.png?v=20261112-291" alt="The Navies"><div class="musync-full-title-row"><h2><span data-ms-full-title>The Navies</span></h2><div><button data-ms-full-favorite type="button" aria-label="${copy.addFavorite}">♡</button><button data-ms-full-list type="button" aria-label="${copy.addList}">＋</button></div></div><p data-ms-full-artist>Musync</p>
           <div class="musync-full-timeline"><input data-ms-full-progress type="range" min="0" max="1000" value="0" aria-label="Progreso"><div><span data-ms-full-current>0:00</span><span data-ms-full-duration>0:00</span></div></div>
           <div class="musync-full-controls">
             <button data-ms-full-shuffle type="button" aria-label="${copy.shuffle}">⇄</button>
@@ -168,7 +169,7 @@
   let seekLyricsFrame;
   let renderedView = '';
   let renderedPlaylist = '';
-  const source = (track) => `${rootPath}audios/${track.file}.mp3?v=20261112-290`;
+  const source = (track) => `${rootPath}audios/${track.file}.mp3?v=20261112-291`;
   const saveUi = () => localStorage.setItem(`the-navies-musync-ui-${memberKey()}`, JSON.stringify({ view, selectedAlbum, selectedPlaylist }));
   function restoreUi() {
     uiState=loadUi();
@@ -239,7 +240,7 @@
     const favoriteButton = `<button class="musync-track-favorite${state.favorites.includes(index)?' is-active':''}" data-ms-favorite-track="${index}" type="button" aria-label="${state.favorites.includes(index)?copy.removeFavorite:copy.addFavorite}">${state.favorites.includes(index)?'♥':'♡'}</button>`;
     if (songsTable) return `<article class="musync-track is-song-table${index === current ? ' is-active' : ''}" data-ms-track="${index}">
       <button class="musync-track-play" data-ms-play="${index}" type="button"><span>${String(position+1).padStart(2,'0')}</span>${svg.play}</button>
-      <img class="musync-track-art" src="${rootPath}${coverFor(track)}?v=20261112-290" alt="">
+      <img class="musync-track-art" src="${rootPath}${coverFor(track)}?v=20261112-291" alt="">
       <button class="musync-table-cell musync-table-title" data-ms-play="${index}" type="button">${escape(track.title)}</button>
       <button class="musync-table-cell" data-ms-play="${index}" type="button">${escape(track.artist)}</button>
       <button class="musync-table-cell" data-ms-play="${index}" type="button">${escape(albumFor(track).title)}</button>
@@ -247,7 +248,7 @@
     </article>`;
     return `<article class="musync-track${index === current ? ' is-active' : ''}${albumDetail?' is-album-track':''}${songsTable?' is-song-table':''}${ordered?' is-orderable':''}" data-ms-track="${index}" data-ms-position="${position}" ${ordered?'draggable="true"':''}>
       <button class="musync-track-play" data-ms-play="${index}" type="button"><span>${String(position+1).padStart(2,'0')}</span>${svg.play}</button>
-      ${albumDetail?'':`<img class="musync-track-art" src="${rootPath}${coverFor(track)}?v=20261112-290" alt="">`}
+      ${albumDetail?'':`<img class="musync-track-art" src="${rootPath}${coverFor(track)}?v=20261112-291" alt="">`}
       <button class="musync-track-copy" data-ms-play="${index}" type="button"><strong>${escape(track.title)}</strong>${songsTable?`<small class="musync-table-artist">${escape(track.artist)}</small><small class="musync-table-album">${escape(albumFor(track).title)}</small>`:`<small>${escape(track.artist)}</small>`}</button>
       ${orderControls}${favoriteButton}<button class="musync-track-more" data-ms-track-menu="${index}" type="button" aria-label="Más opciones"><i></i><i></i><i></i></button>
     </article>`;
@@ -258,7 +259,7 @@
     const favorite=state.favoriteAlbums.includes(album.id);
     if(album.comingSoon)return `<article class="musync-album-card is-coming"><span class="musync-album-placeholder"><b>CC</b></span><span><small>${copy.comingSoon}</small><strong>${escape(album.title)}</strong><em>${copy.comingSoon}</em></span></article>`;
     return `<article class="musync-album-card">
-      <button class="musync-album-open" data-ms-open-album="${album.id}" type="button"><img src="${rootPath}${album.cover}?v=20261112-290" alt="${escape(album.title)}"><span><small data-ms-album-playing="${album.id}" ${isCurrent?'':'hidden'}>${copy.currentAlbum}</small><strong>${escape(album.title)}</strong><em>${count} ${copy.songs.toLocaleLowerCase()}</em></span></button>
+      <button class="musync-album-open" data-ms-open-album="${album.id}" type="button"><img src="${rootPath}${album.cover}?v=20261112-291" alt="${escape(album.title)}"><span><small data-ms-album-playing="${album.id}" ${isCurrent?'':'hidden'}>${copy.currentAlbum}</small><strong>${escape(album.title)}</strong><em>${count} ${copy.songs.toLocaleLowerCase()}</em></span></button>
       <button class="musync-album-favorite${favorite?' is-active':''}" data-ms-favorite-album="${album.id}" type="button" aria-label="${favorite?copy.removeAlbumFavorite:copy.addAlbumFavorite}">${favorite?'♥':'♡'}</button>
     </article>`;
   }
@@ -283,7 +284,7 @@
     if(view==='album') albumsHost.innerHTML=albums.map(albumCard).join('');
     else if(view==='album-detail') {
       const favorite=state.favoriteAlbums.includes(selectedAlbumData.id);
-      albumsHost.innerHTML=`<section class="musync-album-detail"><button class="musync-album-back" data-ms-back-albums type="button" aria-label="${copy.backAlbums}">← <span>${copy.backAlbums}</span></button><img src="${rootPath}${selectedAlbumData.cover}?v=20261112-290" alt="${escape(selectedAlbumData.title)}"><div><small>${copy.album}</small><div class="musync-album-title-row"><h4>${escape(selectedAlbumData.title)}</h4><button class="musync-album-favorite${favorite?' is-active':''}" data-ms-favorite-album="${selectedAlbumData.id}" type="button" aria-label="${favorite?copy.removeAlbumFavorite:copy.addAlbumFavorite}">${favorite?'♥':'♡'}</button></div><p>${escape(selectedAlbumData.artist)} · ${tracks.filter(track=>track.album===selectedAlbum).length} ${copy.songs.toLocaleLowerCase()}</p></div></section>`;
+      albumsHost.innerHTML=`<section class="musync-album-detail"><button class="musync-album-back" data-ms-back-albums type="button" aria-label="${copy.backAlbums}">← <span>${copy.backAlbums}</span></button><img src="${rootPath}${selectedAlbumData.cover}?v=20261112-291" alt="${escape(selectedAlbumData.title)}"><div><small>${copy.album}</small><div class="musync-album-title-row"><h4>${escape(selectedAlbumData.title)}</h4><button class="musync-album-favorite${favorite?' is-active':''}" data-ms-favorite-album="${selectedAlbumData.id}" type="button" aria-label="${favorite?copy.removeAlbumFavorite:copy.addAlbumFavorite}">${favorite?'♥':'♡'}</button></div><p>${escape(selectedAlbumData.artist)} · ${tracks.filter(track=>track.album===selectedAlbum).length} ${copy.songs.toLocaleLowerCase()}</p></div></section>`;
     } else {
       const favoriteAlbums=state.favoriteAlbums.map(id=>albums.find(album=>album.id===id)).filter(Boolean);
       albumsHost.innerHTML=`<section class="musync-favorite-albums"><h4>${copy.favoriteAlbums}</h4><div>${favoriteAlbums.length?favoriteAlbums.map(albumCard).join(''):`<p class="musync-empty">${copy.empty}</p>`}</div></section>`;
@@ -332,7 +333,7 @@
     $('[data-ms-full-duration]').textContent = track ? time(Number.isFinite(audio.duration) ? audio.duration : track.duration) : '0:00';
     const playing = current >= 0 && !audio.paused;
     page.querySelectorAll('[data-ms-album-playing]').forEach(label=>{label.hidden=current<0||label.dataset.msAlbumPlaying!==track?.album;});
-    const cover = track ? `${rootPath}${coverFor(track)}?v=20261112-290` : `${rootPath}assets/images/musync-cover.png?v=20261112-290`;
+    const cover = track ? `${rootPath}${coverFor(track)}?v=20261112-291` : `${rootPath}assets/images/musync-cover.png?v=20261112-291`;
     const sideCover = $('.musync-cover img'); if(sideCover)sideCover.src=cover;
     const fullCover = $('.musync-expanded-player > img'); if(fullCover)fullCover.src=cover;
     $('[data-ms-toggle]').innerHTML = playing ? svg.pause : svg.play;
@@ -429,7 +430,7 @@
     $('[data-ms-resync]').hidden = true;
     if (!track?.lyrics) { lyricsHost.innerHTML = `<p class="musync-no-lyrics">${copy.noLyrics}</p>`; return; }
     try {
-      const text = await fetch(`${rootPath}${track.lyrics}?v=20261112-290`, {cache:'force-cache'}).then(response => response.text());
+      const text = await fetch(`${rootPath}${track.lyrics}?v=20261112-291`, {cache:'force-cache'}).then(response => response.text());
       lyricLines = text.split(/\r?\n/).map(line => {
         const match = line.match(/^\[(?:(\d+):)?(\d+):(\d+(?:\.\d+)?)\]\s*(.*)$/);
         return match ? { time:Number(match[1]||0)*3600+Number(match[2])*60+Number(match[3]), text:match[4] } : null;
@@ -481,7 +482,10 @@
     }
   }
   function openMenu(button,index) {
-    menu.innerHTML = `<button data-ms-action="open-playlists" data-index="${index}">${svg.list}<span>${copy.addList}</span></button>${view==='queue'?`<button data-ms-action="remove-queue" data-index="${index}"><b class="musync-menu-symbol">×</b><span>${copy.removeQueue||copy.remove}</span></button>`:`<button data-ms-action="next" data-index="${index}">${svg.next}<span>${copy.playNext}</span></button><button data-ms-action="queue" data-index="${index}">${svg.queue}<span>${copy.addQueue}</span></button>`}`;
+    const removeFromPlaylist = view==='playlists'&&selectedPlaylist
+      ? `<button data-ms-action="remove-list-item" data-index="${index}" data-list="${encodeURIComponent(selectedPlaylist)}"><b class="musync-menu-symbol">×</b><span>${selectedPlaylist==='__favorites__'?copy.removeFavorite:copy.removeFromList}</span></button>`
+      : '';
+    menu.innerHTML = `${removeFromPlaylist}<button data-ms-action="open-playlists" data-index="${index}">${svg.list}<span>${copy.addList}</span></button>${view==='queue'?`<button data-ms-action="remove-queue" data-index="${index}"><b class="musync-menu-symbol">×</b><span>${copy.removeQueue||copy.remove}</span></button>`:`<button data-ms-action="next" data-index="${index}">${svg.next}<span>${copy.playNext}</span></button><button data-ms-action="queue" data-index="${index}">${svg.queue}<span>${copy.addQueue}</span></button>`}`;
     positionMenu(button);
   }
   function openListDialog(name='') {
@@ -567,7 +571,6 @@
       expanded.dataset.lyricActive='';
       audio.addEventListener('seeked',()=>{syncLyrics(true);persistPlaybackPosition();},{once:true});
       audio.currentTime=Math.max(0,Math.min(targetTime,Number.isFinite(audio.duration)?audio.duration:targetTime));
-      if(audio.paused)audio.play().catch(()=>{});
       return;
     }
     if (!event.target.closest('[data-ms-menu]')) menu.hidden=true;
@@ -619,6 +622,11 @@
     if(action==='next'){rememberQueueReturn();state.queue=[index,...state.queue];}
     if(action==='queue'){rememberQueueReturn();state.queue.push(index);}
     if(action==='remove-queue'){const position=state.queue.indexOf(index);if(position>=0)state.queue.splice(position,1);}
+    if(action==='remove-list-item'){
+      const name=decodeURIComponent(button.dataset.list);
+      if(name==='__favorites__')state.favorites=state.favorites.filter(item=>item!==index);
+      else if(state.playlists[name])state.playlists[name]=state.playlists[name].filter(item=>item!==index);
+    }
     if(action==='playlist'){const name=decodeURIComponent(button.dataset.list);state.playlists[name]=state.playlists[name].includes(index)?state.playlists[name].filter(i=>i!==index):[...state.playlists[name],index];}
     save();menu.hidden=true;render();
   });
