@@ -29,11 +29,75 @@
     { file:'cor-band/mystical-magical', artist:'Benson Boone', title:'Mystical Magical', album:'cor-band', duration:165.773, lyrics:'lyrics/cor-band/mystical-magical.lrc' },
     { file:'cor-band/texas-hold-em', artist:'Beyoncé', title:'Texas Hold ’Em', album:'cor-band', duration:233.535, lyrics:'lyrics/cor-band/texas-hold-em.lrc' },
     { file:'cor-band/training-season', artist:'Dua Lipa', title:'Training Season', album:'cor-band', duration:209.528, lyrics:'lyrics/cor-band/training-season.lrc' },
-    { file:'cor-band/livin-on-a-prayer', artist:'Bon Jovi', title:'Livin’ On A Prayer', album:'cor-band', duration:288.549, lyrics:'lyrics/cor-band/livin-on-a-prayer.lrc' }
+    { file:'cor-band/livin-on-a-prayer', artist:'Bon Jovi', title:'Livin’ On A Prayer', album:'cor-band', duration:288.549, lyrics:'lyrics/cor-band/livin-on-a-prayer.lrc' },
+    { file:"summer-sound-1/1-01 Under The Bridge", ext:'mp3', artist:'Red Hot Chili Peppers', title:'Under the Bridge', album:'summer-sound-1', duration:185.52, disc:1, trackNo:1 },
+    { file:"summer-sound-1/1-02 Summer Nights", ext:'mp3', artist:'John Travolta & Olivia Newton-John', title:'Summer Nights', album:'summer-sound-1', duration:150.96, disc:1, trackNo:2 },
+    { file:"summer-sound-1/1-07 Bohemian Rhapsody", ext:'mp3', artist:'Queen', title:'Bohemian Rhapsody', album:'summer-sound-1', duration:369.998, disc:1, trackNo:7 },
+    { file:"summer-sound-1/2-03 Stairway To Heaven", ext:'mp3', artist:'Led Zeppelin', title:'Stairway to Heaven', album:'summer-sound-1', duration:239.088, disc:2, trackNo:3 },
+    { file:"summer-sound-1/2-04 The Lazy Song", ext:'mp3', artist:'Bruno Mars', title:'The Lazy Song', album:'summer-sound-1', duration:184.824, disc:2, trackNo:4 },
+    { file:"summer-sound-1/3-05 I Shot The Sheriff", ext:'mp3', artist:'Bob Marley & The Wailers', title:'I Shot the Sheriff', album:'summer-sound-1', duration:224.208, disc:3, trackNo:5 },
+    { file:"summer-sound-1/3-06 I Want It All", ext:'mp3', artist:'Queen', title:'I Want It All', album:'summer-sound-1', duration:147.552, disc:3, trackNo:6 },
+    { file:"summer-sound-2/1-01 C-Jam Blues", ext:'mp3', artist:'Duke Ellington', title:'C-Jam Blues', album:'summer-sound-2', duration:144.509, disc:1, trackNo:1 },
+    { file:"summer-sound-2/1-02 We Are The Champions", ext:'mp3', artist:'Queen', title:'We Are the Champions', album:'summer-sound-2', duration:153.339, disc:1, trackNo:2 },
+    { file:"summer-sound-2/2-03 Hotel California", ext:'mp3', artist:'Eagles', title:'Hotel California', album:'summer-sound-2', duration:202.58, disc:2, trackNo:3 },
+    { file:"summer-sound-2/2-04 Billionaire", ext:'mp3', artist:'Travie McCoy feat. Bruno Mars', title:'Billionaire', album:'summer-sound-2', duration:172.513, disc:2, trackNo:4 },
+    { file:"summer-sound-2/2-05 I'm A Beliver", ext:'mp3', artist:'The Monkees', title:'I’m a Believer', album:'summer-sound-2', duration:160, disc:2, trackNo:5 },
+    { file:"summer-sound-2/3-06 Billie Jean", ext:'mp3', artist:'Michael Jackson', title:'Billie Jean', album:'summer-sound-2', duration:185.809, disc:3, trackNo:6 },
+    { file:"summer-sound-2/3-07 He's A Pirate", ext:'mp3', artist:'Klaus Badelt', title:'He’s a Pirate', album:'summer-sound-2', duration:52.767, disc:3, trackNo:7 },
+    { file:"summer-sound-2/3-08 Wake Me Up", ext:'mp3', artist:'Avicii', title:'Wake Me Up', album:'summer-sound-2', duration:206.942, disc:3, trackNo:8 },
+    { file:"summer-sound-2/3-09 We Will Rock You", ext:'mp3', artist:'Queen', title:'We Will Rock You', album:'summer-sound-2', duration:88.372, disc:3, trackNo:9 },
+    { file:"summer-sound-3/1-01 Bella Ciao (Remix)", ext:'m4a', artist:'Tradicional italiana', title:'Bella Ciao (Remix)', album:'summer-sound-3', duration:36.971, disc:1, trackNo:1 },
+    { file:"summer-sound-3/1-02 La Cucaracha", ext:'m4a', artist:'Tradicional mexicana', title:'La Cucaracha', album:'summer-sound-3', duration:113.13, disc:1, trackNo:2 },
+    { file:"summer-sound-3/1-03 Still Got The Blues", ext:'m4a', artist:'Gary Moore', title:'Still Got the Blues', album:'summer-sound-3', duration:246.608, disc:1, trackNo:3 },
+    { file:"summer-sound-3/1-04 Sunny", ext:'m4a', artist:'Bobby Hebb', title:'Sunny', album:'summer-sound-3', duration:178.632, disc:1, trackNo:4 },
+    { file:"summer-sound-3/1-05 Waka Waka", ext:'m4a', artist:'Shakira', title:'Waka Waka', album:'summer-sound-3', duration:164.215, disc:1, trackNo:5 },
+    { file:"summer-sound-3/2-06 A Hard Day's Night", ext:'m4a', artist:'The Beatles', title:'A Hard Day’s Night', album:'summer-sound-3', duration:154.539, disc:2, trackNo:6 },
+    { file:"summer-sound-3/2-07 Livin' On A Prayer", ext:'m4a', artist:'Bon Jovi', title:'Livin’ on a Prayer', album:'summer-sound-3', duration:211.799, disc:2, trackNo:7 },
+    { file:"summer-sound-3/3-08 Boig Per Tu", ext:'m4a', artist:'Sau', title:'Boig per Tu', album:'summer-sound-3', duration:165.072, disc:3, trackNo:8 },
+    { file:"summer-sound-3/3-09 I Want To Break Free", ext:'m4a', artist:'Queen', title:'I Want to Break Free', album:'summer-sound-3', duration:188.773, disc:3, trackNo:9 },
+    { file:"summer-sound-3/4-10 Sultans Of Swing", ext:'m4a', artist:'Dire Straits', title:'Sultans of Swing', album:'summer-sound-3', duration:227.036, disc:4, trackNo:10 },
+    { file:"summer-sound-3/4-11 Sweet Home Alabama", ext:'m4a', artist:'Lynyrd Skynyrd', title:'Sweet Home Alabama', album:'summer-sound-3', duration:220.209, disc:4, trackNo:11 },
+    { file:"summer-sound-3/4-12 Could You Be Loved", ext:'m4a', artist:'Bob Marley & The Wailers', title:'Could You Be Loved', album:'summer-sound-3', duration:214.852, disc:4, trackNo:12 },
+    { file:"summer-sound-3/4-13 Walk Of Life", ext:'m4a', artist:'Dire Straits', title:'Walk of Life', album:'summer-sound-3', duration:199.527, disc:4, trackNo:13 },
+    { file:"summer-sound-4/1-04 Have You Ever Seen The Rain_", ext:'m4a', artist:'Creedence Clearwater Revival', title:'Have You Ever Seen the Rain?', album:'summer-sound-4', duration:150.847, disc:1, trackNo:4 },
+    { file:"summer-sound-4/4-22 Bohemian Rhapsody", ext:'mp3', artist:'Queen', title:'Bohemian Rhapsody', album:'summer-sound-4', duration:261.024, disc:4, trackNo:22 },
+    { file:"summer-sound-4/5-31 Hoguera - Have You Ever Seen The Rain_", ext:'m4a', artist:'Creedence Clearwater Revival', title:'Hoguera — Have You Ever Seen the Rain?', album:'summer-sound-4', duration:139.945, disc:5, trackNo:31 },
+    { file:"summer-sound-4/All My Loving", ext:'m4a', artist:'The Beatles', title:'All My Loving', album:'summer-sound-4', duration:9.234 },
+    { file:"summer-sound-4/Basket Case", ext:'m4a', artist:'Green Day', title:'Basket Case', album:'summer-sound-4', duration:29.244 },
+    { file:"summer-sound-4/Billie Jean", ext:'m4a', artist:'Michael Jackson', title:'Billie Jean', album:'summer-sound-4', duration:40.082 },
+    { file:"summer-sound-4/C-Jam Blues", ext:'m4a', artist:'Duke Ellington', title:'C-Jam Blues', album:'summer-sound-4', duration:132.82 },
+    { file:"summer-sound-4/Caminem Lluny", ext:'m4a', artist:'Doctor Prats', title:'Caminem Lluny', album:'summer-sound-4', duration:73.618 },
+    { file:"summer-sound-4/De Ellos Aprendí", ext:'m4a', artist:'David Rees', title:'De Ellos Aprendí', album:'summer-sound-4', duration:66.62 },
+    { file:"summer-sound-4/Die With A Smile", ext:'m4a', artist:'Lady Gaga & Bruno Mars', title:'Die With a Smile', album:'summer-sound-4', duration:23.335 },
+    { file:"summer-sound-4/Don't Look Back In Anger", ext:'m4a', artist:'Oasis', title:'Don’t Look Back in Anger', album:'summer-sound-4', duration:245.631 },
+    { file:"summer-sound-4/Espresso", ext:'m4a', artist:'Sabrina Carpenter', title:'Espresso', album:'summer-sound-4', duration:4.69 },
+    { file:"summer-sound-4/Every Breath You Take", ext:'m4a', artist:'The Police', title:'Every Breath You Take', album:'summer-sound-4', duration:33.98 },
+    { file:"summer-sound-4/Golden", ext:'m4a', artist:'HUNTR/X', title:'Golden', album:'summer-sound-4', duration:25.746 },
+    { file:"summer-sound-4/I Knew It, I Knew You", ext:'m4a', artist:'Gracie Abrams', title:'I Knew It, I Know You', album:'summer-sound-4', duration:3.09 },
+    { file:"summer-sound-4/I Want It That Way", ext:'m4a', artist:'Backstreet Boys', title:'I Want It That Way', album:'summer-sound-4', duration:126.207 },
+    { file:"summer-sound-4/I'm A Believer", ext:'m4a', artist:'The Monkees', title:'I’m a Believer', album:'summer-sound-4', duration:15.826 },
+    { file:"summer-sound-4/La Cucaracha", ext:'m4a', artist:'Tradicional mexicana', title:'La Cucaracha', album:'summer-sound-4', duration:92.223 },
+    { file:"summer-sound-4/Livin' On A Prayer", ext:'m4a', artist:'Bon Jovi', title:'Livin’ on a Prayer', album:'summer-sound-4', duration:254.975 },
+    { file:"summer-sound-4/Rivers of Babylon", ext:'m4a', artist:'Boney M.', title:'Rivers of Babylon', album:'summer-sound-4', duration:124.009 },
+    { file:"summer-sound-4/Roar", ext:'m4a', artist:'Katy Perry', title:'Roar', album:'summer-sound-4', duration:59.388 },
+    { file:"summer-sound-4/Rock You Like A Hurricane", ext:'m4a', artist:'Scorpions', title:'Rock You Like a Hurricane', album:'summer-sound-4', duration:243.561 },
+    { file:"summer-sound-4/Runaway", ext:'m4a', artist:'AURORA', title:'Runaway', album:'summer-sound-4', duration:54.61 },
+    { file:"summer-sound-4/Shake It Off", ext:'m4a', artist:'Taylor Swift', title:'Shake It Off', album:'summer-sound-4', duration:2.919 },
+    { file:"summer-sound-4/Sweet Caroline", ext:'m4a', artist:'Neil Diamond', title:'Sweet Caroline', album:'summer-sound-4', duration:59.559 },
+    { file:"summer-sound-4/The Final Countdown", ext:'m4a', artist:'Europe', title:'The Final Countdown', album:'summer-sound-4', duration:293.588 },
+    { file:"summer-sound-4/The Lion Sleeps Tonight", ext:'m4a', artist:'The Tokens', title:'The Lion Sleeps Tonight', album:'summer-sound-4', duration:101.972 },
+    { file:"summer-sound-4/Under Pressure", ext:'m4a', artist:'Queen & David Bowie', title:'Under Pressure', album:'summer-sound-4', duration:62.951 },
+    { file:"summer-sound-4/Waka Waka", ext:'m4a', artist:'Shakira', title:'Waka Waka', album:'summer-sound-4', duration:8.892 },
+    { file:"summer-sound-4/We Will Rock You", ext:'m4a', artist:'Queen', title:'We Will Rock You', album:'summer-sound-4', duration:78.121 },
+    { file:"summer-sound-4/When The Saints Go Marching In", ext:'m4a', artist:'Tradicional', title:'When the Saints Go Marching In', album:'summer-sound-4', duration:86.484 }
   ];
   const albums = [
-    { id:'the-navies', title:'The Navies', artist:'The Navies', cover:'assets/images/musync-cover.png' },
-    { id:'cor-band', title:'Cor-Band', artist:'Cor-Band', cover:'assets/images/cor-band-cover.png' }
+    { id:'the-navies', title:'The Navies', artist:'The Navies', category:'sagrera', cover:'assets/images/musync-cover.png' },
+    { id:'cor-band', title:'Cor-Band', artist:'Cor-Band', category:'sagrera', cover:'assets/images/cor-band-cover.png' },
+    { id:'summer-sound-1', title:'Summer Sound 1', artist:'Summer Sound', category:'summer', cover:'assets/images/summer-sound-1-cover.png' },
+    { id:'summer-sound-2', title:'Summer Sound 2', artist:'Summer Sound', category:'summer', cover:'assets/images/summer-sound-2-cover.png' },
+    { id:'summer-sound-3', title:'Summer Sound 3', artist:'Summer Sound', category:'summer', cover:'assets/images/summer-sound-3-cover.png' },
+    { id:'summer-sound-4', title:'Summer Sound 4', artist:'Summer Sound', category:'summer', cover:'assets/images/summer-sound-4-cover.png' }
   ];
   const albumFor = track => albums.find(album=>album.id===track?.album) || albums[0];
   const coverFor = track => albumFor(track).cover || 'assets/images/musync-cover.png';
@@ -170,7 +234,7 @@
   let seekLyricsFrame;
   let renderedView = '';
   let renderedPlaylist = '';
-  const source = (track) => `${rootPath}audios/${track.file}.mp3?v=20261112-292`;
+  const source = (track) => `${rootPath}audios/${track.file}.${track.ext || 'mp3'}?v=20261112-293`;
   const saveUi = () => localStorage.setItem(`the-navies-musync-ui-${memberKey()}`, JSON.stringify({ view, selectedAlbum, selectedPlaylist, albumReturnView }));
   function restoreUi() {
     uiState=loadUi();
@@ -230,7 +294,7 @@
     if (view === 'queue') return state.queue;
     if (view === 'playlists') return selectedPlaylist === '__favorites__' ? state.favorites : (selectedPlaylist ? (state.playlists[selectedPlaylist] || []) : []);
     if (view === 'album') return [];
-    if (view === 'album-detail') return tracks.map((_,index)=>index).filter(index=>tracks[index].album===selectedAlbum);
+    if (view === 'album-detail') return tracks.map((_,index)=>index).filter(index=>tracks[index].album===selectedAlbum).sort((a,b)=>(tracks[a].disc||0)-(tracks[b].disc||0)||(tracks[a].trackNo||a)-(tracks[b].trackNo||b));
     return tracks.map((_,index) => index);
   }
   function trackRow(index, position) {
@@ -249,7 +313,7 @@
       ${favoriteButton}<button class="musync-track-more" data-ms-track-menu="${index}" type="button" aria-label="Más opciones"><i></i><i></i><i></i></button>
     </article>`;
     return `<article class="musync-track${index === current ? ' is-active' : ''}${albumDetail?' is-album-track':''}${songsTable?' is-song-table':''}${ordered?' is-orderable':''}" data-ms-track="${index}" data-ms-position="${position}" ${ordered?'draggable="true"':''}>
-      <button class="musync-track-play" data-ms-play="${index}" type="button"><span>${String(position+1).padStart(2,'0')}</span>${svg.play}</button>
+      <button class="musync-track-play" data-ms-play="${index}" type="button"><span>${albumDetail&&track.disc&&track.trackNo?`${track.disc}-${String(track.trackNo).padStart(2,'0')}`:String(position+1).padStart(2,'0')}</span>${svg.play}</button>
       ${albumDetail?'':`<img class="musync-track-art" src="${rootPath}${coverFor(track)}?v=20261112-291" alt="">`}
       <button class="musync-track-copy" data-ms-play="${index}" type="button"><strong>${escape(track.title)}</strong>${songsTable?`<small class="musync-table-artist">${escape(track.artist)}</small><small class="musync-table-album">${escape(albumFor(track).title)}</small>`:`<small>${escape(track.artist)}</small>`}</button>
       ${orderControls}${favoriteButton}<button class="musync-track-more" data-ms-track-menu="${index}" type="button" aria-label="Más opciones"><i></i><i></i><i></i></button>
