@@ -461,7 +461,8 @@
       resetLyricsToPlayback();
     }
     addRecent(index);
-    try { await audio.play(); window.naviesPauseSiteMusicForNavyAudio?.(); } catch (_) {}
+    window.naviesPauseSiteMusicForNavyAudio?.({ immediate:true });
+    try { await audio.play(); } catch (_) {}
     render();
   }
   const sequenceForPlayback = () => playbackSequence.length ? playbackSequence : tracks.map((_,index)=>index);
@@ -486,7 +487,17 @@
     if (state.shuffle) return shuffledNext();
     return followingInSequence(current,state.repeat==='list');
   }
+  function closeExpandedPlayer(){
+    if(expanded.hidden||expanded.classList.contains('is-closing'))return;
+    expanded.classList.add('is-closing');
+    window.setTimeout(()=>{
+      expanded.hidden=true;
+      expanded.classList.remove('is-closing');
+      document.body.classList.remove('musync-expanded-open');
+    },260);
+  }
   function clearPlayback(){
+    closeExpandedPlayer();
     audio.pause();audio.removeAttribute('src');audio.load();current=-1;state.currentTrack=-1;state.currentTime=0;trackVersion='original';lyricLines=[];save();render();
   }
   function next() { const index = nextIndex(); if (index >= 0) play(index,false); else clearPlayback(); }
@@ -536,8 +547,9 @@
     const line=lyricLines[activeIndex];
     if(!line)return '';
     const group=lyricLines.map((item,index)=>({item,index})).filter(entry=>entry.item.displayIndex===line.displayIndex);
-    const chords=line.text.replace(/^\s*♪\s*/,'').split('\n').map(lyricMarkup).join('<br>');
-    return `<span class="musync-instrumental"><span class="musync-instrumental-chords">${chords}</span><span class="musync-cue-dots">${group.map(entry=>`<span class="musync-cue-dot" data-ms-cue-target="${entry.index}" aria-label="${entry.index-line.displayIndex+1}"><i></i></span>`).join('')}</span></span>`;
+    const chordSource=line.text.replace(/^\s*♪\s*/,'').trim();
+    const chords=chordSource.split('\n').map(lyricMarkup).join('<br>');
+    return `<span class="musync-instrumental${chordSource?'':' no-chords'}">${chordSource?`<span class="musync-instrumental-chords">${chords}</span>`:''}<span class="musync-cue-dots">${group.map(entry=>`<span class="musync-cue-dot" data-ms-cue-target="${entry.index}" aria-label="${entry.index-line.displayIndex+1}"><i></i></span>`).join('')}</span></span>`;
   }
   async function loadLyrics() {
     const track = tracks[current];
@@ -585,9 +597,11 @@
         dot.classList.add('is-leaving');
         dot.classList.remove('is-complete','is-current');
         setTimeout(()=>{
-          dot.classList.remove('is-leaving');
+          dot.classList.add('is-resetting');
           dot.style.setProperty('--cue-progress','0');
           dot.style.setProperty('--cue-leave-progress','0');
+          dot.classList.remove('is-leaving');
+          requestAnimationFrame(()=>requestAnimationFrame(()=>dot.classList.remove('is-resetting')));
         },320);
       }
     });
@@ -761,7 +775,7 @@
       requestAnimationFrame(syncPlayer);
       return;
     }
-    if (event.target.closest('.musync-expanded-back')) { expanded.classList.add('is-closing'); setTimeout(()=>{expanded.hidden=true;expanded.classList.remove('is-closing');document.body.classList.remove('musync-expanded-open');},260); return; }
+    if (event.target.closest('.musync-expanded-back')) { closeExpandedPlayer(); return; }
     const cue=event.target.closest('[data-ms-cue-target]');
     if(cue){
       const cueTime=lyricLines[Number(cue.dataset.msCueTarget)]?.time;
@@ -870,12 +884,12 @@
   $('[data-ms-full-favorite]').addEventListener('click',()=>{if(current<0)return;state.favorites=state.favorites.includes(current)?state.favorites.filter(i=>i!==current):[...state.favorites,current];save();render();});
   function togglePlaybackForView(){
     if(!audio.paused){audio.pause();return;}
+    if(current>=0){audio.play().catch(()=>{});return;}
     if(view==='album'||view==='queue'||(view==='playlists'&&!selectedPlaylist))return;
     const visible=[...tracksHost.querySelectorAll('[data-ms-track]')].map(row=>Number(row.dataset.msTrack));
     if(!visible.length)return;
     playbackSequence=visible;shufflePool=[];queueReturnIndex=-1;
-    if(current>=0&&visible.includes(current))audio.play().catch(()=>{});
-    else play(visible[0],true,visible);
+    play(visible[0],true,visible);
   }
   $('[data-ms-toggle]').addEventListener('click',togglePlaybackForView);
   window.addEventListener('keydown',event=>{
@@ -967,7 +981,7 @@
   }
   audio.addEventListener('timeupdate',updatePlaybackPosition);
   audio.addEventListener('loadedmetadata',()=>{syncPlayer();updatePlaybackPosition();});
-  audio.addEventListener('play',()=>{syncPlayer();startPlaybackClock();});
+  audio.addEventListener('play',()=>{window.naviesPauseSiteMusicForNavyAudio?.({ immediate:true });syncPlayer();startPlaybackClock();});
   audio.addEventListener('pause',()=>{stopPlaybackClock();updatePlaybackPosition();if(current>=0){state.currentTrack=current;state.currentTime=audio.currentTime;save();}syncPlayer();});
   audio.addEventListener('ended',()=>{stopPlaybackClock();next();});
   $('[data-ms-full-toggle]').addEventListener('click',togglePlaybackForView);
@@ -976,6 +990,13 @@
   $('[data-ms-full-repeat]').addEventListener('click',()=>{state.repeat=state.repeat==='off'?'list':state.repeat==='list'?'one':'off';save();syncPlayer();});
   const launch=document.querySelector('.musyc-launch');
   launch?.addEventListener('click',()=>window.naviesOpenRoute?.('musync'));
+  window.naviesIsMusyncPlaying=()=>!audio.paused&&current>=0;
+  window.naviesStopMusyncForSiteMusic=()=>{
+    if(audio.paused||current<0)return false;
+    persistPlaybackPosition(true);
+    audio.pause();
+    return true;
+  };
   function syncAccess(){
     state=loadState();restoreUi();volume.value=String(Number.isFinite(Number(state.volume))?state.volume:1);audio.volume=Number(volume.value);$('[data-ms-full-volume]').value=volume.value;paintRange(volume,audio.volume);paintRange($('[data-ms-full-volume]'),audio.volume);
     const loggedIn=Boolean(window.naviesCurrentMember?.());
@@ -997,8 +1018,11 @@
   });
   window.addEventListener('navies-auth-change',syncAccess);
   window.addEventListener('navies-route-change',event=>{
-    if(event.detail?.route==='musync') { window.naviesPauseSiteMusicForNavyAudio?.(); render(); }
-    else if(!audio.paused){audio.pause();window.naviesResumeSiteMusicAfterNavyAudio?.();}
+    if(event.detail?.route==='musync') { window.naviesPauseSiteMusicForNavyAudio?.({ immediate:true }); render(); }
+    else {
+      if(!audio.paused)audio.pause();
+      window.naviesResumeSiteMusicAfterNavyAudio?.({ force:true });
+    }
   });
   const persistAndPause=()=>{persistPlaybackPosition(true);audio.pause();};
   window.addEventListener('pagehide',persistAndPause);

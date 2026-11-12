@@ -1162,18 +1162,33 @@ function fadeSiteMusicIn(duration = 2000) {
 }
 
 let siteMusicInterruptedByNavyAudio = false;
-window.naviesPauseSiteMusicForNavyAudio = function naviesPauseSiteMusicForNavyAudio() {
-  if (siteMusicIndex < 0 || siteMusicAudio.paused || siteMusicInterruptedByNavyAudio) return;
+window.naviesPauseSiteMusicForNavyAudio = function naviesPauseSiteMusicForNavyAudio(options = {}) {
+  const immediate = options.immediate === true;
+  if (siteMusicIndex < 0 || siteMusicAudio.paused) return;
+  if (siteMusicInterruptedByNavyAudio && !immediate) return;
   siteMusicInterruptedByNavyAudio = true;
-  fadeSiteMusicOut(() => {
+  if (immediate) {
+    if (siteMusicFadeFrame !== null) cancelAnimationFrame(siteMusicFadeFrame);
+    siteMusicFadeFrame = null;
     siteMusicAudio.pause();
+    setAudioLevel(siteMusicAudio, siteMusicVolume);
+    updateSiteMusicUI();
+    return;
+  }
+  fadeSiteMusicOut(() => {
+    if (!siteMusicInterruptedByNavyAudio) return;
+    siteMusicAudio.pause();
+    setAudioLevel(siteMusicAudio, siteMusicVolume);
     updateSiteMusicUI();
   }, 650);
 };
 
-window.naviesResumeSiteMusicAfterNavyAudio = function naviesResumeSiteMusicAfterNavyAudio() {
+window.naviesResumeSiteMusicAfterNavyAudio = function naviesResumeSiteMusicAfterNavyAudio(options = {}) {
   if (!siteMusicInterruptedByNavyAudio || siteMusicIndex < 0) return;
+  if (!options.force && (document.documentElement.dataset.route === 'musync' || window.naviesIsMusyncPlaying?.())) return;
   siteMusicInterruptedByNavyAudio = false;
+  if (siteMusicFadeFrame !== null) cancelAnimationFrame(siteMusicFadeFrame);
+  siteMusicFadeFrame = null;
   ensureAudioGain(siteMusicAudio);
   resumeNaviesAudio();
   setAudioLevel(siteMusicAudio, 0);
@@ -1261,7 +1276,9 @@ siteMusicProgress.addEventListener('input', () => {
   siteMusicAudio.currentTime = (Number(siteMusicProgress.value) / 1000) * siteMusicAudio.duration;
 });
 function toggleSiteMusicPlayback() {
-  const reclaimedFromNavyAudio = window.naviesStopNavyAudioForSiteMusic?.() === true;
+  const stoppedScoreAudio = window.naviesStopNavyAudioForSiteMusic?.() === true;
+  const stoppedMusync = window.naviesStopMusyncForSiteMusic?.() === true;
+  const reclaimedFromNavyAudio = stoppedScoreAudio || stoppedMusync;
   if (reclaimedFromNavyAudio) {
     siteMusicInterruptedByNavyAudio = false;
     if (siteMusicFadeFrame !== null) cancelAnimationFrame(siteMusicFadeFrame);
@@ -1307,7 +1324,13 @@ function toggleSiteMusicPlayback() {
 }
 siteMusicToggle.addEventListener('click', toggleSiteMusicPlayback);
 footerQuickToggle.addEventListener('click', toggleSiteMusicPlayback);
-siteMusicAudio.addEventListener('play', updateSiteMusicUI);
+siteMusicAudio.addEventListener('play', () => {
+  if (window.naviesIsMusyncPlaying?.()) {
+    siteMusicAudio.pause();
+    return;
+  }
+  updateSiteMusicUI();
+});
 siteMusicAudio.addEventListener('pause', updateSiteMusicUI);
 siteMusicAudio.addEventListener('timeupdate', () => {
   if (siteMusicIndex < 0) return;
