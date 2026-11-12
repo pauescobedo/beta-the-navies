@@ -156,6 +156,7 @@
   let current = -1;
   let view = ['album','album-detail','songs','recent','favorites','playlists','queue'].includes(uiState.view) ? uiState.view : 'album';
   let selectedAlbum = albums.some(album=>album.id===uiState.selectedAlbum) ? uiState.selectedAlbum : 'the-navies';
+  let albumReturnView = uiState.albumReturnView === 'favorites' ? 'favorites' : 'album';
   let selectedPlaylist = uiState.selectedPlaylist || '';
   let editingPlaylist = '';
   let pendingPlaylistTrack = -1;
@@ -169,12 +170,13 @@
   let seekLyricsFrame;
   let renderedView = '';
   let renderedPlaylist = '';
-  const source = (track) => `${rootPath}audios/${track.file}.mp3?v=20261112-291`;
-  const saveUi = () => localStorage.setItem(`the-navies-musync-ui-${memberKey()}`, JSON.stringify({ view, selectedAlbum, selectedPlaylist }));
+  const source = (track) => `${rootPath}audios/${track.file}.mp3?v=20261112-292`;
+  const saveUi = () => localStorage.setItem(`the-navies-musync-ui-${memberKey()}`, JSON.stringify({ view, selectedAlbum, selectedPlaylist, albumReturnView }));
   function restoreUi() {
     uiState=loadUi();
     view=['album','album-detail','songs','recent','favorites','playlists','queue'].includes(uiState.view)?uiState.view:'album';
     selectedAlbum=albums.some(album=>album.id===uiState.selectedAlbum)?uiState.selectedAlbum:'the-navies';
+    albumReturnView=uiState.albumReturnView==='favorites'?'favorites':'album';
     selectedPlaylist=uiState.selectedPlaylist||'';
   }
   function restoreSavedTrack() {
@@ -266,7 +268,7 @@
   function render() {
     if(view==='playlists'&&selectedPlaylist&&selectedPlaylist!=='__favorites__'&&!state.playlists[selectedPlaylist])selectedPlaylist='';
     saveUi();
-    page.querySelectorAll('[data-ms-view]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.msView === view || (view==='album-detail'&&button.dataset.msView==='album'))));
+    page.querySelectorAll('[data-ms-view]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.msView === view || (view==='album-detail'&&button.dataset.msView===albumReturnView))));
     const selectedAlbumData = albums.find(album=>album.id===selectedAlbum) || albums[0];
     const headings = { album:copy.albums, 'album-detail':selectedAlbumData.title, songs:copy.songs, favorites:copy.favorites, recent:copy.recent, playlists:copy.playlists, queue:copy.queue };
     $('[data-ms-heading]').textContent = headings[view];
@@ -517,10 +519,10 @@
     const viewButton = event.target.closest('[data-ms-view]');
     if (viewButton) { view=viewButton.dataset.msView; if(view!=='playlists') selectedPlaylist=''; render(); return; }
     const albumButton = event.target.closest('[data-ms-open-album]');
-    if (albumButton) { selectedAlbum=albumButton.dataset.msOpenAlbum; view='album-detail'; render(); return; }
+    if (albumButton) { selectedAlbum=albumButton.dataset.msOpenAlbum; albumReturnView=view==='favorites'?'favorites':'album'; view='album-detail'; render(); return; }
     const albumFavorite = event.target.closest('[data-ms-favorite-album]');
     if(albumFavorite){const id=albumFavorite.dataset.msFavoriteAlbum;state.favoriteAlbums=state.favoriteAlbums.includes(id)?state.favoriteAlbums.filter(item=>item!==id):[...state.favoriteAlbums,id];save();render();return;}
-    if (event.target.closest('[data-ms-back-albums]')) { view='album'; render(); return; }
+    if (event.target.closest('[data-ms-back-albums]')) { view=albumReturnView; render(); return; }
     const playButton = event.target.closest('[data-ms-play]');
     if (playButton) { const index=Number(playButton.dataset.msPlay); if(index===current){audio.paused?audio.play().catch(()=>{}):audio.pause();}else play(index); return; }
     const trackMenu = event.target.closest('[data-ms-track-menu]');
