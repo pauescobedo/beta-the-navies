@@ -8,11 +8,11 @@
     it:{ library:'Libreria', albums:'Album', album:'The Navies', spaceBack:'Torna a Spazio Navy', search:'Cerca brani', favorites:'Preferiti', recent:'Ascoltati di recente', playlists:'Playlist', queue:'Coda', newList:'Nuova playlist', empty:'Non ci sono ancora brani qui.', play:'Riproduci', pause:'Pausa', previous:'Precedente', next:'Successivo', volume:'Volume', expand:'Espandi player', back:'Torna alla libreria', lyrics:'Testo e accordi', chords:'Mostra accordi', resync:'Risincronizza', noLyrics:'Stiamo lavorando al testo sincronizzato di questo brano. Sarà presto disponibile!', addFavorite:'Aggiungi ai preferiti', removeFavorite:'Rimuovi dai preferiti', playNext:'Riproduci dopo', addQueue:'Aggiungi alla fine della coda', addList:'Aggiungi a una playlist', rename:'Rinomina', remove:'Elimina', save:'Salva', cancel:'Annulla', listName:'Nome della playlist', shuffle:'Casuale', repeat:'Ripeti', clearQueue:'Svuota coda' }
   })[language] || null;
   Object.assign(copy, ({
-    es:{ songs:'Canciones', sort:'Ordenar por', sortTitle:'Título', sortArtist:'Artista', sortAlbum:'Álbum', currentAlbum:'Álbum actual', comingSoon:'Próximamente', addCurrentQueue:'Añadir a la cola', openQueue:'Abrir cola', nothingPlaying:'Nada en reproducción', memberAccess:'Cuenta Navy', loginCopy:'Inicia sesión con tu Cuenta Navy para abrir Musync.', username:'Usuario', password:'Contraseña', enter:'Entrar', loginError:'Usuario o contraseña incorrectos.', backAlbums:'Volver', deleteQuestion:'¿Quieres eliminar esta playlist?', deleteConfirm:'Eliminar playlist' },
-    ca:{ songs:'Cançons', sort:'Ordenar per', sortTitle:'Títol', sortArtist:'Artista', sortAlbum:'Àlbum', currentAlbum:'Àlbum actual', comingSoon:'Pròximament', addCurrentQueue:'Afegir a la cua', openQueue:'Obrir cua', nothingPlaying:'Res en reproducció', memberAccess:'Compte Navy', loginCopy:'Inicia sessió amb el teu Compte Navy per obrir Musync.', username:'Usuari', password:'Contrasenya', enter:'Entrar', loginError:'Usuari o contrasenya incorrectes.', backAlbums:'Tornar', deleteQuestion:'Vols eliminar aquesta llista?', deleteConfirm:'Eliminar la llista' },
-    en:{ songs:'Songs', sort:'Sort by', sortTitle:'Title', sortArtist:'Artist', sortAlbum:'Album', currentAlbum:'Current album', comingSoon:'Coming soon', addCurrentQueue:'Add to queue', openQueue:'Open queue', nothingPlaying:'Nothing playing', memberAccess:'Navy Account', loginCopy:'Sign in with your Navy Account to open Musync.', username:'Username', password:'Password', enter:'Sign in', loginError:'Incorrect username or password.', backAlbums:'Back', deleteQuestion:'Do you want to delete this playlist?', deleteConfirm:'Delete playlist' },
-    fr:{ songs:'Titres', sort:'Trier par', sortTitle:'Titre', sortArtist:'Artiste', sortAlbum:'Album', currentAlbum:'Album actuel', comingSoon:'Bientôt', addCurrentQueue:'Ajouter à la file', openQueue:'Ouvrir la file', nothingPlaying:'Aucune lecture', memberAccess:'Compte Navy', loginCopy:'Connectez-vous avec votre Compte Navy pour ouvrir Musync.', username:'Utilisateur', password:'Mot de passe', enter:'Connexion', loginError:'Utilisateur ou mot de passe incorrect.', backAlbums:'Retour', deleteQuestion:'Voulez-vous supprimer cette playlist ?', deleteConfirm:'Supprimer la playlist' },
-    it:{ songs:'Brani', sort:'Ordina per', sortTitle:'Titolo', sortArtist:'Artista', sortAlbum:'Album', currentAlbum:'Album attuale', comingSoon:'Prossimamente', addCurrentQueue:'Aggiungi alla coda', openQueue:'Apri coda', nothingPlaying:'Nessun brano in riproduzione', memberAccess:'Account Navy', loginCopy:'Accedi con il tuo Account Navy per aprire Musync.', username:'Utente', password:'Password', enter:'Accedi', loginError:'Utente o password errati.', backAlbums:'Indietro', deleteQuestion:'Vuoi eliminare questa playlist?', deleteConfirm:'Elimina playlist' }
+    es:{ songs:'Canciones', sort:'Ordenar por', sortTitle:'Título', sortArtist:'Artista', sortAlbum:'Álbum', currentAlbum:'Álbum actual', comingSoon:'Próximamente', addCurrentQueue:'Añadir a la cola', openQueue:'Abrir cola', nothingPlaying:'Nada en reproducción', memberAccess:'Cuenta Navy', loginCopy:'Inicia sesión con tu cuenta Navy para abrir Musync.', username:'Usuario', password:'Contraseña', enter:'Entrar', loginError:'Usuario o contraseña incorrectos.', backAlbums:'Volver', deleteQuestion:'¿Quieres eliminar esta playlist?', deleteConfirm:'Eliminar playlist', favoriteAlbums:'Álbumes favoritos', favoriteSongs:'Canciones favoritas', addAlbumFavorite:'Añadir álbum a favoritos', removeAlbumFavorite:'Quitar álbum de favoritos', moveUp:'Subir', moveDown:'Bajar', noPlaylists:'Todavía no tienes ninguna playlist.' },
+    ca:{ songs:'Cançons', sort:'Ordenar per', sortTitle:'Títol', sortArtist:'Artista', sortAlbum:'Àlbum', currentAlbum:'Àlbum actual', comingSoon:'Pròximament', addCurrentQueue:'Afegir a la cua', openQueue:'Obrir cua', nothingPlaying:'Res en reproducció', memberAccess:'Compte Navy', loginCopy:'Inicia sessió amb el teu Compte Navy per obrir Musync.', username:'Usuari', password:'Contrasenya', enter:'Entrar', loginError:'Usuari o contrasenya incorrectes.', backAlbums:'Tornar', deleteQuestion:'Vols eliminar aquesta llista?', deleteConfirm:'Eliminar la llista', favoriteAlbums:'Àlbums preferits', favoriteSongs:'Cançons preferides', addAlbumFavorite:'Afegir àlbum a preferits', removeAlbumFavorite:'Treure àlbum de preferits', moveUp:'Pujar', moveDown:'Baixar', noPlaylists:'Encara no tens cap llista.' },
+    en:{ songs:'Songs', sort:'Sort by', sortTitle:'Title', sortArtist:'Artist', sortAlbum:'Album', currentAlbum:'Current album', comingSoon:'Coming soon', addCurrentQueue:'Add to queue', openQueue:'Open queue', nothingPlaying:'Nothing playing', memberAccess:'Navy Account', loginCopy:'Sign in with your Navy Account to open Musync.', username:'Username', password:'Password', enter:'Sign in', loginError:'Incorrect username or password.', backAlbums:'Back', deleteQuestion:'Do you want to delete this playlist?', deleteConfirm:'Delete playlist', favoriteAlbums:'Favorite albums', favoriteSongs:'Favorite songs', addAlbumFavorite:'Add album to favorites', removeAlbumFavorite:'Remove album from favorites', moveUp:'Move up', moveDown:'Move down', noPlaylists:'You do not have any playlists yet.' },
+    fr:{ songs:'Titres', sort:'Trier par', sortTitle:'Titre', sortArtist:'Artiste', sortAlbum:'Album', currentAlbum:'Album actuel', comingSoon:'Bientôt', addCurrentQueue:'Ajouter à la file', openQueue:'Ouvrir la file', nothingPlaying:'Aucune lecture', memberAccess:'Compte Navy', loginCopy:'Connectez-vous avec votre Compte Navy pour ouvrir Musync.', username:'Utilisateur', password:'Mot de passe', enter:'Connexion', loginError:'Utilisateur ou mot de passe incorrect.', backAlbums:'Retour', deleteQuestion:'Voulez-vous supprimer cette playlist ?', deleteConfirm:'Supprimer la playlist', favoriteAlbums:'Albums favoris', favoriteSongs:'Titres favoris', addAlbumFavorite:'Ajouter l’album aux favoris', removeAlbumFavorite:'Retirer l’album des favoris', moveUp:'Monter', moveDown:'Descendre', noPlaylists:'Vous n’avez encore aucune playlist.' },
+    it:{ songs:'Brani', sort:'Ordina per', sortTitle:'Titolo', sortArtist:'Artista', sortAlbum:'Album', currentAlbum:'Album attuale', comingSoon:'Prossimamente', addCurrentQueue:'Aggiungi alla coda', openQueue:'Apri coda', nothingPlaying:'Nessun brano in riproduzione', memberAccess:'Account Navy', loginCopy:'Accedi con il tuo Account Navy per aprire Musync.', username:'Utente', password:'Password', enter:'Accedi', loginError:'Utente o password errati.', backAlbums:'Indietro', deleteQuestion:'Vuoi eliminare questa playlist?', deleteConfirm:'Elimina playlist', favoriteAlbums:'Album preferiti', favoriteSongs:'Brani preferiti', addAlbumFavorite:'Aggiungi album ai preferiti', removeAlbumFavorite:'Rimuovi album dai preferiti', moveUp:'Sposta su', moveDown:'Sposta giù', noPlaylists:'Non hai ancora nessuna playlist.' }
   })[language] || {});
   const rootPath = window.__naviesForcedLanguage ? '../' : '';
   const tracks = [
@@ -60,7 +60,7 @@
     <div class="musync-login-gate" hidden><form data-ms-login><span>MUSYNC</span><h1>${copy.memberAccess}</h1><p>${copy.loginCopy}</p><label><span>${copy.username}</span><input name="username" autocomplete="username" autocapitalize="none" required></label><label><span>${copy.password}</span><input name="password" type="password" autocomplete="current-password" required></label><p class="musync-login-error" data-ms-login-error aria-live="polite"></p><button type="submit">${copy.enter}</button></form></div>
     <div class="musync-app" data-ms-app>
       <aside class="musync-player-panel">
-        <div class="musync-cover"><img src="${rootPath}assets/images/musync-cover.png?v=20261112-282" alt="The Navies"></div>
+        <div class="musync-cover"><img src="${rootPath}assets/images/musync-cover.png?v=20261112-290" alt="The Navies"></div>
         <div class="musync-current-copy"><h1><span data-ms-title>The Navies</span></h1><p data-ms-artist>Musync</p></div>
         <div class="musync-timeline"><input data-ms-progress type="range" min="0" max="1000" value="0" aria-label="Progreso"><div><span data-ms-current>0:00</span><span data-ms-duration>0:00</span></div></div>
         <div class="musync-controls">
@@ -96,6 +96,7 @@
           <label class="musync-search musync-song-search" hidden>${svg.search}<input data-ms-search type="search" placeholder="${copy.search}" autocomplete="off"></label>
           <div data-ms-albums class="musync-albums"></div>
           <div data-ms-playlists class="musync-playlists" hidden></div>
+          <h4 data-ms-favorite-songs class="musync-favorite-heading" hidden>${copy.favoriteSongs}</h4>
           <div data-ms-track-head class="musync-track-head" hidden><span>#</span><span></span><button data-ms-sort-key="title">${copy.sortTitle}</button><button data-ms-sort-key="artist">${copy.sortArtist}</button><button data-ms-sort-key="album">${copy.sortAlbum}</button><span></span></div>
           <div data-ms-tracks class="musync-tracks"></div>
         </section>
@@ -108,7 +109,7 @@
       <button class="musync-expanded-back" type="button" aria-label="${copy.back}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v6H3M15 3v6h6M9 21v-6H3m12 6v-6h6"/></svg></button>
       <div class="musync-expanded-grid">
         <div class="musync-expanded-player">
-          <img src="${rootPath}assets/images/musync-cover.png?v=20261112-282" alt="The Navies"><div class="musync-full-title-row"><h2><span data-ms-full-title>The Navies</span></h2><div><button data-ms-full-favorite type="button" aria-label="${copy.addFavorite}">♡</button><button data-ms-full-list type="button" aria-label="${copy.addList}">＋</button></div></div><p data-ms-full-artist>Musync</p>
+          <img src="${rootPath}assets/images/musync-cover.png?v=20261112-290" alt="The Navies"><div class="musync-full-title-row"><h2><span data-ms-full-title>The Navies</span></h2><div><button data-ms-full-favorite type="button" aria-label="${copy.addFavorite}">♡</button><button data-ms-full-list type="button" aria-label="${copy.addList}">＋</button></div></div><p data-ms-full-artist>Musync</p>
           <div class="musync-full-timeline"><input data-ms-full-progress type="range" min="0" max="1000" value="0" aria-label="Progreso"><div><span data-ms-full-current>0:00</span><span data-ms-full-duration>0:00</span></div></div>
           <div class="musync-full-controls">
             <button data-ms-full-shuffle type="button" aria-label="${copy.shuffle}">⇄</button>
@@ -146,7 +147,7 @@
   const memberKey = () => window.naviesCurrentMember?.() || 'member';
   const apiUrl = String(window.NAVIES_ADMIN_API_URL || '').replace(/\/$/, '');
   const memberAuth = () => { try { return JSON.parse(localStorage.getItem('navies-member-auth')) || null; } catch (_) { return null; } };
-  const blankState = () => ({ favorites:[], recent:[], queue:[], playlists:{}, volume:1, shuffle:false, repeat:'off', showChords:true, sort:'title', sortDirection:'asc', currentTrack:-1, currentTime:0 });
+  const blankState = () => ({ favorites:[], favoriteAlbums:[], recent:[], queue:[], playlists:{}, volume:1, shuffle:false, repeat:'off', showChords:true, sort:'title', sortDirection:'asc', currentTrack:-1, currentTime:0 });
   function loadState() { try { return { ...blankState(), ...(JSON.parse(localStorage.getItem(`the-navies-musync-${memberKey()}`)) || {}) }; } catch (_) { return blankState(); } }
   function loadUi() { try { return JSON.parse(localStorage.getItem(`the-navies-musync-ui-${memberKey()}`)) || {}; } catch (_) { return {}; } }
   let state = loadState();
@@ -167,7 +168,7 @@
   let seekLyricsFrame;
   let renderedView = '';
   let renderedPlaylist = '';
-  const source = (track) => `${rootPath}audios/${track.file}.mp3?v=20261112-282`;
+  const source = (track) => `${rootPath}audios/${track.file}.mp3?v=20261112-290`;
   const saveUi = () => localStorage.setItem(`the-navies-musync-ui-${memberKey()}`, JSON.stringify({ view, selectedAlbum, selectedPlaylist }));
   function restoreUi() {
     uiState=loadUi();
@@ -233,20 +234,32 @@
     const track = tracks[index];
     const albumDetail = view === 'album-detail';
     const songsTable = view === 'songs';
-    const queueControls = view === 'queue' ? `<div class="musync-queue-actions"><button data-ms-move="up" data-position="${position}" aria-label="Subir">↑</button><button data-ms-move="down" data-position="${position}" aria-label="Bajar">↓</button></div>` : '';
+    const ordered = view === 'queue' || view === 'favorites' || (view === 'playlists' && Boolean(selectedPlaylist));
+    const orderControls = ordered ? `<div class="musync-order-actions"><button data-ms-move="up" data-position="${position}" aria-label="${copy.moveUp}" ${position===0?'disabled':''}>↑</button><button data-ms-move="down" data-position="${position}" aria-label="${copy.moveDown}" ${position===indexesForView().length-1?'disabled':''}>↓</button></div>` : '';
+    const favoriteButton = `<button class="musync-track-favorite${state.favorites.includes(index)?' is-active':''}" data-ms-favorite-track="${index}" type="button" aria-label="${state.favorites.includes(index)?copy.removeFavorite:copy.addFavorite}">${state.favorites.includes(index)?'♥':'♡'}</button>`;
     if (songsTable) return `<article class="musync-track is-song-table${index === current ? ' is-active' : ''}" data-ms-track="${index}">
       <button class="musync-track-play" data-ms-play="${index}" type="button"><span>${String(position+1).padStart(2,'0')}</span>${svg.play}</button>
-      <img class="musync-track-art" src="${rootPath}${coverFor(track)}?v=20261112-282" alt="">
+      <img class="musync-track-art" src="${rootPath}${coverFor(track)}?v=20261112-290" alt="">
       <button class="musync-table-cell musync-table-title" data-ms-play="${index}" type="button">${escape(track.title)}</button>
       <button class="musync-table-cell" data-ms-play="${index}" type="button">${escape(track.artist)}</button>
       <button class="musync-table-cell" data-ms-play="${index}" type="button">${escape(albumFor(track).title)}</button>
-      <button class="musync-track-more" data-ms-track-menu="${index}" type="button" aria-label="Más opciones"><i></i><i></i><i></i></button>
+      ${favoriteButton}<button class="musync-track-more" data-ms-track-menu="${index}" type="button" aria-label="Más opciones"><i></i><i></i><i></i></button>
     </article>`;
-    return `<article class="musync-track${index === current ? ' is-active' : ''}${albumDetail?' is-album-track':''}${songsTable?' is-song-table':''}" data-ms-track="${index}">
+    return `<article class="musync-track${index === current ? ' is-active' : ''}${albumDetail?' is-album-track':''}${songsTable?' is-song-table':''}${ordered?' is-orderable':''}" data-ms-track="${index}" data-ms-position="${position}" ${ordered?'draggable="true"':''}>
       <button class="musync-track-play" data-ms-play="${index}" type="button"><span>${String(position+1).padStart(2,'0')}</span>${svg.play}</button>
-      ${albumDetail?'':`<img class="musync-track-art" src="${rootPath}${coverFor(track)}?v=20261112-282" alt="">`}
+      ${albumDetail?'':`<img class="musync-track-art" src="${rootPath}${coverFor(track)}?v=20261112-290" alt="">`}
       <button class="musync-track-copy" data-ms-play="${index}" type="button"><strong>${escape(track.title)}</strong>${songsTable?`<small class="musync-table-artist">${escape(track.artist)}</small><small class="musync-table-album">${escape(albumFor(track).title)}</small>`:`<small>${escape(track.artist)}</small>`}</button>
-      ${queueControls}<button class="musync-track-more" data-ms-track-menu="${index}" type="button" aria-label="Más opciones"><i></i><i></i><i></i></button>
+      ${orderControls}${favoriteButton}<button class="musync-track-more" data-ms-track-menu="${index}" type="button" aria-label="Más opciones"><i></i><i></i><i></i></button>
+    </article>`;
+  }
+  function albumCard(album) {
+    const count=tracks.filter(track=>track.album===album.id).length;
+    const isCurrent=current>=0&&tracks[current].album===album.id;
+    const favorite=state.favoriteAlbums.includes(album.id);
+    if(album.comingSoon)return `<article class="musync-album-card is-coming"><span class="musync-album-placeholder"><b>CC</b></span><span><small>${copy.comingSoon}</small><strong>${escape(album.title)}</strong><em>${copy.comingSoon}</em></span></article>`;
+    return `<article class="musync-album-card">
+      <button class="musync-album-open" data-ms-open-album="${album.id}" type="button"><img src="${rootPath}${album.cover}?v=20261112-290" alt="${escape(album.title)}"><span><small data-ms-album-playing="${album.id}" ${isCurrent?'':'hidden'}>${copy.currentAlbum}</small><strong>${escape(album.title)}</strong><em>${count} ${copy.songs.toLocaleLowerCase()}</em></span></button>
+      <button class="musync-album-favorite${favorite?' is-active':''}" data-ms-favorite-album="${album.id}" type="button" aria-label="${favorite?copy.removeAlbumFavorite:copy.addAlbumFavorite}">${favorite?'♥':'♡'}</button>
     </article>`;
   }
   function render() {
@@ -266,8 +279,15 @@
     });
     $('[data-ms-queue-count]').textContent = state.queue.length;
     $('.musync-content').classList.toggle('is-playlists', view === 'playlists');
-    albumsHost.hidden = !['album','album-detail'].includes(view);
-    albumsHost.innerHTML = view === 'album' ? albums.map(album=>{const count=tracks.filter(track=>track.album===album.id).length;const isCurrent=current>=0&&tracks[current].album===album.id;return album.comingSoon?`<article class="musync-album-card is-coming"><span class="musync-album-placeholder"><b>CC</b></span><span><small>${copy.comingSoon}</small><strong>${escape(album.title)}</strong><em>${copy.comingSoon}</em></span></article>`:`<button class="musync-album-card" data-ms-open-album="${album.id}" type="button"><img src="${rootPath}${album.cover}?v=20261112-282" alt="${escape(album.title)}"><span><small data-ms-album-playing="${album.id}" ${isCurrent?'':'hidden'}>${copy.currentAlbum}</small><strong>${escape(album.title)}</strong><em>${count} ${copy.songs.toLocaleLowerCase()}</em></span></button>`;}).join('') : view === 'album-detail' ? `<section class="musync-album-detail"><button class="musync-album-back" data-ms-back-albums type="button" aria-label="${copy.backAlbums}">← <span>${copy.backAlbums}</span></button><img src="${rootPath}${selectedAlbumData.cover}?v=20261112-282" alt="${escape(selectedAlbumData.title)}"><div><small>${copy.album}</small><h4>${escape(selectedAlbumData.title)}</h4><p>${escape(selectedAlbumData.artist)} · ${tracks.filter(track=>track.album===selectedAlbum).length} ${copy.songs.toLocaleLowerCase()}</p></div></section>` : '';
+    albumsHost.hidden = !['album','album-detail','favorites'].includes(view);
+    if(view==='album') albumsHost.innerHTML=albums.map(albumCard).join('');
+    else if(view==='album-detail') {
+      const favorite=state.favoriteAlbums.includes(selectedAlbumData.id);
+      albumsHost.innerHTML=`<section class="musync-album-detail"><button class="musync-album-back" data-ms-back-albums type="button" aria-label="${copy.backAlbums}">← <span>${copy.backAlbums}</span></button><img src="${rootPath}${selectedAlbumData.cover}?v=20261112-290" alt="${escape(selectedAlbumData.title)}"><div><small>${copy.album}</small><div class="musync-album-title-row"><h4>${escape(selectedAlbumData.title)}</h4><button class="musync-album-favorite${favorite?' is-active':''}" data-ms-favorite-album="${selectedAlbumData.id}" type="button" aria-label="${favorite?copy.removeAlbumFavorite:copy.addAlbumFavorite}">${favorite?'♥':'♡'}</button></div><p>${escape(selectedAlbumData.artist)} · ${tracks.filter(track=>track.album===selectedAlbum).length} ${copy.songs.toLocaleLowerCase()}</p></div></section>`;
+    } else {
+      const favoriteAlbums=state.favoriteAlbums.map(id=>albums.find(album=>album.id===id)).filter(Boolean);
+      albumsHost.innerHTML=`<section class="musync-favorite-albums"><h4>${copy.favoriteAlbums}</h4><div>${favoriteAlbums.length?favoriteAlbums.map(albumCard).join(''):`<p class="musync-empty">${copy.empty}</p>`}</div></section>`;
+    }
     playlistsHost.hidden = view !== 'playlists';
     if (view === 'playlists') {
       const names = Object.keys(state.playlists);
@@ -287,6 +307,7 @@
       button.classList.toggle('is-active',active);
       button.dataset.direction=active?(state.sortDirection||'asc'):'';
     });
+    $('[data-ms-favorite-songs]').hidden=view!=='favorites';
     tracksHost.hidden = view === 'album';
     tracksHost.innerHTML = view==='playlists'&&!selectedPlaylist ? '' : indexes.length ? indexes.map((index,position) => trackRow(index,position)).join('') : `<p class="musync-empty">${copy.empty}</p>`;
     const content = $('.musync-content');
@@ -311,7 +332,7 @@
     $('[data-ms-full-duration]').textContent = track ? time(Number.isFinite(audio.duration) ? audio.duration : track.duration) : '0:00';
     const playing = current >= 0 && !audio.paused;
     page.querySelectorAll('[data-ms-album-playing]').forEach(label=>{label.hidden=current<0||label.dataset.msAlbumPlaying!==track?.album;});
-    const cover = track ? `${rootPath}${coverFor(track)}?v=20261112-282` : `${rootPath}assets/images/musync-cover.png?v=20261112-282`;
+    const cover = track ? `${rootPath}${coverFor(track)}?v=20261112-290` : `${rootPath}assets/images/musync-cover.png?v=20261112-290`;
     const sideCover = $('.musync-cover img'); if(sideCover)sideCover.src=cover;
     const fullCover = $('.musync-expanded-player > img'); if(fullCover)fullCover.src=cover;
     $('[data-ms-toggle]').innerHTML = playing ? svg.pause : svg.play;
@@ -408,7 +429,7 @@
     $('[data-ms-resync]').hidden = true;
     if (!track?.lyrics) { lyricsHost.innerHTML = `<p class="musync-no-lyrics">${copy.noLyrics}</p>`; return; }
     try {
-      const text = await fetch(`${rootPath}${track.lyrics}?v=20261112-282`, {cache:'force-cache'}).then(response => response.text());
+      const text = await fetch(`${rootPath}${track.lyrics}?v=20261112-290`, {cache:'force-cache'}).then(response => response.text());
       lyricLines = text.split(/\r?\n/).map(line => {
         const match = line.match(/^\[(?:(\d+):)?(\d+):(\d+(?:\.\d+)?)\]\s*(.*)$/);
         return match ? { time:Number(match[1]||0)*3600+Number(match[2])*60+Number(match[3]), text:match[4] } : null;
@@ -417,7 +438,7 @@
       lyricsHost.classList.toggle('hide-chords', !$('[data-ms-chords]').checked);
     } catch (_) { lyricsHost.innerHTML = `<p class="musync-no-lyrics">${copy.noLyrics}</p>`; }
   }
-  function syncLyrics(force = false) {
+  function syncLyrics(force = false, instant = false) {
     if (!lyricLines.length) return;
     let active = -1;
     for (let i=0;i<lyricLines.length;i++) if (audio.currentTime >= lyricLines[i].time) active=i; else break;
@@ -426,7 +447,7 @@
     if (!target && force) {
       lyricsAutoScrolling = true;
       clearTimeout(lyricsAutoScrollTimer);
-      lyricsHost.scrollTo({ top:0, behavior:'smooth' });
+      lyricsHost.scrollTo({ top:0, behavior:instant?'auto':'smooth' });
       lyricsAutoScrollTimer = setTimeout(()=>{ lyricsAutoScrolling=false; },900);
       return;
     }
@@ -435,20 +456,32 @@
       const targetTop = lyricsHost.scrollTop + target.getBoundingClientRect().top - lyricsHost.getBoundingClientRect().top - 88;
       lyricsAutoScrolling = true;
       clearTimeout(lyricsAutoScrollTimer);
-      lyricsHost.scrollTo({ top:Math.max(0,targetTop), behavior:'smooth' });
+      lyricsHost.scrollTo({ top:Math.max(0,targetTop), behavior:instant?'auto':'smooth' });
       lyricsAutoScrollTimer = setTimeout(()=>{ lyricsAutoScrolling=false; },900);
     }
   }
-  function resetLyricsToPlayback() {
+  function resetLyricsToPlayback(instant = false) {
     lyricsDetached = false;
     lyricsHost.classList.remove('is-manual');
     $('[data-ms-resync]').hidden = true;
     expanded.dataset.lyricActive = '';
-    requestAnimationFrame(() => requestAnimationFrame(() => syncLyrics(true)));
+    requestAnimationFrame(() => requestAnimationFrame(() => syncLyrics(true,instant)));
+  }
+  function alignLyricsAfterOpening(){
+    resetLyricsToPlayback(true);
+    [120,300,540].forEach(delay=>setTimeout(()=>{if(!expanded.hidden)syncLyrics(true,true);},delay));
+  }
+  function showPlaylistPicker(index,anchor){
+    const names=Object.keys(state.playlists);
+    menu.innerHTML=`<em>${copy.addList}</em>${names.length?names.map(name=>`<button data-ms-action="playlist" data-index="${index}" data-list="${encodeURIComponent(name)}">${svg.list}<span>${state.playlists[name].includes(index)?'✓ ':''}${escape(name)}</span></button>`).join(''):`<p class="musync-menu-empty">${copy.noPlaylists}</p>`}<button data-ms-action="create-for-track" data-index="${index}"><b class="musync-menu-symbol">＋</b><span>${copy.newList}</span></button>`;
+    if(anchor)positionMenu(anchor);else{
+      menu.hidden=false;
+      const top=Number.parseFloat(menu.style.top)||12;
+      menu.style.top=`${Math.max(12,Math.min(top,innerHeight-menu.offsetHeight-12))}px`;
+    }
   }
   function openMenu(button,index) {
-    const favorite = state.favorites.includes(index);
-    menu.innerHTML = `<button data-ms-action="favorite" data-index="${index}">${svg.heart}<span>${favorite?copy.removeFavorite:copy.addFavorite}</span></button>${view==='queue'?`<button data-ms-action="remove-queue" data-index="${index}"><b class="musync-menu-symbol">×</b><span>${copy.removeQueue||copy.remove}</span></button>`:`<button data-ms-action="next" data-index="${index}">${svg.next}<span>${copy.playNext}</span></button><button data-ms-action="queue" data-index="${index}">${svg.queue}<span>${copy.addQueue}</span></button>`}${Object.keys(state.playlists).length?`<em>${copy.addList}</em>${Object.keys(state.playlists).map(name=>`<button data-ms-action="playlist" data-index="${index}" data-list="${encodeURIComponent(name)}">${svg.list}<span>${state.playlists[name].includes(index)?'− ':''}${escape(name)}</span></button>`).join('')}`:''}`;
+    menu.innerHTML = `<button data-ms-action="open-playlists" data-index="${index}">${svg.list}<span>${copy.addList}</span></button>${view==='queue'?`<button data-ms-action="remove-queue" data-index="${index}"><b class="musync-menu-symbol">×</b><span>${copy.removeQueue||copy.remove}</span></button>`:`<button data-ms-action="next" data-index="${index}">${svg.next}<span>${copy.playNext}</span></button><button data-ms-action="queue" data-index="${index}">${svg.queue}<span>${copy.addQueue}</span></button>`}`;
     positionMenu(button);
   }
   function openListDialog(name='') {
@@ -460,9 +493,7 @@
   }
   function openCurrentPlaylistMenu(button) {
     if (current < 0) return;
-    const names = Object.keys(state.playlists);
-    menu.innerHTML = `${names.length ? `<em>${copy.addList}</em>${names.map(name => `<button data-ms-action="playlist" data-index="${current}" data-list="${encodeURIComponent(name)}">${svg.list}<span>${state.playlists[name].includes(current)?'− ':''}${escape(name)}</span></button>`).join('')}` : ''}<button data-ms-action="create-for-current"><b class="musync-menu-symbol">＋</b><span>${copy.newList}</span></button>`;
-    positionMenu(button);
+    showPlaylistPicker(current,button);
   }
   function positionMenu(button) {
     const rect=button.getBoundingClientRect();
@@ -471,17 +502,27 @@
     menu.style.left=`${Math.max(12,Math.min(rect.right-width,innerWidth-width-12))}px`;
     menu.style.top=`${Math.max(12,Math.min(rect.bottom+8,innerHeight-menu.offsetHeight-12))}px`;
   }
+  function orderedCollection(){
+    if(view==='queue')return state.queue;
+    if(view==='favorites'||(view==='playlists'&&selectedPlaylist==='__favorites__'))return state.favorites;
+    if(view==='playlists'&&selectedPlaylist)return state.playlists[selectedPlaylist];
+    return null;
+  }
 
   page.addEventListener('click', event => {
     const viewButton = event.target.closest('[data-ms-view]');
     if (viewButton) { view=viewButton.dataset.msView; if(view!=='playlists') selectedPlaylist=''; render(); return; }
     const albumButton = event.target.closest('[data-ms-open-album]');
     if (albumButton) { selectedAlbum=albumButton.dataset.msOpenAlbum; view='album-detail'; render(); return; }
+    const albumFavorite = event.target.closest('[data-ms-favorite-album]');
+    if(albumFavorite){const id=albumFavorite.dataset.msFavoriteAlbum;state.favoriteAlbums=state.favoriteAlbums.includes(id)?state.favoriteAlbums.filter(item=>item!==id):[...state.favoriteAlbums,id];save();render();return;}
     if (event.target.closest('[data-ms-back-albums]')) { view='album'; render(); return; }
     const playButton = event.target.closest('[data-ms-play]');
     if (playButton) { const index=Number(playButton.dataset.msPlay); if(index===current){audio.paused?audio.play().catch(()=>{}):audio.pause();}else play(index); return; }
     const trackMenu = event.target.closest('[data-ms-track-menu]');
     if (trackMenu) return openMenu(trackMenu,Number(trackMenu.dataset.msTrackMenu));
+    const trackFavorite=event.target.closest('[data-ms-favorite-track]');
+    if(trackFavorite){const index=Number(trackFavorite.dataset.msFavoriteTrack);state.favorites=state.favorites.includes(index)?state.favorites.filter(item=>item!==index):[...state.favorites,index];save();render();return;}
     const listButton = event.target.closest('[data-ms-list]');
     if (listButton) {
       selectedPlaylist=listButton.dataset.msList === '__favorites__' ? '__favorites__' : decodeURIComponent(listButton.dataset.msList);
@@ -496,7 +537,8 @@
     const move = event.target.closest('[data-ms-move]');
     if (move) {
       const from=Number(move.dataset.position), to=move.dataset.msMove==='up'?from-1:from+1;
-      if(to>=0&&to<state.queue.length) [state.queue[from],state.queue[to]]=[state.queue[to],state.queue[from]];
+      const collection=orderedCollection();
+      if(collection&&to>=0&&to<collection.length)[collection[from],collection[to]]=[collection[to],collection[from]];
       save(); render(); return;
     }
     if (event.target.closest('[data-ms-create]')) return openListDialog();
@@ -510,7 +552,7 @@
       $('[data-ms-resync]').hidden=true;
       expanded.hidden=false;
       document.body.classList.add('musync-expanded-open');
-      loadLyrics().then(()=>resetLyricsToPlayback());
+      loadLyrics().then(alignLyricsAfterOpening);
       requestAnimationFrame(syncPlayer);
       return;
     }
@@ -530,11 +572,43 @@
     }
     if (!event.target.closest('[data-ms-menu]')) menu.hidden=true;
   });
+  let draggedPosition=-1;
+  let draggedPlacement='before';
+  tracksHost.addEventListener('dragstart',event=>{
+    const row=event.target.closest('.musync-track.is-orderable');
+    if(!row)return;
+    draggedPosition=Number(row.dataset.msPosition);
+    row.classList.add('is-dragging');
+    event.dataTransfer.effectAllowed='move';
+    event.dataTransfer.setData('text/plain',String(draggedPosition));
+  });
+  tracksHost.addEventListener('dragover',event=>{
+    const row=event.target.closest('.musync-track.is-orderable');
+    if(!row)return;
+    event.preventDefault();
+    const rect=row.getBoundingClientRect();
+    draggedPlacement=event.clientY < rect.top + rect.height/2 ? 'before' : 'after';
+    tracksHost.querySelectorAll('.is-drag-target,.is-drag-before,.is-drag-after').forEach(item=>item.classList.remove('is-drag-target','is-drag-before','is-drag-after'));
+    row.classList.add('is-drag-target',draggedPlacement==='before'?'is-drag-before':'is-drag-after');
+  });
+  tracksHost.addEventListener('drop',event=>{
+    const row=event.target.closest('.musync-track.is-orderable');
+    const collection=orderedCollection();
+    if(!row||!collection)return;
+    event.preventDefault();
+    let to=Number(row.dataset.msPosition)+(draggedPlacement==='after'?1:0);
+    if(draggedPosition>=0&&to>=0){const [item]=collection.splice(draggedPosition,1);if(draggedPosition<to)to-=1;to=Math.max(0,Math.min(to,collection.length));collection.splice(to,0,item);save();render();}
+    draggedPosition=-1;
+  });
+  tracksHost.addEventListener('dragend',()=>{draggedPosition=-1;tracksHost.querySelectorAll('.is-dragging,.is-drag-target,.is-drag-before,.is-drag-after').forEach(item=>item.classList.remove('is-dragging','is-drag-target','is-drag-before','is-drag-after'));});
   menu.addEventListener('click', event => {
+    event.stopPropagation();
     const button=event.target.closest('[data-ms-action]'); if(!button)return;
     const action=button.dataset.msAction;
+    if(action==='open-playlists'){showPlaylistPicker(Number(button.dataset.index));return;}
     if(action==='rename-list'){menu.hidden=true;return openListDialog(decodeURIComponent(button.dataset.list));}
     if(action==='create-for-current'){pendingPlaylistTrack=current;menu.hidden=true;return openListDialog();}
+    if(action==='create-for-track'){pendingPlaylistTrack=Number(button.dataset.index);menu.hidden=true;return openListDialog();}
     if(action==='delete-list'){
       pendingDeletePlaylist=decodeURIComponent(button.dataset.list);
       menu.hidden=true;
@@ -542,7 +616,6 @@
       return;
     }
     const index=Number(button.dataset.index);
-    if(action==='favorite')state.favorites=state.favorites.includes(index)?state.favorites.filter(i=>i!==index):[...state.favorites,index];
     if(action==='next'){rememberQueueReturn();state.queue=[index,...state.queue];}
     if(action==='queue'){rememberQueueReturn();state.queue.push(index);}
     if(action==='remove-queue'){const position=state.queue.indexOf(index);if(position>=0)state.queue.splice(position,1);}
@@ -605,6 +678,17 @@
   volume.value=String(Number.isFinite(Number(state.volume))?state.volume:1);paintRange(volume,Number(volume.value));
   $('[data-ms-full-volume]').value=volume.value;paintRange($('[data-ms-full-volume]'),Number(volume.value));
   function setVolume(value){audio.volume=Number(value);state.volume=audio.volume;volume.value=String(value);$('[data-ms-full-volume]').value=String(value);paintRange(volume,audio.volume);paintRange($('[data-ms-full-volume]'),audio.volume);save();}
+  let lastAudibleVolume=Number(state.volume)>0?Number(state.volume):1;
+  function toggleMute(){
+    if(audio.volume>0){lastAudibleVolume=audio.volume;setVolume(0);}
+    else setVolume(lastAudibleVolume||1);
+    page.querySelectorAll('.musync-volume,.musync-full-volume').forEach(label=>label.classList.toggle('is-muted',audio.volume===0));
+  }
+  page.querySelectorAll('.musync-volume svg,.musync-full-volume svg').forEach(icon=>{
+    icon.setAttribute('role','button');icon.setAttribute('tabindex','0');icon.setAttribute('aria-label',copy.volume);
+    icon.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();toggleMute();});
+    icon.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMute();}});
+  });
   volume.addEventListener('input',()=>setVolume(volume.value));
   $('[data-ms-full-volume]').addEventListener('input',()=>setVolume($('[data-ms-full-volume]').value));
   progress.addEventListener('input',()=>seekFrom(progress));
@@ -638,8 +722,31 @@
   }
   $('[data-ms-full-progress]').addEventListener('input',()=>seekFrom($('[data-ms-full-progress]')));
   let lastPositionSave=0;
-  audio.addEventListener('timeupdate',()=>{const duration=Number.isFinite(audio.duration)?audio.duration:tracks[current]?.duration||0;const value=duration?String(Math.round(audio.currentTime/duration*1000)):'0';const ratio=duration?audio.currentTime/duration:0;$('[data-ms-current]').textContent=time(audio.currentTime);$('[data-ms-full-current]').textContent=time(audio.currentTime);progress.value=value;$('[data-ms-full-progress]').value=value;paintRange(progress,ratio);paintRange($('[data-ms-full-progress]'),ratio);syncLyrics();if(current>=0&&Date.now()-lastPositionSave>3000){persistPlaybackPosition();lastPositionSave=Date.now();}});
-  audio.addEventListener('loadedmetadata',syncPlayer);audio.addEventListener('play',syncPlayer);audio.addEventListener('pause',()=>{if(current>=0){state.currentTrack=current;state.currentTime=audio.currentTime;save();}syncPlayer();});audio.addEventListener('ended',next);
+  let playbackFrame=0;
+  function updatePlaybackPosition(){
+    const duration=Number.isFinite(audio.duration)?audio.duration:tracks[current]?.duration||0;
+    const value=duration?String(Math.round(audio.currentTime/duration*1000)):'0';
+    const ratio=duration?audio.currentTime/duration:0;
+    $('[data-ms-current]').textContent=time(audio.currentTime);
+    $('[data-ms-full-current]').textContent=time(audio.currentTime);
+    progress.value=value;
+    $('[data-ms-full-progress]').value=value;
+    paintRange(progress,ratio);
+    paintRange($('[data-ms-full-progress]'),ratio);
+    syncLyrics();
+    if(current>=0&&Date.now()-lastPositionSave>3000){persistPlaybackPosition();lastPositionSave=Date.now();}
+  }
+  function stopPlaybackClock(){cancelAnimationFrame(playbackFrame);playbackFrame=0;}
+  function startPlaybackClock(){
+    stopPlaybackClock();
+    const tick=()=>{updatePlaybackPosition();if(!audio.paused&&!audio.ended)playbackFrame=requestAnimationFrame(tick);};
+    playbackFrame=requestAnimationFrame(tick);
+  }
+  audio.addEventListener('timeupdate',updatePlaybackPosition);
+  audio.addEventListener('loadedmetadata',()=>{syncPlayer();updatePlaybackPosition();});
+  audio.addEventListener('play',()=>{syncPlayer();startPlaybackClock();});
+  audio.addEventListener('pause',()=>{stopPlaybackClock();updatePlaybackPosition();if(current>=0){state.currentTrack=current;state.currentTime=audio.currentTime;save();}syncPlayer();});
+  audio.addEventListener('ended',()=>{stopPlaybackClock();next();});
   $('[data-ms-full-toggle]').addEventListener('click',togglePlaybackForView);
   $('[data-ms-full-prev]').addEventListener('click',previous);$('[data-ms-full-next]').addEventListener('click',next);
   $('[data-ms-full-shuffle]').addEventListener('click',()=>{state.shuffle=!state.shuffle;shufflePool=[];save();syncPlayer();});

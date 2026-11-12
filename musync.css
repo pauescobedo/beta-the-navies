@@ -32,6 +32,8 @@
 .musync-action-divider { width:1px; height:25px; margin:0 3px; background:rgba(255,255,255,.14); }
 .musync-volume { margin-top:5px; padding-top:12px; border-top:1px solid rgba(255,255,255,.09); display:grid; grid-template-columns:18px 1fr; align-items:center; gap:12px; color:#92a9b5; }
 .musync-volume svg { width:18px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; }
+.musync-volume svg[role="button"],.musync-full-volume svg[role="button"] { cursor:pointer; }
+.musync-volume.is-muted svg,.musync-full-volume.is-muted svg { color:color-mix(in srgb,var(--accent) 72%,white); opacity:.72; }
 .musync-library-panel { min-width:0; min-height:calc(100vh - 145px); padding:clamp(24px,3vw,42px); border:1px solid rgba(255,255,255,.09); border-radius:32px; background:linear-gradient(145deg,rgba(8,31,48,.78),rgba(10,38,59,.56)); box-shadow:0 25px 80px rgba(2,13,22,.18); backdrop-filter:blur(22px); }
 .musync-library-head { display:flex; align-items:flex-end; justify-content:space-between; gap:28px; }
 .musync-library-head p,.musync-section-head span { margin:0 0 7px; color:#d0a58e; font-size:9px; font-weight:800; letter-spacing:.18em; }
@@ -98,6 +100,7 @@
 .musync-empty { padding:50px 12px; color:#829aa7; text-align:center; font-size:12px; }
 .musync-menu { position:fixed; z-index:400; width:230px; max-height:min(420px,70vh); padding:7px; border:1px solid rgba(208,165,142,.22); border-radius:15px; display:grid; overflow:auto; color:#fff; background:rgba(8,28,43,.98); box-shadow:0 24px 70px rgba(0,0,0,.4); backdrop-filter:blur(20px); }
 .musync-menu[hidden] { display:none; }.musync-menu button{min-height:39px;padding:0 10px;border:0;border-radius:9px;display:flex;align-items:center;gap:9px;overflow:hidden;color:#d6e0e4;text-align:left;background:transparent;cursor:pointer;white-space:nowrap}.musync-menu button:hover{color:#fff;background:rgba(208,165,142,.12)}.musync-menu button>span{min-width:0;overflow:hidden;text-overflow:ellipsis}.musync-menu button>svg{width:16px;height:16px;flex:0 0 16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.musync-menu>em{padding:11px 10px 5px;color:#718c9a;font-size:8px;font-style:normal;font-weight:800;letter-spacing:.13em;text-transform:uppercase}.musync-menu-symbol{width:16px;flex:0 0 16px;color:#9fb2bc;text-align:center;font:700 16px/1 "DM Sans",sans-serif}
+.musync-menu-empty { margin:2px 8px 7px; padding:11px 10px; border-radius:10px; color:#8fa6b2; background:rgba(255,255,255,.035); font-size:10px; line-height:1.45; }
 .musync-list-dialog { width:min(410px,calc(100% - 28px)); padding:0; border:1px solid rgba(208,165,142,.28); border-radius:22px; color:#fff; background:#0d2a43; box-shadow:0 35px 100px rgba(0,0,0,.45); }.musync-list-dialog::backdrop{background:rgba(3,14,23,.7);backdrop-filter:blur(8px)}.musync-list-dialog form{padding:30px;display:grid;gap:20px}.musync-list-dialog h2{margin:0;font:620 27px "Manrope",sans-serif}.musync-list-dialog input{min-height:48px;padding:0 14px;border:1px solid rgba(255,255,255,.15);border-radius:13px;outline:0;color:#fff;background:rgba(255,255,255,.06)}.musync-list-dialog form div{display:flex;justify-content:flex-end;gap:8px}.musync-list-dialog button{min-height:40px;padding:0 15px;border:0;border-radius:11px;color:#fff;background:rgba(255,255,255,.08)}.musync-list-dialog [data-ms-list-save]{color:#10283b;background:#d0a58e}
 .musync-confirm-dialog { width:min(390px,calc(100% - 28px)); padding:0; border:1px solid rgba(208,165,142,.28); border-radius:22px; color:#fff; background:#0d2a43; box-shadow:0 35px 100px rgba(0,0,0,.45); }
 .musync-confirm-dialog::backdrop { background:rgba(3,14,23,.7); backdrop-filter:blur(8px); }
@@ -212,6 +215,48 @@
 @media(max-width:700px) {
   .musync-content.is-playlists { display:block; }
   .musync-playlists { min-height:0; margin-bottom:22px; padding:0 0 18px; border-right:0; border-bottom:1px solid rgba(255,255,255,.09); }
+}
+
+/* Stable compact mobile layout: library first, player docked below. */
+@media(max-width:700px) {
+  body.route-musync { padding-bottom:126px; overflow-x:hidden; }
+  .musync-v2 { padding:82px 10px 28px; }
+  .musync-app { display:flex; flex-direction:column; gap:0; }
+  .musync-library-panel { order:1; width:100%; min-height:calc(100svh - 100px); padding:20px 13px 24px; border-radius:23px; overflow:hidden; }
+  .musync-player-panel {
+    position:fixed; left:10px; right:10px; bottom:max(8px,env(safe-area-inset-bottom)); top:auto; z-index:48;
+    order:2; width:auto; min-width:0; min-height:0; margin:0; padding:9px 11px 10px; border-radius:19px;
+    display:grid; grid-template-columns:42px minmax(68px,1fr) minmax(136px,auto);
+    grid-template-areas:"cover copy controls" "timeline timeline timeline" "actions actions volume";
+    gap:5px 9px; background:rgba(9,31,47,.96); box-shadow:0 16px 48px rgba(0,0,0,.34); backdrop-filter:blur(22px);
+  }
+  .musync-cover { grid-area:cover; width:42px; height:42px; border-radius:10px; align-self:center; }
+  .musync-current-copy { grid-area:copy; min-width:0; min-height:0; padding:3px 0; align-self:center; overflow:hidden; }
+  .musync-current-copy h1 { font-size:12px; }
+  .musync-current-copy p { margin-top:3px; overflow:hidden; font-size:8px; text-overflow:ellipsis; white-space:nowrap; }
+  .musync-timeline { grid-area:timeline; min-width:0; }
+  .musync-timeline input { height:12px; }
+  .musync-timeline > div { margin-top:1px; font-size:7px; }
+  .musync-controls { grid-area:controls; min-width:0; margin:0; grid-template-columns:22px 26px 34px 26px 22px; justify-content:end; gap:0; }
+  .musync-controls button { width:22px; height:28px; }
+  .musync-controls svg { width:14px; }
+  .musync-controls .musync-play { width:34px; height:34px; }
+  .musync-player-actions { grid-area:actions; min-width:0; margin:0; justify-content:flex-start; gap:7px; }
+  .musync-player-actions button { width:28px; height:28px; font-size:14px; }
+  .musync-action-divider { height:19px; margin:0 1px; }
+  .musync-volume { grid-area:volume; width:100%; min-width:0; max-width:120px; margin:0; padding:0; border:0; justify-self:end; grid-template-columns:16px minmax(0,1fr); gap:7px; }
+  .musync-volume svg { width:16px; }
+  .musync-expand { margin:0; }
+  .musync-library-head { min-width:0; }
+  .musync-library-head h2 { font-size:30px; }
+  .musync-tabs { width:100%; margin:20px 0 17px; padding:0 0 4px; gap:1px; scroll-snap-type:x proximity; touch-action:pan-x; -webkit-overflow-scrolling:touch; }
+  .musync-tabs button { flex:0 0 auto; min-height:39px; padding:0 11px; scroll-snap-align:start; font-size:10px; }
+  .musync-section-head h3 { font-size:22px; }
+  .musync-track-copy strong,.musync-table-title { font-size:11px; }
+  .musync-track-copy small,.musync-table-cell { font-size:9px; }
+  body.route-musync footer .season-control { width:100%; align-items:stretch; flex-direction:column; gap:13px; }
+  body.route-musync footer .musyc-footer-back { order:0; align-self:flex-start; }
+  body.route-musync footer .season-options { order:1; width:100%; margin-left:0; border-radius:20px; display:grid; grid-template-columns:1fr 1fr; }
 }
 @media(max-width:900px) {
   .musync-expanded { padding:18px; }
@@ -352,7 +397,57 @@ body.route-musync #main-nav > a.content-editor-trigger,body.route-musync .mobile
 .musync-track-head button.is-active { color:color-mix(in srgb,var(--accent) 72%,white); text-decoration-color:var(--accent); }
 .musync-full-title-row button:hover,.musync-full-title-row button.is-active { border-color:color-mix(in srgb,var(--accent) 30%,transparent); background:color-mix(in srgb,var(--accent) 12%,transparent); }
 .musync-login-gate input:focus { border-color:color-mix(in srgb,var(--accent) 65%,transparent); }
+
+/* Favorites and manual ordering */
+.musync-album-card { position:relative; cursor:default; }
+.musync-album-open { width:100%; padding:0; border:0; display:grid; color:inherit; text-align:left; background:transparent; cursor:pointer; }
+.musync-album-open > span { display:grid; }
+.musync-album-favorite { position:absolute; right:10px; top:10px; z-index:2; width:38px; height:38px; padding:0; border:1px solid rgba(255,255,255,.13); border-radius:50%; display:grid; place-items:center; color:#fff; background:rgba(7,29,45,.78); box-shadow:0 8px 24px rgba(0,0,0,.2); backdrop-filter:blur(12px); font:700 19px "DM Sans",sans-serif; cursor:pointer; transition:color .2s,background .2s,transform .2s; }
+.musync-album-favorite:hover { transform:scale(1.04); background:rgba(7,29,45,.94); }
+.musync-album-favorite.is-active { color:color-mix(in srgb,var(--accent) 76%,white); }
+.musync-album-title-row { min-width:0; display:flex; align-items:center; gap:14px; }
+.musync-album-title-row h4 { min-width:0; }
+.musync-album-title-row .musync-album-favorite { position:static; flex:0 0 42px; width:42px; height:42px; }
+.musync-favorite-albums { grid-column:1/-1; display:grid; gap:13px; }
+.musync-favorite-albums > h4,.musync-favorite-heading { margin:0; color:#a9bdc7; font:750 10px "DM Sans",sans-serif; letter-spacing:.1em; text-transform:uppercase; }
+.musync-favorite-albums > div { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,240px)); gap:14px; }
+.musync-favorite-albums .musync-empty { grid-column:1/-1; padding:26px 12px; }
+.musync-favorite-heading { margin:26px 0 8px; padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,.08); }
+.musync-favorite-heading[hidden] { display:none; }
+.musync-track-favorite { width:34px; height:34px; border-radius:50%!important; color:#8da4af!important; font:700 17px "DM Sans",sans-serif; transition:color .2s,background .2s; }
+.musync-track-favorite:hover,.musync-track-favorite.is-active { color:color-mix(in srgb,var(--accent) 75%,white)!important; background:color-mix(in srgb,var(--accent) 11%,transparent)!important; }
+.musync-order-actions { display:none; align-items:center; }
+.musync-order-actions button { width:27px; height:29px; border-radius:8px!important; color:#7894a3!important; font-size:12px; transition:color .2s,background .2s; }
+.musync-order-actions button:hover:not(:disabled) { color:#fff!important; background:rgba(255,255,255,.07)!important; }
+.musync-order-actions button:disabled { opacity:.2; cursor:default; }
+.musync-track.is-orderable { cursor:grab; }
+.musync-track.is-orderable:active { cursor:grabbing; }
+.musync-track.is-dragging { opacity:.42; transform:scale(.985); }
+.musync-track.is-drag-target { position:relative; border-color:transparent; background:color-mix(in srgb,var(--accent) 6%,transparent); }
+.musync-track.is-drag-before::before,.musync-track.is-drag-after::after { content:""; position:absolute; left:8px; right:8px; z-index:3; height:2px; border-radius:2px; background:var(--accent); box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 28%,transparent); pointer-events:none; }
+.musync-track.is-drag-before::before { top:-1px; }
+.musync-track.is-drag-after::after { bottom:-1px; }
+.musync-track:has(.musync-order-actions) { grid-template-columns:38px 44px minmax(0,1fr) 34px 38px; }
+.musync-track.is-album-track { grid-template-columns:38px minmax(0,1fr) 34px 38px; }
+.musync-track.is-song-table,.musync-track-head { grid-template-columns:38px 44px minmax(150px,1.2fr) minmax(110px,.8fr) minmax(100px,.7fr) 34px 38px; }
 @media(max-width:700px) {
   .musync-content.is-playlists { display:block; }
   .musync-full-title-row { margin-top:20px; text-align:left; }
+  .musync-track { grid-template-columns:34px minmax(0,1fr) 32px 32px; }
+  .musync-track:has(.musync-order-actions) { grid-template-columns:34px minmax(0,1fr) auto 32px 32px; }
+  .musync-track-art { display:none; }
+  .musync-track.is-song-table { grid-template-columns:34px 40px minmax(0,1fr) 32px 32px; }
+  .musync-track.is-song-table .musync-track-art { display:block; }
+  .musync-order-actions { gap:0; }
+  .musync-order-actions { display:flex; }
+  .musync-order-actions button { width:23px; }
+  .musync-favorite-albums > div { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+
+/* Keep the compact dock override last so the generic tablet layout cannot expand it. */
+@media(max-width:700px) {
+  .musync-player-panel { grid-template-areas:"cover copy controls" "timeline timeline timeline" "actions actions volume"; }
+  .musync-timeline > div { display:none; }
+  .musync-player-actions { grid-area:actions; }
+  .musync-volume { grid-area:volume; }
 }
