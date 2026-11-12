@@ -913,11 +913,11 @@ Object.assign(translations.ca, { musicPrevious:'Cançó anterior', musicPlay:'Re
 Object.assign(translations.en, { musicPrevious:'Previous song', musicPlay:'Play music', musicPause:'Pause music', musicNext:'Next song', musicMute:'Mute music', musicUnmute:'Turn sound on' });
 Object.assign(translations.it, { musicPrevious:'Brano precedente', musicPlay:'Riproduci musica', musicPause:'Metti in pausa', musicNext:'Brano successivo', musicMute:'Disattiva la musica', musicUnmute:'Attiva il suono' });
 Object.assign(translations.fr, { musicPrevious:'Chanson précédente', musicPlay:'Lancer la musique', musicPause:'Mettre en pause', musicNext:'Chanson suivante', musicMute:'Couper la musique', musicUnmute:'Activer le son' });
-Object.assign(translations.es, { bcnIntro:'En este camino contamos con la colaboración de <strong class="bcn-highlight">BCN Fusió</strong>, que nos acompaña y nos ayuda a seguir creciendo como banda.' });
-Object.assign(translations.ca, { bcnIntro:'En aquest camí comptem amb la col·laboració de <strong class="bcn-highlight">BCN Fusió</strong>, que ens acompanya i ens ajuda a continuar creixent com a banda.' });
-Object.assign(translations.en, { bcnIntro:'Along the way, we have the support of <strong class="bcn-highlight">BCN Fusió</strong>, who are helping us continue to grow as a band.' });
-Object.assign(translations.it, { bcnIntro:'In questo percorso contiamo sulla collaborazione di <strong class="bcn-highlight">BCN Fusió</strong>, che ci accompagna e ci aiuta a continuare a crescere come band.' });
-Object.assign(translations.fr, { bcnIntro:'Dans cette aventure, nous bénéficions de la collaboration de <strong class="bcn-highlight">BCN Fusió</strong>, qui nous accompagne et nous aide à continuer de grandir en tant que groupe.' });
+Object.assign(translations.es, { bcnIntro:'En este camino contamos con la colaboración de <a class="bcn-highlight" href="https://bcnfusio.cat" target="_blank" rel="noopener">BCN Fusió</a>, que nos acompaña y nos ayuda a seguir creciendo como banda.' });
+Object.assign(translations.ca, { bcnIntro:'En aquest camí comptem amb la col·laboració de <a class="bcn-highlight" href="https://bcnfusio.cat" target="_blank" rel="noopener">BCN Fusió</a>, que ens acompanya i ens ajuda a continuar creixent com a banda.' });
+Object.assign(translations.en, { bcnIntro:'Along the way, we have the support of <a class="bcn-highlight" href="https://bcnfusio.cat" target="_blank" rel="noopener">BCN Fusió</a>, who are helping us continue to grow as a band.' });
+Object.assign(translations.it, { bcnIntro:'In questo percorso contiamo sulla collaborazione di <a class="bcn-highlight" href="https://bcnfusio.cat" target="_blank" rel="noopener">BCN Fusió</a>, che ci accompagna e ci aiuta a continuare a crescere come band.' });
+Object.assign(translations.fr, { bcnIntro:'Dans cette aventure, nous bénéficions de la collaboration de <a class="bcn-highlight" href="https://bcnfusio.cat" target="_blank" rel="noopener">BCN Fusió</a>, qui nous accompagne et nous aide à continuer de grandir en tant que groupe.' });
 
 const seasonThemes = {
   spring: { color:'#F4A7C1', icon:'🌸' },

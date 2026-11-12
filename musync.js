@@ -110,7 +110,7 @@
     pause:'<svg viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>',
     prev:'<svg viewBox="0 0 24 24"><path d="m11 6-7 6 7 6V6Zm9 0-7 6 7 6V6Z"/></svg>',
     next:'<svg viewBox="0 0 24 24"><path d="m4 6 7 6-7 6V6Zm9 0 7 6-7 6V6Z"/></svg>',
-    volume:'<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4Zm12.2 1.1a3 3 0 0 1 0 3.8m2.6-6.4a6.5 6.5 0 0 1 0 9"/></svg>',
+    volume:'<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4Zm12.2 1.1a3 3 0 0 1 0 3.8m2.6-6.4a6.5 6.5 0 0 1 0 9"/><path class="musync-mute-slash" d="M5 4 20 19"/></svg>',
     expand:'<svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4M9 21h6"/></svg>',
     search:'<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/></svg>',
     albums:'<svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg>',
@@ -558,6 +558,44 @@
     const nextChords=nextChordSource?nextChordSource.split('\n').map(lyricMarkup).join('<br>'):'';
     return `<span class="musync-instrumental${chordSource?'':' no-chords'}">${chordSource?`<span class="musync-instrumental-chords"><span class="musync-chord-current">${chords}</span>${nextChords?`<span class="musync-chord-arrow" aria-hidden="true">→</span><span class="musync-chord-next">${nextChords}</span>`:''}</span>`:''}<span class="musync-cue-dots">${group.map(entry=>`<span class="musync-cue-dot" data-ms-cue-target="${entry.index}" aria-label="${entry.index-line.displayIndex+1}"><i></i></span>`).join('')}</span></span>`;
   }
+  function fitInstrumentalChordPreviews(root=lyricsHost){
+    requestAnimationFrame(()=>root.querySelectorAll('.musync-instrumental-chords').forEach(container=>{
+      const next=container.querySelector('.musync-chord-next');
+      const arrow=container.querySelector('.musync-chord-arrow');
+      const run=next?.querySelector('.musync-chord-run');
+      if(!next||!arrow||!run)return;
+      const items=[...run.querySelectorAll('.musync-run-chord')];
+      let clipped=false;
+      while(items.length>1&&container.scrollWidth>container.clientWidth){items.pop().remove();clipped=true;}
+      if(clipped&&items.length){
+        items[items.length-1].textContent='…';
+        while(items.length>1&&container.scrollWidth>container.clientWidth){items.pop().remove();items[items.length-1].textContent='…';}
+      }
+      if(container.scrollWidth>container.clientWidth){arrow.hidden=true;next.hidden=true;}
+    }));
+  }
+  function transitionInstrumentalChords(target,activeLine,active){
+    const existing=target.querySelector('.musync-instrumental-chords');
+    const template=document.createElement('template');
+    template.innerHTML=instrumentalMarkup(active);
+    const replacement=template.content.querySelector('.musync-instrumental-chords');
+    if(!existing||!replacement||window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+      target.dataset.msLyric=String(active);
+      target.innerHTML=activeLine.text.trimStart().startsWith('♪')?instrumentalMarkup(active):activeLine.text.split('\n').map(lyricMarkup).join('<br>');
+      fitInstrumentalChordPreviews(target);
+      return;
+    }
+    const transitionId=String(active);
+    target.dataset.msLyric=transitionId;
+    target.dataset.msChordTransition=transitionId;
+    existing.classList.add('is-leaving');
+    setTimeout(()=>{
+      if(target.dataset.msChordTransition!==transitionId)return;
+      existing.replaceWith(replacement);
+      delete target.dataset.msChordTransition;
+      fitInstrumentalChordPreviews(target);
+    },190);
+  }
   async function loadLyrics() {
     const track = tracks[current];
     const loadId = ++lyricsLoadId;
@@ -578,7 +616,7 @@
       return;
     }
     try {
-      const text = await fetch(`${rootPath}${lyricsSource}?v=20261112-309`, {cache:'no-cache'}).then(response => response.text());
+      const text = await fetch(`${rootPath}${lyricsSource}?v=20261113-323`, {cache:'no-cache'}).then(response => response.text());
       if (loadId !== lyricsLoadId || track !== tracks[current]) return;
       $('.musync-chord-toggle').hidden = !text.split(/\r?\n/).some(line=>line.split(']').slice(1).join(']').split(/(\([^)]*\))/g).some(part=>part.startsWith('(')&&chordPattern.test(part.slice(1,-1))));
       lyricLines = text.split(/\r?\n/).reduce((lines,line) => {
@@ -594,6 +632,7 @@
       });
       lyricsHost.innerHTML = lyricLines.map((line,index) => line.displayIndex===index ? `<button type="button" data-ms-display="${index}" data-ms-lyric="${index}">${line.text.trimStart().startsWith('♪')?instrumentalMarkup(index):line.text.split('\n').map(lyricMarkup).join('<br>')}</button>` : '').join('');
       lyricsHost.classList.toggle('hide-chords', !$('[data-ms-chords]').checked);
+      fitInstrumentalChordPreviews();
       resetLyricsToPlayback(true);
     } catch (_) {
       if (loadId !== lyricsLoadId) return;
@@ -626,9 +665,10 @@
       }
     });
     if(target&&activeLine&&Number(target.dataset.msLyric)!==active){
-      target.dataset.msLyric=String(active);
-      target.innerHTML=activeLine.text.trimStart().startsWith('♪')?instrumentalMarkup(active):activeLine.text.split('\n').map(lyricMarkup).join('<br>');
+      if(activeLine.text.trimStart().startsWith('♪'))transitionInstrumentalChords(target,activeLine,active);
+      else { target.dataset.msLyric=String(active);target.innerHTML=activeLine.text.split('\n').map(lyricMarkup).join('<br>'); }
       lyricsHost.classList.toggle('hide-chords', !$('[data-ms-chords]').checked);
+      if(!activeLine.text.trimStart().startsWith('♪'))fitInstrumentalChordPreviews(target);
     }
     if(target&&activeLine?.text.trimStart().startsWith('♪')){
       const group=lyricLines.map((item,index)=>({item,index})).filter(entry=>entry.item.displayIndex===displayIndex);
@@ -925,21 +965,24 @@
   $('.musync-cover').addEventListener('click',()=>{
     if(window.matchMedia('(max-width:700px)').matches&&current>=0)$('.musync-expand').click();
   });
+  const isTypingTarget=target=>target instanceof Element&&Boolean(target.closest('textarea,select,[contenteditable="true"],input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"])'));
   window.addEventListener('keydown',event=>{
-    if(event.key==='Escape'&&!expanded.hidden&&!listDialog.open&&!confirmDialog.open){event.preventDefault();$('.musync-expanded-back').click();return;}
+    if(event.key==='Escape'&&!page.hidden&&!$('[data-ms-app]').hidden&&!listDialog.open&&!confirmDialog.open){event.preventDefault();event.stopImmediatePropagation();if(document.activeElement instanceof HTMLElement)document.activeElement.blur();if(!expanded.hidden)$('.musync-expanded-back').click();return;}
     if(event.code!=='Space'||event.repeat||page.hidden||$('[data-ms-app]').hidden)return;
-    if(event.target instanceof Element&&event.target.closest('input,textarea,select,[contenteditable="true"]'))return;
+    if(isTypingTarget(event.target))return;
     if(listDialog.open||confirmDialog.open)return;
     event.preventDefault();
-    if(event.target instanceof HTMLElement&&event.target.matches('button,[role="button"]'))event.target.blur();
+    event.stopImmediatePropagation();
+    if(document.activeElement instanceof HTMLElement)document.activeElement.blur();
     if(current>=0){audio.paused?audio.play().catch(()=>{}):audio.pause();return;}
     togglePlaybackForView();
   },{capture:true});
   window.addEventListener('keyup',event=>{
     if(event.code!=='Space'||page.hidden||$('[data-ms-app]').hidden)return;
-    if(event.target instanceof Element&&event.target.closest('input,textarea,select,[contenteditable="true"]'))return;
+    if(isTypingTarget(event.target))return;
     if(listDialog.open||confirmDialog.open)return;
     event.preventDefault();
+    event.stopImmediatePropagation();
   },{capture:true});
   $('[data-ms-prev]').addEventListener('click',previous);
   $('[data-ms-next]').addEventListener('click',next);
@@ -947,20 +990,22 @@
   $('[data-ms-repeat]').addEventListener('click',()=>{state.repeat=state.repeat==='off'?'list':state.repeat==='list'?'one':'off';save();syncPlayer();});
   volume.value=String(Number.isFinite(Number(state.volume))?state.volume:1);paintRange(volume,Number(volume.value));
   $('[data-ms-full-volume]').value=volume.value;paintRange($('[data-ms-full-volume]'),Number(volume.value));
-  function setVolume(value){audio.volume=Number(value);state.volume=audio.volume;volume.value=String(value);$('[data-ms-full-volume]').value=String(value);paintRange(volume,audio.volume);paintRange($('[data-ms-full-volume]'),audio.volume);save();}
+  function syncMuteVisual(){page.querySelectorAll('.musync-volume,.musync-full-volume').forEach(label=>label.classList.toggle('is-muted',audio.volume===0));}
+  function setVolume(value){audio.volume=Number(value);state.volume=audio.volume;volume.value=String(value);$('[data-ms-full-volume]').value=String(value);paintRange(volume,audio.volume);paintRange($('[data-ms-full-volume]'),audio.volume);syncMuteVisual();save();}
   let lastAudibleVolume=Number(state.volume)>0?Number(state.volume):1;
   function toggleMute(){
     if(audio.volume>0){lastAudibleVolume=audio.volume;setVolume(0);}
     else setVolume(lastAudibleVolume||1);
-    page.querySelectorAll('.musync-volume,.musync-full-volume').forEach(label=>label.classList.toggle('is-muted',audio.volume===0));
+    syncMuteVisual();
   }
   page.querySelectorAll('.musync-volume svg,.musync-full-volume svg').forEach(icon=>{
     icon.setAttribute('role','button');icon.setAttribute('tabindex','0');icon.setAttribute('aria-label',copy.volume);
-    icon.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();toggleMute();});
+    icon.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();toggleMute();icon.blur();});
     icon.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMute();}});
   });
   volume.addEventListener('input',()=>setVolume(volume.value));
   $('[data-ms-full-volume]').addEventListener('input',()=>setVolume($('[data-ms-full-volume]').value));
+  syncMuteVisual();
   progress.addEventListener('input',()=>seekFrom(progress));
   $('[data-ms-chords]').checked=state.showChords;
   $('[data-ms-chords]').addEventListener('change',event=>{
@@ -1030,6 +1075,15 @@
     audio.pause();
     return true;
   };
+  const viewportMeta=document.querySelector('meta[name="viewport"]');
+  const defaultViewport=viewportMeta?.content||'width=device-width, initial-scale=1.0';
+  let viewportResetTimer;
+  function resetMobileMusyncViewport(){
+    if(!viewportMeta||!window.matchMedia('(max-width:700px)').matches)return;
+    clearTimeout(viewportResetTimer);
+    viewportMeta.content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover';
+    viewportResetTimer=setTimeout(()=>{viewportMeta.content=defaultViewport;},180);
+  }
   function syncAccess(){
     state=loadState();restoreUi();volume.value=String(Number.isFinite(Number(state.volume))?state.volume:1);audio.volume=Number(volume.value);$('[data-ms-full-volume]').value=volume.value;paintRange(volume,audio.volume);paintRange($('[data-ms-full-volume]'),audio.volume);
     const loggedIn=Boolean(window.naviesCurrentMember?.());
@@ -1051,7 +1105,7 @@
   });
   window.addEventListener('navies-auth-change',syncAccess);
   window.addEventListener('navies-route-change',event=>{
-    if(event.detail?.route==='musync') { window.naviesPauseSiteMusicForNavyAudio?.({ immediate:true }); render(); }
+    if(event.detail?.route==='musync') { resetMobileMusyncViewport(); window.naviesPauseSiteMusicForNavyAudio?.({ immediate:true }); render(); }
     else {
       if(!audio.paused)audio.pause();
       window.naviesResumeSiteMusicAfterNavyAudio?.({ force:true });
@@ -1061,5 +1115,6 @@
   window.addEventListener('pagehide',persistAndPause);
   window.addEventListener('beforeunload',persistAndPause);
   document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')persistPlaybackPosition(true);});
+  if(location.hash==='#musync')resetMobileMusyncViewport();
   render();syncAccess();
 })();
