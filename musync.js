@@ -18,15 +18,15 @@
   copy.sagreraAlbums = ({ es:'Concierto Fiestas de La Sagrera', ca:'Concert Festes de La Sagrera', en:'La Sagrera Neighbourhood Festival Concert', fr:'Concert des fêtes de La Sagrera', it:'Concerto della festa di La Sagrera' })[language] || 'Concierto Fiestas de La Sagrera';
   copy.summerAlbums = 'Summer Sound';
   copy.originalVersion = ({es:'Original',ca:'Original',en:'Original',fr:'Originale',it:'Originale'})[language] || 'Original';
-  copy.naviesVersion = 'The Navies';
+  copy.naviesVersion = ({es:'Práctica',ca:'Pràctica',en:'Practice',fr:'Répétition',it:'Prova'})[language] || 'Práctica';
   const rootPath = window.__naviesForcedLanguage ? '../' : '';
   const tracks = [
-    { file:'the-navies/shake-it-off', artist:'Taylor Swift', title:'Shake It Off', album:'the-navies', duration:219.246, lyrics:'lyrics/the-navies/shake-it-off.lrc', hasChords:true },
-    { file:'the-navies/baby-one-more-time', artist:'Britney Spears', title:'…Baby One More Time', album:'the-navies', duration:211.096, lyrics:'lyrics/the-navies/baby-one-more-time.lrc' },
+    { file:'the-navies/shake-it-off', artist:'Taylor Swift', title:'Shake It Off', album:'the-navies', duration:219.246, lyrics:'lyrics/the-navies/shake-it-off.lrc', naviesFile:'the-navies/shake-it-off-navies', naviesLyrics:'lyrics/the-navies/shake-it-off.lrc', hasChords:true },
+    { file:'the-navies/baby-one-more-time', artist:'Britney Spears', title:'…Baby One More Time', album:'the-navies', duration:211.096, lyrics:'lyrics/the-navies/baby-one-more-time.lrc', naviesFile:'the-navies/baby-one-more-time-navies', naviesLyrics:'lyrics/the-navies/baby-one-more-time.lrc' },
     { file:'the-navies/sweet-caroline', artist:'Neil Diamond', title:'Sweet Caroline', album:'the-navies', duration:203.64, lyrics:'lyrics/the-navies/sweet-caroline.lrc', naviesFile:'the-navies/sweet-caroline-navies', naviesLyrics:'lyrics/the-navies/sweet-caroline-navies.lrc' },
-    { file:'the-navies/dont-look-back-in-anger', artist:'Oasis', title:'Don’t Look Back in Anger', album:'the-navies', duration:289.62, lyrics:'lyrics/the-navies/dont-look-back-in-anger.lrc' },
+    { file:'the-navies/dont-look-back-in-anger', artist:'Oasis', title:'Don’t Look Back in Anger', album:'the-navies', duration:289.62, lyrics:'lyrics/the-navies/dont-look-back-in-anger.lrc', naviesFile:'the-navies/dont-look-back-in-anger-navies', naviesLyrics:'lyrics/the-navies/dont-look-back-in-anger.lrc' },
     { file:'the-navies/the-final-countdown', artist:'Europe', title:'The Final Countdown', album:'the-navies', duration:311.304, lyrics:'lyrics/the-navies/the-final-countdown.lrc', naviesFile:'the-navies/the-final-countdown-navies', naviesLyrics:'lyrics/the-navies/the-final-countdown-navies.lrc' },
-    { file:'the-navies/have-you-ever-seen-the-rain', artist:'Creedence Clearwater Revival', title:'Have You Ever Seen the Rain?', album:'the-navies', duration:157.824, lyrics:'lyrics/the-navies/have-you-ever-seen-the-rain.lrc' },
+    { file:'the-navies/have-you-ever-seen-the-rain', artist:'Creedence Clearwater Revival', title:'Have You Ever Seen the Rain?', album:'the-navies', duration:157.824, lyrics:'lyrics/the-navies/have-you-ever-seen-the-rain.lrc', naviesFile:'the-navies/have-you-ever-seen-the-rain-navies', naviesLyrics:'lyrics/the-navies/have-you-ever-seen-the-rain.lrc' },
     { file:'the-navies/the-final-countdown-reprise', artist:'Europe', title:'The Final Countdown (Reprise)', album:'the-navies', duration:94.368, lyrics:'lyrics/the-navies/the-final-countdown-reprise.lrc', naviesFile:'the-navies/the-final-countdown-reprise-navies', naviesLyrics:'lyrics/the-navies/the-final-countdown-reprise-navies.lrc' },
     { file:'cor-band/billie-jean', artist:'Michael Jackson', title:'Billie Jean', album:'cor-band', duration:294.269, lyrics:'lyrics/cor-band/billie-jean.lrc' },
     { file:'cor-band/stayin-alive', artist:'Bee Gees', title:'Stayin’ Alive', album:'cor-band', duration:284.709, lyrics:'lyrics/cor-band/stayin-alive.lrc' },
@@ -130,7 +130,7 @@
     <div class="musync-login-gate" hidden><form data-ms-login><span>MUSYNC</span><h1>${copy.memberAccess}</h1><p>${copy.loginCopy}</p><label><span>${copy.username}</span><input name="username" autocomplete="username" autocapitalize="none" required></label><label><span>${copy.password}</span><input name="password" type="password" autocomplete="current-password" required></label><p class="musync-login-error" data-ms-login-error aria-live="polite"></p><button type="submit">${copy.enter}</button></form></div>
     <div class="musync-app" data-ms-app>
       <aside class="musync-player-panel">
-        <div class="musync-cover"><img src="${rootPath}assets/images/musync-cover.png?v=20261112-291" alt="The Navies"></div>
+        <button class="musync-cover" type="button" aria-label="${copy.expand}"><img src="${rootPath}assets/images/musync-cover.png?v=20261112-291" alt="The Navies"></button>
         <div class="musync-current-copy"><h1><span data-ms-title>The Navies</span></h1><p data-ms-artist>Musync</p></div>
         <div class="musync-timeline"><input data-ms-progress type="range" min="0" max="1000" value="0" aria-label="Progreso"><div><span data-ms-current>0:00</span><span data-ms-duration>0:00</span></div></div>
         <div class="musync-controls">
@@ -240,20 +240,22 @@
   let lyricsDetached = false;
   let lyricsAutoScrolling = false;
   let lyricsAutoScrollTimer;
+  let lyricsLoadId = 0;
   let seekLyricsFrame;
   let renderedView = '';
   let renderedPlaylist = '';
-  let trackVersion = 'original';
+  let trackVersion = uiState.trackVersion === 'navies' ? 'navies' : 'original';
   const effectiveFile = track => trackVersion === 'navies' && track?.naviesFile ? track.naviesFile : track?.file;
   const effectiveLyrics = track => trackVersion === 'navies' && track?.naviesLyrics ? track.naviesLyrics : track?.lyrics;
-  const source = (track) => `${rootPath}audios/${effectiveFile(track)}.${track.ext || 'mp3'}?v=20261112-295`;
-  const saveUi = () => localStorage.setItem(`the-navies-musync-ui-${memberKey()}`, JSON.stringify({ view, selectedAlbum, selectedPlaylist, albumReturnView }));
+  const source = (track) => `${rootPath}audios/${effectiveFile(track)}.${track.ext || 'mp3'}?v=20261112-310`;
+  const saveUi = () => localStorage.setItem(`the-navies-musync-ui-${memberKey()}`, JSON.stringify({ view, selectedAlbum, selectedPlaylist, albumReturnView, trackVersion }));
   function restoreUi() {
     uiState=loadUi();
     view=['album','album-detail','songs','recent','favorites','playlists','queue'].includes(uiState.view)?uiState.view:'album';
     selectedAlbum=albums.some(album=>album.id===uiState.selectedAlbum)?uiState.selectedAlbum:'the-navies';
     albumReturnView=uiState.albumReturnView==='favorites'?'favorites':'album';
     selectedPlaylist=uiState.selectedPlaylist||'';
+    trackVersion=uiState.trackVersion==='navies'?'navies':'original';
   }
   function restoreSavedTrack() {
     const index=Number(state.currentTrack);
@@ -413,6 +415,7 @@
     $('[data-ms-full-title]').textContent = track?.title || copy.nothingPlaying;
     $('[data-ms-full-artist]').textContent = track?.artist || 'Musync';
     page.querySelectorAll('.musync-cover,.musync-expanded-player').forEach(element => element.classList.toggle('is-empty', !track));
+    $('.musync-cover').disabled = !track;
     $('.musync-expand').disabled = !track;
     $('[data-ms-duration]').textContent = track ? time(Number.isFinite(audio.duration) ? audio.duration : track.duration) : '0:00';
     $('[data-ms-full-duration]').textContent = track ? time(Number.isFinite(audio.duration) ? audio.duration : track.duration) : '0:00';
@@ -454,7 +457,7 @@
   async function play(index, restart = true, sequence = null) {
     if (!tracks[index]) return;
     if(Array.isArray(sequence)&&sequence.length)playbackSequence=[...sequence];
-    if (current !== index) { current = index; trackVersion='original'; state.currentTrack=index; state.currentTime=0; audio.src = source(tracks[index]); restart = true; await loadLyrics(); }
+    if (current !== index) { current = index; state.currentTrack=index; state.currentTime=0; audio.src = source(tracks[index]); restart = true; await loadLyrics(); }
     if (restart) {
       audio.currentTime = 0;
       state.currentTime=0;
@@ -547,13 +550,20 @@
     const line=lyricLines[activeIndex];
     if(!line)return '';
     const group=lyricLines.map((item,index)=>({item,index})).filter(entry=>entry.item.displayIndex===line.displayIndex);
-    const chordSource=line.text.replace(/^\s*♪\s*/,'').trim();
+    const chordSourceFor=item=>item.text.replace(/^\s*♪\s*/,'').trim();
+    const chordSource=chordSourceFor(line);
+    const nextEntry=group.find(entry=>entry.index>activeIndex&&chordSourceFor(entry.item));
+    const nextChordSource=nextEntry?chordSourceFor(nextEntry.item):'';
     const chords=chordSource.split('\n').map(lyricMarkup).join('<br>');
-    return `<span class="musync-instrumental${chordSource?'':' no-chords'}">${chordSource?`<span class="musync-instrumental-chords">${chords}</span>`:''}<span class="musync-cue-dots">${group.map(entry=>`<span class="musync-cue-dot" data-ms-cue-target="${entry.index}" aria-label="${entry.index-line.displayIndex+1}"><i></i></span>`).join('')}</span></span>`;
+    const nextChords=nextChordSource?nextChordSource.split('\n').map(lyricMarkup).join('<br>'):'';
+    return `<span class="musync-instrumental${chordSource?'':' no-chords'}">${chordSource?`<span class="musync-instrumental-chords"><span class="musync-chord-current">${chords}</span>${nextChords?`<span class="musync-chord-arrow" aria-hidden="true">→</span><span class="musync-chord-next">${nextChords}</span>`:''}</span>`:''}<span class="musync-cue-dots">${group.map(entry=>`<span class="musync-cue-dot" data-ms-cue-target="${entry.index}" aria-label="${entry.index-line.displayIndex+1}"><i></i></span>`).join('')}</span></span>`;
   }
   async function loadLyrics() {
     const track = tracks[current];
+    const loadId = ++lyricsLoadId;
     const lyricsSource=effectiveLyrics(track);
+    clearTimeout(lyricsAutoScrollTimer);
+    lyricsAutoScrolling = true;
     expanded.classList.toggle('is-player-only', !lyricsSource);
     $('[data-ms-version-switch]').hidden=!track?.naviesFile;
     page.querySelectorAll('[data-ms-version]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.msVersion===trackVersion)));
@@ -562,9 +572,14 @@
     lyricsDetached = false;
     lyricsHost.classList.remove('is-manual');
     $('[data-ms-resync]').hidden = true;
-    if (!lyricsSource) { lyricsHost.innerHTML = `<p class="musync-no-lyrics">${copy.noLyrics}</p>`; return; }
+    if (!lyricsSource) {
+      lyricsHost.innerHTML = `<p class="musync-no-lyrics">${copy.noLyrics}</p>`;
+      lyricsAutoScrollTimer = setTimeout(()=>{ if(loadId===lyricsLoadId) lyricsAutoScrolling=false; },250);
+      return;
+    }
     try {
-      const text = await fetch(`${rootPath}${lyricsSource}?v=20261112-300`, {cache:'no-cache'}).then(response => response.text());
+      const text = await fetch(`${rootPath}${lyricsSource}?v=20261112-309`, {cache:'no-cache'}).then(response => response.text());
+      if (loadId !== lyricsLoadId || track !== tracks[current]) return;
       $('.musync-chord-toggle').hidden = !text.split(/\r?\n/).some(line=>line.split(']').slice(1).join(']').split(/(\([^)]*\))/g).some(part=>part.startsWith('(')&&chordPattern.test(part.slice(1,-1))));
       lyricLines = text.split(/\r?\n/).reduce((lines,line) => {
         const match = line.match(/^\[(?:(\d+):)?(\d+):(\d+(?:\.\d+)?)\]\s*(.*)$/);
@@ -579,7 +594,12 @@
       });
       lyricsHost.innerHTML = lyricLines.map((line,index) => line.displayIndex===index ? `<button type="button" data-ms-display="${index}" data-ms-lyric="${index}">${line.text.trimStart().startsWith('♪')?instrumentalMarkup(index):line.text.split('\n').map(lyricMarkup).join('<br>')}</button>` : '').join('');
       lyricsHost.classList.toggle('hide-chords', !$('[data-ms-chords]').checked);
-    } catch (_) { lyricsHost.innerHTML = `<p class="musync-no-lyrics">${copy.noLyrics}</p>`; }
+      resetLyricsToPlayback(true);
+    } catch (_) {
+      if (loadId !== lyricsLoadId) return;
+      lyricsHost.innerHTML = `<p class="musync-no-lyrics">${copy.noLyrics}</p>`;
+      lyricsAutoScrollTimer = setTimeout(()=>{ if(loadId===lyricsLoadId) lyricsAutoScrolling=false; },250);
+    }
   }
   function syncLyrics(force = false, instant = false) {
     if (!lyricLines.length) return;
@@ -638,11 +658,14 @@
     }
   }
   function resetLyricsToPlayback(instant = false) {
+    clearTimeout(lyricsAutoScrollTimer);
+    lyricsAutoScrolling = true;
     lyricsDetached = false;
     lyricsHost.classList.remove('is-manual');
     $('[data-ms-resync]').hidden = true;
     expanded.dataset.lyricActive = '';
     requestAnimationFrame(() => requestAnimationFrame(() => syncLyrics(true,instant)));
+    lyricsAutoScrollTimer = setTimeout(()=>{ lyricsAutoScrolling=false; },950);
   }
   function alignLyricsAfterOpening(){
     resetLyricsToPlayback(true);
@@ -733,6 +756,12 @@
       selectedPlaylist=listButton.dataset.msList === '__favorites__' ? '__favorites__' : decodeURIComponent(listButton.dataset.msList);
       render(); return;
     }
+    const playlistColumn = event.target.closest('[data-ms-playlists]');
+    if (playlistColumn && view === 'playlists' && selectedPlaylist && !event.target.closest('[data-ms-list],[data-ms-list-menu]')) {
+      selectedPlaylist='';
+      render();
+      return;
+    }
     const listMenu = event.target.closest('[data-ms-list-menu]');
     if (listMenu) {
       const name=decodeURIComponent(listMenu.dataset.msListMenu);
@@ -756,6 +785,7 @@
       const wasPlaying=!audio.paused;
       const position=audio.currentTime;
       trackVersion=versionButton.dataset.msVersion;
+      saveUi();
       audio.src=source(tracks[current]);
       audio.addEventListener('loadedmetadata',async()=>{
         audio.currentTime=Math.min(position,Number.isFinite(audio.duration)?audio.duration:position);
@@ -892,6 +922,9 @@
     play(visible[0],true,visible);
   }
   $('[data-ms-toggle]').addEventListener('click',togglePlaybackForView);
+  $('.musync-cover').addEventListener('click',()=>{
+    if(window.matchMedia('(max-width:700px)').matches&&current>=0)$('.musync-expand').click();
+  });
   window.addEventListener('keydown',event=>{
     if(event.key==='Escape'&&!expanded.hidden&&!listDialog.open&&!confirmDialog.open){event.preventDefault();$('.musync-expanded-back').click();return;}
     if(event.code!=='Space'||event.repeat||page.hidden||$('[data-ms-app]').hidden)return;

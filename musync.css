@@ -5,7 +5,8 @@
 .musync-expand { align-self:flex-end; width:38px; height:38px; margin-bottom:12px; border:1px solid rgba(255,255,255,.12); border-radius:50%; display:grid; place-items:center; color:#cbd9df; background:rgba(255,255,255,.045); cursor:pointer; }
 .musync-expand svg { width:17px; fill:none; stroke:currentColor; stroke-width:1.7; }
 .musync-expand:hover { color:#fff; background:rgba(255,255,255,.1); }
-.musync-cover { width:100%; aspect-ratio:1; border-radius:22px; overflow:hidden; box-shadow:0 25px 55px rgba(0,0,0,.3); }
+.musync-cover { width:100%; padding:0; border:0; aspect-ratio:1; border-radius:22px; overflow:hidden; color:inherit; background:transparent; box-shadow:0 25px 55px rgba(0,0,0,.3); }
+.musync-cover:disabled { cursor:default; }
 .musync-cover img { width:100%; height:100%; object-fit:cover; display:block; }
 .musync-current-copy { min-height:72px; padding:21px 2px 10px; }
 .musync-current-copy h1 { width:100%; margin:0; overflow:hidden; color:#fff; font:650 clamp(18px,2vw,25px)/1.15 "Manrope",sans-serif; letter-spacing:-.035em; white-space:nowrap; }
@@ -149,8 +150,12 @@
 .musync-run-chord { display:inline-block; color:inherit; font:inherit; line-height:inherit; letter-spacing:inherit; }
 .musync-instrumental { min-width:min(100%,420px); display:inline-grid; justify-items:start; gap:.38em; vertical-align:middle; }
 .musync-instrumental.no-chords { gap:0; }
-.musync-instrumental-chords { min-height:.72em; display:flex; align-items:flex-start; }
+.musync-instrumental-chords { min-height:.72em; max-width:min(100%,720px); display:flex; align-items:flex-start; gap:.7em; overflow:hidden; animation:musyncChordStep .34s cubic-bezier(.2,.75,.25,1) both; }
 .musync-instrumental-chords .musync-chord-run { margin-left:0; }
+.musync-chord-current,.musync-chord-next { display:inline-flex; min-width:0; }
+.musync-chord-arrow { flex:0 0 auto; color:rgba(215,169,143,.64); font:700 .62em/.9 "DM Sans",sans-serif; }
+.musync-chord-next { opacity:.36; filter:blur(.15px); }
+@keyframes musyncChordStep { from { opacity:0; transform:translateX(12px); } to { opacity:1; transform:translateX(0); } }
 .musync-cue-dots { min-height:1em; display:flex; align-items:center; align-self:center; gap:9px; line-height:1; }
 .musync-cue-dot { position:relative; width:15px; height:15px; overflow:hidden; border-radius:50%; display:block; flex:0 0 15px; background:rgba(255,255,255,.18); box-shadow:inset 0 0 0 1px rgba(255,255,255,.05); cursor:pointer; transition:transform .22s,background .28s,opacity .28s; }
 .musync-cue-dot::after { content:""; position:absolute; inset:0; border-radius:inherit; opacity:1; background:linear-gradient(90deg,#fff 0%,#fff 68%,rgba(255,255,255,.78) 84%,rgba(255,255,255,0) 100%); box-shadow:0 0 8px rgba(255,255,255,.26); transform:scaleX(0); transform-origin:left center; transition:transform .2s cubic-bezier(.22,.65,.3,1); }
@@ -159,8 +164,12 @@
 .musync-cue-dot.is-leaving::after { opacity:0; transform:scaleX(var(--cue-leave-progress,1)); transition:opacity .3s ease; }
 .musync-cue-dot.is-resetting::after { opacity:0; transform:scaleX(0); transition:none; }
 .musync-cue-dot:hover { transform:scale(1.14); background:rgba(255,255,255,.32); }
+@media(min-width:701px) {
+  .musync-cue-dots { gap:10px; }
+  .musync-cue-dot { width:17px; height:17px; flex-basis:17px; }
+}
 .musync-lyrics.hide-chords .musync-chord-word { padding-top:0; }
-.musync-lyrics.hide-chords .musync-chord,.musync-lyrics.hide-chords .musync-trailing-chord,.musync-lyrics.hide-chords .musync-chord-run { display:none; }
+.musync-lyrics.hide-chords .musync-chord,.musync-lyrics.hide-chords .musync-trailing-chord,.musync-lyrics.hide-chords .musync-chord-run,.musync-lyrics.hide-chords .musync-instrumental-chords { display:none; }
 .musync-version-switch { margin-left:auto; padding:3px; border:1px solid rgba(208,165,142,.24); border-radius:999px; display:flex; gap:2px; background:rgba(255,255,255,.04); }
 .musync-version-switch[hidden] { display:none; }
 .musync-version-switch button { min-height:30px; padding:0 12px; border:0; border-radius:999px; color:#9fb4bf; background:transparent; font:750 9px "DM Sans",sans-serif; cursor:pointer; transition:color .2s,background .2s; }
@@ -237,6 +246,9 @@
 .musync-lyrics > button { font-size:clamp(22px,2.35vw,34px); }
 
 @media(max-width:700px) {
+  .musync-cover:not(:disabled) { cursor:pointer; }
+  .musync-expanded-player > p { text-align:left; }
+  .musync-lyrics > button { text-align:left; }
   .musync-mobile-view-toggle { width:100%; min-height:46px; margin:20px 0 0; padding:0 15px; border:1px solid rgba(255,255,255,.1); border-radius:14px; display:flex; align-items:center; justify-content:space-between; color:#edf4f6; background:rgba(255,255,255,.055); font:750 11px "DM Sans",sans-serif; cursor:pointer; }
   .musync-mobile-view-toggle svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; transition:transform .28s ease; }
   .musync-mobile-view-toggle[aria-expanded="true"] svg { transform:rotate(180deg); }

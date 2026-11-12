@@ -551,6 +551,7 @@ function showPage(route, updateHistory = true, editorLinkActive = false) {
   const selectedView = pageViews.find((view) => view.dataset.pageView === selectedRoute);
   window.dispatchEvent(new CustomEvent('navies-route-change', { detail:{ route:selectedRoute } }));
   document.documentElement.dataset.route = selectedRoute;
+  window.naviesRefreshFavicon?.();
   pageViews.forEach((view) => {
     view.classList.remove('route-entering');
     view.querySelectorAll('.reveal').forEach((element) => {
@@ -1358,7 +1359,10 @@ function setSeason(season, persist = true) {
   document.documentElement.dataset.season = selected;
   document.documentElement.style.setProperty('--accent', seasonThemes[selected].color);
   const faviconAccent = naviesFaviconMode === 'static' ? '#d7f27d' : seasonThemes[selected].color;
-  const seasonalIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#173c5b"/><circle cx="50" cy="14" r="6" fill="${faviconAccent}"/><text x="9" y="42" fill="#fff" font-family="Arial,Helvetica,sans-serif" font-size="28" font-weight="700" letter-spacing="-2">TN</text></svg>`;
+  const musyncIcon = document.documentElement.dataset.route === 'musync';
+  const seasonalIcon = musyncIcon
+    ? `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#173c5b"/><circle cx="32" cy="32" r="21" fill="${seasonThemes[selected].color || '#d7f27d'}"/><circle cx="32" cy="32" r="7" fill="#173c5b"/></svg>`
+    : `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#173c5b"/><circle cx="50" cy="14" r="6" fill="${faviconAccent}"/><text x="9" y="42" fill="#fff" font-family="Arial,Helvetica,sans-serif" font-size="28" font-weight="700" letter-spacing="-2">TN</text></svg>`;
   const seasonalFavicon = document.querySelector('#seasonal-favicon');
   const crawlerRequest = /bot|crawler|spider|slurp|bingpreview|google-inspectiontool/i.test(navigator.userAgent);
   if (seasonalFavicon && !crawlerRequest) seasonalFavicon.href = `data:image/svg+xml,${encodeURIComponent(seasonalIcon)}`;
@@ -1366,6 +1370,7 @@ function setSeason(season, persist = true) {
   if (persist) localStorage.setItem('the-navies-season', selected);
 }
 window.naviesSetSeason = setSeason;
+window.naviesRefreshFavicon = () => setSeason(document.documentElement.dataset.season || 'autumn', false);
 setSeason(window.__naviesInitialSeason || localStorage.getItem('the-navies-season') || 'autumn', false);
 requestAnimationFrame(() => document.documentElement.classList.add('theme-ready'));
 seasonControl.querySelectorAll('.season-option').forEach((button) => button.addEventListener('click', () => setSeason(button.dataset.season)));
