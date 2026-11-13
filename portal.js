@@ -30,6 +30,20 @@ Object.assign(editorText, ({
   it:{ live:'Navies Live', liveTitle:'Titolo di Navies Live', liveDescription:'Descrizione di Navies Live', socialNetworks:'Social media', socialNetworksCopy:'Link pubblici mostrati nella pagina Home.', addSocial:'Aggiungi social', dialogTitle:'Titolo interno', socialLabel:'Testo del link', socialUrl:'Link personale', siteEditing:'Modifica del Sito', general:'Impostazioni generali', generalCopy:'Preferenze comuni per tutto il sito.', defaultSeason:'Tema predefinito', initialPlayback:'Primo brano del lettore', randomPlayback:'Casuale', customPlayback:'Brano personalizzato', initialSong:'Brano iniziale', countdownSetting:'Landing e conto alla rovescia', enabled:'Attivato', disabled:'Disattivato', initialVolume:'Volum iniziale', lowVolume:'Basso', mediumVolume:'Medio', highVolume:'Alto', fallbackLanguage:'Lingua di riserva', faviconMode:'Icona della scheda', dynamicFavicon:'Dinamica · colore stagionale', staticFavicon:'Statica · punto verde', saveBeforeExit:'Ci sono modifiche non salvate. Vuoi salvarle prima di uscire?', singer:'Cantante' }
 }[portalLanguage] || {}));
 Object.assign(editorText, ({
+  es:{ sessionInactivity:'Cierre por inactividad', inactivityHours:'Tiempo sin actividad', hours:'horas' },
+  ca:{ sessionInactivity:'Tancament per inactivitat', inactivityHours:'Temps sense activitat', hours:'hores' },
+  en:{ sessionInactivity:'Sign out after inactivity', inactivityHours:'Inactive time', hours:'hours' },
+  fr:{ sessionInactivity:'Déconnexion pour inactivité', inactivityHours:'Durée d’inactivité', hours:'heures' },
+  it:{ sessionInactivity:'Disconnessione per inattività', inactivityHours:'Tempo di inattività', hours:'ore' }
+}[portalLanguage] || {}));
+Object.assign(editorText, ({
+  es:{ customPlayback:'Personalizada', dynamicFavicon:'Dinámico', staticFavicon:'Estático' },
+  ca:{ customPlayback:'Personalitzada', dynamicFavicon:'Dinàmic', staticFavicon:'Estàtic' },
+  en:{ customPlayback:'Custom', dynamicFavicon:'Dynamic', staticFavicon:'Static' },
+  fr:{ customPlayback:'Personnalisée', dynamicFavicon:'Dynamique', staticFavicon:'Statique' },
+  it:{ customPlayback:'Personalizzata', dynamicFavicon:'Dinamico', staticFavicon:'Statico' }
+}[portalLanguage] || {}));
+Object.assign(editorText, ({
   es:{ links:'Listas de reproducción', linksCopy:'Listas musicales asociadas a esta formación.', addLink:'Añadir lista' },
   ca:{ links:'Llistes de reproducció', linksCopy:'Llistes musicals associades a aquesta formació.', addLink:'Afegir llista' },
   en:{ links:'Playlists', linksCopy:'Music playlists associated with this ensemble.', addLink:'Add playlist' },
@@ -480,12 +494,7 @@ function decorateScoreSongs() {
       container.append(item);
     });
     if (song.startsWith('conjunt-de-cordes/')) return;
-    const naviesLiveAudio = {
-      'sweet-caroline':'the-navies/sweet-caroline-navies',
-      'the-final-countdown':'the-navies/the-final-countdown-navies',
-      'the-final-countdown-reprise':'the-navies/the-final-countdown-reprise-navies'
-    };
-    const audioId = naviesLiveAudio[song] || (song.includes('/') ? song : `the-navies/${song}`);
+    const audioId = song.includes('/') ? song : `the-navies/${song}`;
     const audioSource = `${audioRoot}/${audioId}.mp3`;
     const divider = document.createElement('span');
     divider.className = 'audio-divider';
@@ -496,6 +505,7 @@ function decorateScoreSongs() {
     audioButton.type = 'button';
     audioButton.dataset.audioSrc = audioSource;
     audioButton.dataset.audioTitle = songTitle;
+    audioButton.dataset.practicePitchWarning = String(['sweet-caroline','the-final-countdown','the-final-countdown-reprise'].includes(song));
     audioButton.setAttribute('aria-label', `Escuchar ${songTitle}`);
     audioButton.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7.4v9.2L17 12 9 7.4Z"></path></svg>';
     container.append(audioButton);
@@ -549,7 +559,15 @@ window.addEventListener('navies-auth-change', () => { if (selectedEnsemble === '
 const audioDialog = document.querySelector('#audio-dialog');
 const audioPlayer = document.querySelector('#audio-player');
 const audioDialogTitle = document.querySelector('#audio-dialog-title');
+const audioDialogWarning = document.querySelector('#audio-dialog-warning');
 const audioDialogDownload = document.querySelector('#audio-dialog-download');
+const practicePitchWarning = ({
+  es:'Esta es la versión original y no está en el tono con el que se tocará en el concierto. Para ensayar en el tono correcto, abre Musync y selecciona la versión de práctica.',
+  ca:'Aquesta és la versió original i no està en el to amb què es tocarà al concert. Per assajar en el to correcte, obre Musync i selecciona la versió de pràctica.',
+  en:'This is the original version and it is not in the key that will be used at the concert. To rehearse in the correct key, open Musync and select the practice version.',
+  fr:'Il s’agit de la version originale, qui n’est pas dans la tonalité utilisée au concert. Pour répéter dans la bonne tonalité, ouvre Musync et sélectionne la version de répétition.',
+  it:'Questa è la versione originale e non è nella tonalità che verrà usata al concerto. Per provare nella tonalità corretta, apri Musync e seleziona la versione di prova.'
+})[portalLanguage] || 'Esta es la versión original y no está en el tono con el que se tocará en el concierto. Para ensayar en el tono correcto, abre Musync y selecciona la versión de práctica.';
 let navyAudioYieldingToSiteMusic = false;
 audioPlayer.addEventListener('play', () => window.naviesPauseSiteMusicForNavyAudio?.());
 audioPlayer.addEventListener('pause', () => {
@@ -567,6 +585,8 @@ document.addEventListener('click', (event) => {
   const button = event.target.closest('.audio-open');
   if (!button) return;
   audioDialogTitle.textContent = button.dataset.audioTitle;
+  audioDialogWarning.hidden = button.dataset.practicePitchWarning !== 'true';
+  audioDialogWarning.textContent = audioDialogWarning.hidden ? '' : practicePitchWarning;
   audioPlayer.src = button.dataset.audioSrc;
   audioDialogDownload.href = button.dataset.audioSrc;
   audioDialogDownload.setAttribute('download', '');
@@ -1503,21 +1523,67 @@ function populateEditor() {
   volumeSlider.type = 'range';
   volumeSlider.name = 'initialVolume';
   volumeSlider.min = '0';
-  volumeSlider.max = '2';
+  volumeSlider.max = '100';
   volumeSlider.step = '1';
-  volumeSlider.value = String({ low:0, medium:1, high:2 }[navyContent.home.settings?.initialVolume] ?? 1);
+  const legacyVolume = { low:22, medium:34, high:48 };
+  const savedVolume = navyContent.home.settings?.initialVolume;
+  volumeSlider.value = String(Number.isFinite(Number(savedVolume)) ? Math.max(0, Math.min(100, Number(savedVolume))) : (legacyVolume[savedVolume] ?? 34));
   volumeSlider.setAttribute('aria-label', editorText.initialVolume);
-  const syncVolumeSlider = () => volumeSlider.style.setProperty('--volume-track', `${Number(volumeSlider.value) * 50}%`);
+  const volumeValue = document.createElement('output');
+  volumeValue.className = 'editor-range-value';
+  const syncVolumeSlider = () => {
+    volumeSlider.style.setProperty('--volume-track', `${volumeSlider.value}%`);
+    volumeValue.textContent = `${volumeSlider.value}%`;
+  };
   volumeSlider.addEventListener('input', syncVolumeSlider);
   syncVolumeSlider();
   const volumeLabels = document.createElement('div');
   volumeLabels.className = 'editor-volume-labels';
-  volumeLabels.innerHTML = `<span>${editorText.lowVolume}</span><span>${editorText.mediumVolume}</span><span>${editorText.highVolume}</span>`;
-  volumeField.append(volumeSlider, volumeLabels);
+  volumeLabels.innerHTML = `<span>0%</span><span>100%</span>`;
+  volumeField.append(volumeValue, volumeSlider, volumeLabels);
+  const idleField = document.createElement('div');
+  idleField.className = 'editor-setting-card editor-idle-setting';
+  idleField.innerHTML = `<span>${editorText.sessionInactivity}</span>`;
+  const idleSwitch = document.createElement('label');
+  idleSwitch.className = 'editor-switch';
+  const idleInput = document.createElement('input');
+  idleInput.type = 'checkbox';
+  idleInput.name = 'sessionIdleEnabled';
+  idleInput.checked = navyContent.home.settings?.sessionIdleEnabled !== false;
+  const idleTrack = document.createElement('i');
+  idleTrack.setAttribute('aria-hidden', 'true');
+  const idleState = document.createElement('b');
+  idleSwitch.append(idleInput, idleTrack, idleState);
+  const idleRangeWrap = document.createElement('div');
+  idleRangeWrap.className = 'editor-idle-range';
+  const idleRangeHead = document.createElement('div');
+  idleRangeHead.innerHTML = `<span>${editorText.inactivityHours}</span>`;
+  const idleValue = document.createElement('output');
+  idleRangeHead.append(idleValue);
+  const idleSlider = document.createElement('input');
+  idleSlider.type = 'range';
+  idleSlider.name = 'sessionIdleHours';
+  idleSlider.min = '1';
+  idleSlider.max = '720';
+  idleSlider.step = '1';
+  idleSlider.value = String(Math.max(1, Math.min(720, Number(navyContent.home.settings?.sessionIdleHours) || 24)));
+  const syncIdleSetting = () => {
+    const enabled = idleInput.checked;
+    idleState.textContent = enabled ? editorText.enabled : editorText.disabled;
+    idleRangeWrap.classList.toggle('is-disabled', !enabled);
+    idleSlider.disabled = !enabled;
+    idleValue.textContent = `${idleSlider.value} ${editorText.hours}`;
+    idleSlider.style.setProperty('--volume-track', `${((Number(idleSlider.value) - 1) / 719) * 100}%`);
+  };
+  idleInput.addEventListener('change', syncIdleSetting);
+  idleSlider.addEventListener('input', syncIdleSetting);
+  idleRangeWrap.append(idleRangeHead, idleSlider);
+  idleField.append(idleSwitch, idleRangeWrap);
+  syncIdleSetting();
   const languageNames = { ca:'Català', es:'Castellano', en:'English', fr:'Français', it:'Italiano' };
   const fallbackField = makeSettingsSelect('fallbackLanguage', editorText.fallbackLanguage, ['ca','es','en','fr','it'].map((code) => [code,languageNames[code]]), navyContent.home.settings?.fallbackLanguage || 'es');
   const faviconField = makeSettingsSelect('faviconMode', editorText.faviconMode, [['dynamic',editorText.dynamicFavicon],['static',editorText.staticFavicon]], navyContent.home.settings?.faviconMode || 'dynamic');
-  settings.replaceChildren(seasonField, playbackField, countdownField, volumeField, fallbackField, faviconField);
+  settings.replaceChildren(seasonField, playbackField, countdownField, volumeField, fallbackField, faviconField, idleField);
   concertList.replaceChildren(...navyContent.home.concerts.map(concertEditorRow));
   memberList.replaceChildren(...navyContent.home.members.map(memberEditorRow));
   socialList.replaceChildren(...navyContent.home.socials.map(socialEditorRow));
@@ -1548,7 +1614,9 @@ function editorContent() {
   const initialPlayback = contentEditor.querySelector('[name="initialPlayback"]:checked').value;
   const initialSongId = initialPlayback === 'custom' ? contentEditor.querySelector('[name="initialSongId"]').value : '';
   const countdownEnabled = contentEditor.querySelector('[name="countdownEnabled"]').checked;
-  const initialVolume = ['low','medium','high'][Number(contentEditor.querySelector('[name="initialVolume"]').value)] || 'medium';
+  const initialVolume = Math.max(0, Math.min(100, Number(contentEditor.querySelector('[name="initialVolume"]').value) || 0));
+  const sessionIdleEnabled = contentEditor.querySelector('[name="sessionIdleEnabled"]').checked;
+  const sessionIdleHours = Math.max(1, Math.min(720, Number(contentEditor.querySelector('[name="sessionIdleHours"]').value) || 24));
   const fallbackLanguage = contentEditor.querySelector('[name="fallbackLanguage"]').value;
   const faviconMode = contentEditor.querySelector('[name="faviconMode"]').value;
   const concerts = [...contentEditor.querySelectorAll('.editor-concert-row')].map((row, index) => ({
@@ -1606,7 +1674,7 @@ function editorContent() {
   };
   editorEnsembleLinkDrafts[editorSpaceEnsemble] = readLinkRows();
   const links = editorEnsembleLinkDrafts['the-navies'];
-  return { home:{ settings:{ defaultSeason, initialPlayback, initialSongId, countdownEnabled, initialVolume, fallbackLanguage, faviconMode }, live:navyContent.home.live, texts:{ heroIntro:homeTexts.querySelector('[name="heroIntro"]').value.trim(), soundBody:homeTexts.querySelector('[name="soundBody"]').value.trim(), bandBody:homeTexts.querySelector('[name="bandBody"]').value.trim() }, concerts, members, socials }, events, ensembles:{ 'cor-band':{ events:editorEnsembleDrafts['cor-band'], links:editorEnsembleLinkDrafts['cor-band'] }, strings:{ events:editorEnsembleDrafts.strings, links:editorEnsembleLinkDrafts.strings } }, songs, links };
+  return { home:{ settings:{ defaultSeason, initialPlayback, initialSongId, countdownEnabled, initialVolume, sessionIdleEnabled, sessionIdleHours, fallbackLanguage, faviconMode }, live:navyContent.home.live, texts:{ heroIntro:homeTexts.querySelector('[name="heroIntro"]').value.trim(), soundBody:homeTexts.querySelector('[name="soundBody"]').value.trim(), bandBody:homeTexts.querySelector('[name="bandBody"]').value.trim() }, concerts, members, socials }, events, ensembles:{ 'cor-band':{ events:editorEnsembleDrafts['cor-band'], links:editorEnsembleLinkDrafts['cor-band'] }, strings:{ events:editorEnsembleDrafts.strings, links:editorEnsembleLinkDrafts.strings } }, songs, links };
 }
 
 function syncEditorAccess() {
